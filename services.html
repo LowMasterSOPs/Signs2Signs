@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Our Services | Signs2Signs</title>
+  <meta name="description" content="Shopfront trays, illuminated signs, CNC cut letters, vinyl and large format. Trade-only, built in Manchester.">
+  <link rel="icon" type="image/svg+xml" href="public/S2S.svg">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --brand:#0B1B4A; --brand-2:#1F3FAF;
+      --accent:#F26B1D; --bg:#0A0F1C;
+      --muted:#9CA3AF;
+      --radius:20px; --shadow:0 10px 30px rgba(0,0,0,.25);
+      --gutter:24px;
+    }
+    html,body{
+      margin:0; padding:0;
+      font-family:Manrope,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,'Helvetica Neue',Arial,sans-serif;
+      color:#f8fafc;
+      background:linear-gradient(180deg,#0B1B4A 0%,#0A0F1C 60%);
+    }
+    body{ padding-left:var(--gutter); padding-right:var(--gutter); }
+    body::before{
+      content:""; position:fixed; inset:0;
+      background:
+        radial-gradient(60% 60% at 20% 20%, rgba(242,107,29,.22) 0%, rgba(242,107,29,0) 60%),
+        radial-gradient(70% 70% at 80% 10%, rgba(31,63,175,.25) 0%, rgba(31,63,175,0) 65%);
+      filter:blur(100px); z-index:-1;
+    }
+    a{color:var(--accent);text-decoration:none}
+    img{max-width:100%;display:block}
+    .container{max-width:1200px;margin:0 auto}
+
+    section{padding:32px 0}
+    h1,h2,h3{margin:0 0 12px;color:#fff}
+    p{color:#cbd5e1;margin:0 0 10px}
+    .center{text-align:center}
+
+    /* Hero */
+    .page-hero{text-align:center;padding:64px 0}
+    .page-hero h1{font-size:clamp(34px,5vw,54px)}
+    .page-hero p{color:#cbd5e1;font-size:clamp(16px,2vw,20px)}
+
+    /* Service detail */
+    .services-detail-grid{display:grid;gap:32px}
+    .service-detail-card{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:center;background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.1);border-radius:var(--radius);padding:20px}
+    .service-detail-image img{border-radius:16px}
+    .service-features{margin:0;padding-left:20px;color:#cbd5e1}
+    .service-features li{margin-bottom:6px}
+
+    /* Process */
+    .process-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:24px}
+    .process-step{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);border-radius:var(--radius);padding:20px;text-align:center}
+    .process-number{font-size:28px;font-weight:700;color:var(--accent);margin-bottom:10px}
+
+    /* CTA */
+    .cta{text-align:center;padding:48px 0}
+    .btn{display:inline-flex;align-items:center;gap:10px;padding:14px 18px;border-radius:14px;font-weight:700;box-shadow:0 12px 28px rgba(0,0,0,.25)}
+    .btn-primary{background:var(--accent);color:#111827}
+
+    /* Responsive */
+    @media(max-width:900px){
+      .service-detail-card{grid-template-columns:1fr}
+      .process-grid{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header include -->
+  <div id="header"></div>
+
+  <main>
+    <!-- Hero -->
+    <section class="page-hero">
+      <div class="container">
+        <h1>Our Services</h1>
+        <p>What we make (and make well)</p>
+      </div>
+    </section>
+
+    <!-- Service details -->
+    <section class="services-detail">
+      <div class="container services-detail-grid">
+        
+        <div class="service-detail-card">
+          <div class="service-detail-image">
+            <img src="https://images.pexels.com/photos/1462637/pexels-photo-1462637.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop" alt="Shopfront and fascia signage">
+          </div>
+          <div class="service-detail-content">
+            <h3>Shopfront & Fascia Trays</h3>
+            <p>From traditional fascia boards to modern LED-lit trays, built proper in aluminium and steel.</p>
+            <ul class="service-features">
+              <li>Aluminium and steel construction</li>
+              <li>Powder coating in any RAL colour</li>
+              <li>LED integration available</li>
+              <li>Weatherproof sealing</li>
+              <li>Trade installation brackets included</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="service-detail-card">
+          <div class="service-detail-image">
+            <img src="https://images.pexels.com/photos/273230/pexels-photo-273230.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop" alt="LED illuminated signage">
+          </div>
+          <div class="service-detail-content">
+            <h3>Illuminated & LED Signs</h3>
+            <p>Energy-efficient LED illumination: halo-lit letters, face-lit panels, opal backs.</p>
+            <ul class="service-features">
+              <li>High-efficiency LED modules</li>
+              <li>IP65-rated weatherproofing</li>
+              <li>Dimming and timer controls</li>
+              <li>5-year LED warranty</li>
+              <li>Low power consumption</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="service-detail-card">
+          <div class="service-detail-image">
+            <img src="https://images.pexels.com/photos/1369476/pexels-photo-1369476.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop" alt="CNC precision cutting">
+          </div>
+          <div class="service-detail-content">
+            <h3>CNC Cut Letters & Logos</h3>
+            <p>Sharp edges, clean finishes — CNC cut acrylic, aluminium, foamex, and more.</p>
+            <ul class="service-features">
+              <li>Acrylic, aluminium, steel, brass</li>
+              <li>Thickness from 3mm to 25mm</li>
+              <li>Polished or brushed finishes</li>
+              <li>Mounting systems included</li>
+              <li>CAD file preparation service</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="service-detail-card">
+          <div class="service-detail-image">
+            <img src="https://images.pexels.com/photos/267367/pexels-photo-267367.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop" alt="Large format vinyl graphics">
+          </div>
+          <div class="service-detail-content">
+            <h3>Vinyl & Large Format</h3>
+            <p>High-res digital printing on premium vinyls for vehicles, walls, windows and wraps.</p>
+            <ul class="service-features">
+              <li>UV-resistant inks and vinyls</li>
+              <li>Up to 1600mm wide printing</li>
+              <li>Cut vinyl lettering and graphics</li>
+              <li>Application tape included</li>
+              <li>Lamination for extra durability</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Process -->
+    <section class="process">
+      <div class="container center">
+        <h2>How It Works</h2>
+        <p class="muted">Simple process for trade professionals</p>
+        <div class="process-grid">
+          <div class="process-step">
+            <div class="process-number">1</div>
+            <h3>You Design</h3>
+            <p>Send us your CAD or artwork files, we’ll check and prep them for production.</p>
+          </div>
+          <div class="process-step">
+            <div class="process-number">2</div>
+            <h3>We Make</h3>
+            <p>Fabricated in Manchester using CNC, laser, print and assembly all in-house.</p>
+          </div>
+          <div class="process-step">
+            <div class="process-number">3</div>
+            <h3>You Fit</h3>
+            <p>Signs supplied ready-to-fit, with fixings, delivery UK-wide or collection available.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta">
+      <div class="container center">
+        <h2>Ready to get started?</h2>
+        <p class="muted">Send your brief today; we’ll price it proper and advise what’ll work best.</p>
+        <a href="contact.html#quote" class="btn btn-primary">Start a Quote</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer include -->
+  <div id="footer"></div>
+
+  <script>
+    async function include(file, target){
+      const res = await fetch(file);
+      const html = await res.text();
+      document.getElementById(target).innerHTML = html;
+    }
+    include('header.html','header');
+    include('footer.html','footer');
+  </script>
+</body>
+</html>

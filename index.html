@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Signs2Signs | Trade Signage, Built in Manchester</title>
+  <meta name="description" content="Trade-only signage supply. You design, we make — you fit. CNC, print & fabrication in-house. UK-wide delivery or Manchester collection.">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" type="image/svg+xml" href="public/S2S.svg">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- Page-specific CSS -->
+  <style>
+    :root{
+      --brand:#0B1B4A; --brand-2:#1F3FAF;
+      --accent:#F26B1D; --bg:#0A0F1C;
+      --muted:#9CA3AF;
+      --radius:20px; --shadow:0 10px 30px rgba(0,0,0,.25);
+      --gutter:24px;
+    }
+    html,body{
+      margin:0; padding:0;
+      font-family:Manrope,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,'Helvetica Neue',Arial,sans-serif;
+      color:#f8fafc;
+      background:linear-gradient(180deg,#0B1B4A 0%,#0A0F1C 60%);
+    }
+    body{ padding-left:var(--gutter); padding-right:var(--gutter); }
+    body::before{
+      content:""; position:fixed; inset:0;
+      background:
+        radial-gradient(60% 60% at 20% 20%, rgba(242,107,29,.22) 0%, rgba(242,107,29,0) 60%),
+        radial-gradient(70% 70% at 80% 10%, rgba(31,63,175,.25) 0%, rgba(31,63,175,0) 65%);
+      filter:blur(100px); z-index:-1;
+    }
+    a{color:var(--accent);text-decoration:none}
+    img{max-width:100%;display:block}
+    .container{max-width:1200px;margin:0 auto}
+
+    /* Sections */
+    section{padding:32px 0}
+    .hero{padding:64px 0;text-align:center}
+
+    section h2{color:#fff;font-size:clamp(26px,3.6vw,36px);margin:0 0 12px}
+    section p{color:#cbd5e1;margin:0 0 10px}
+
+    /* Hero */
+    h1{font-size:clamp(34px,5vw,54px);line-height:1.05;margin:18px 0 10px;color:#fff}
+    .lede{font-size:clamp(16px,2.2vw,20px);color:#e5e7eb;opacity:.95}
+    .kicker{display:inline-flex;align-items:center;gap:8px;color:#c7d2fe;background:rgba(99,102,241,.15);border:1px solid rgba(99,102,241,.35);padding:6px 12px;border-radius:999px;font-weight:700}
+    .hero-actions{display:flex;gap:14px;margin-top:18px;flex-wrap:wrap;justify-content:center}
+
+    /* Buttons */
+    .btn{display:inline-flex;align-items:center;gap:10px;padding:14px 18px;border-radius:14px;font-weight:700;box-shadow:0 12px 28px rgba(0,0,0,.25)}
+    .btn-primary{background:var(--accent);color:#111827}
+    .btn-outline{border:1px solid rgba(255,255,255,.25);color:#e5e7eb;background:transparent}
+
+    /* Cards & stats */
+    .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .card{background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.03));border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:20px}
+
+    /* Services */
+    .services{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+    .svc{background:linear-gradient(180deg,rgba(16,23,42,.9),rgba(16,23,42,.6));border:1px solid rgba(255,255,255,.1);border-radius:18px;padding:18px;display:grid;gap:6px}
+
+    .center{text-align:center}
+
+    /* Responsive */
+    @media (max-width:1024px){
+      :root{--gutter:16px}
+      .services{grid-template-columns:repeat(2,1fr)}
+      .cards{grid-template-columns:repeat(2,1fr)}
+    }
+    @media (max-width:640px){
+      :root{--gutter:12px}
+      .cards,.services{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header include -->
+  <div id="header"></div>
+
+  <!-- Main -->
+  <main>
+    <section class="hero">
+      <div class="container">
+        <span class="kicker">Manchester • Trade Sign Specialists</span>
+        <h1>Signs that look mint. Built proper. Ready to fit.</h1>
+        <p class="lede">Trade-only: you design, we make — you fit. CNC, print and fabrication all in-house. UK-wide delivery or collect from Manchester.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="contact.html#quote">Get a fast quote</a>
+          <a class="btn btn-outline" href="work.html">See recent work</a>
+        </div>
+        <p class="muted mt-s">Need it sharpish? We’ll be straight with lead-times and keep you posted.</p>
+      </div>
+    </section>
+
+    <!-- Trust cards -->
+    <section>
+      <div class="container">
+        <h2>Built here. Built to last. Built for trade.</h2>
+        <div class="cards">
+          <div class="card">
+            <h3>In-house kit</h3>
+            <p>CNC routing, laser, print and fabrication under one roof. Quicker turnarounds and tighter QC.</p>
+          </div>
+          <div class="card">
+            <h3>No nonsense</h3>
+            <p>Clear pricing, proper materials, updates as we go. If it won’t work, we’ll tell you.</p>
+          </div>
+          <div class="card">
+            <h3>Trade supply, UK-wide</h3>
+            <p>You design, we make. Courier delivery or collection from Manchester.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services shortcuts -->
+    <section id="services">
+      <div class="container">
+        <h2>What we make (and make well)</h2>
+        <div class="services">
+          <a class="svc" href="services.html#fascia"><strong>Shopfront &amp; Fascia Trays</strong><span class="muted">Powder-coated trays, stand-offs, tidy finishes.</span></a>
+          <a class="svc" href="services.html#illuminated"><strong>Illuminated &amp; LED</strong><span class="muted">Halo, face-lit, opal backs — bright where it matters.</span></a>
+          <a class="svc" href="services.html#cnc"><strong>CNC Cut Letters &amp; Logos</strong><span class="muted">Acrylic, aluminium, foamex — crisp edges.</span></a>
+          <a class="svc" href="services.html#print"><strong>Vinyl &amp; Large Format</strong><span class="muted">Windows, walls, vehicles and banners — we print, you fit.</span></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section>
+      <div class="container center">
+        <h2>Ready when you are</h2>
+        <p class="muted">Send your brief today; we’ll price it proper and advise what’ll work best.</p>
+        <p><a class="btn btn-primary" href="contact.html#quote">Start a quote</a></p>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer include -->
+  <div id="footer"></div>
+
+  <script>
+    async function include(file, target){
+      const res = await fetch(file);
+      const html = await res.text();
+      document.getElementById(target).innerHTML = html;
+    }
+    include('header.html','header');
+    include('footer.html','footer');
+  </script>
+</body>
+</html>

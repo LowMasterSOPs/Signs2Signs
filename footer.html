@@ -1,0 +1,48 @@
+<footer class="site-foot">
+  <style>
+    .site-foot{
+      border-top:1px solid rgba(255,255,255,.08);
+      margin-inline: calc(-1 * var(--gutter));
+      padding-inline: var(--gutter);
+      padding-top:40px; padding-bottom:40px;
+      background:transparent;
+    }
+    .foot{display:grid;grid-template-columns:1.2fr .8fr;gap:26px}
+    .white{color:#fff}
+    .muted{color:var(--muted)}
+    .mt-s{margin-top:10px}
+    .center{text-align:center}
+    @media (max-width:1024px){ .foot{grid-template-columns:1fr} }
+  </style>
+
+  <div class="container foot">
+    <div>
+      <a class="logo" href="/" aria-label="Signs2Signs home">
+        <img src="public/S2S.svg" alt="S2S monogram logo" height="70">
+      </a>
+      <p class="muted">Manchester • UK-wide • Trade supply only</p>
+      <p class="muted">Reliance St, Manchester M40 3AG</p>
+      <p><a href="tel:+441616817515">0161 681 7515</a> • <a href="mailto:sales@signs2signs.com">sales@signs2signs.com</a></p>
+      <p class="muted">Mon–Fri 8:30–16:30</p>
+      <p class="muted">Follow: <a href="https://instagram.com/yourhandle" target="_blank" rel="noopener">Instagram</a></p>
+      <p class="muted">© <span id="year"></span> Signs2Signs.</p>
+    </div>
+    <div>
+      <p class="muted">
+        <b class="white">Quick links</b><br>
+        <a href="services.html">Services</a> ·
+        <a href="work.html">Work</a> ·
+        <a href="contact.html#quote">Get a Quote</a> ·
+        <a href="admin.html">Admin</a>
+        <a href="Gallery.html">Gallery</a>
+      </p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  (function(){
+    var el=document.querySelector('#year');
+    if(el) el.textContent=new Date().getFullYear();
+  })();
+</script>
