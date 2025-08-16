@@ -26,6 +26,7 @@
       font-family:Manrope,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,'Helvetica Neue',Arial,sans-serif;
       color:#f8fafc;
 
+      /* Desktop/tablet: image + gradient */
       background:
         url("public/WEBBG8.png") no-repeat top right fixed,
         linear-gradient(180deg,#0B1B4A 0%,#0A0F1C 60%);
@@ -34,6 +35,7 @@
       -moz-osx-font-smoothing:grayscale;
     }
 
+    /* Mobile: remove background image, keep gradient */
     @media (max-width:768px){
       html,body{
         background: linear-gradient(180deg,#0B1B4A 0%,#0A0F1C 60%);
@@ -60,24 +62,30 @@
 
     /* Hero */
     .page-hero{text-align:center;padding:64px 0}
-    h1{font-size:clamp(34px,5vw,54px);line-height:1.05;margin:18px 0 10px;color:#fff}
+    h1{font-size:clamp(34px,5vw,54px);line-height:1.05;margin:18px 0 10px}
     .lede{font-size:clamp(16px,2.2vw,20px);color:#e5e7eb;opacity:.95}
     .kicker{
       display:inline-flex;align-items:center;gap:8px;
       color:#c7d2fe;
       background:rgba(99,102,241,.15);
       border:1px solid rgba(99,102,241,.35);
-      padding:6px 12px;
-      border-radius:999px;
-      font-weight:700;
+      padding:6px 12px;border-radius:999px;font-weight:700;
     }
+    @media(max-width:640px){ .kicker{ margin-inline:auto; } }
 
     /* Service detail */
     .services-detail-grid{display:grid;gap:32px}
-    .service-detail-card{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:center;background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.1);border-radius:var(--radius);padding:20px}
+    .service-detail-card{
+      display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:center;
+      background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02));
+      border:1px solid rgba(255,255,255,.1);
+      border-radius:var(--radius);padding:20px;
+    }
     .service-detail-image img{border-radius:16px}
     .service-features{margin:0;padding-left:20px;color:#cbd5e1}
     .service-features li{margin-bottom:6px}
+    /* Make service titles orange */
+    .service-detail-card h3{ color: var(--accent); }
 
     /* Process */
     .process-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:24px}
@@ -93,9 +101,6 @@
     @media(max-width:900px){
       .service-detail-card{grid-template-columns:1fr}
       .process-grid{grid-template-columns:1fr}
-    }
-    @media(max-width:640px){
-      .kicker{ margin-inline:auto; }
     }
   </style>
 </head>
@@ -115,95 +120,93 @@
     </section>
 
     <!-- Service details -->
+    <section class="services-detail">
+      <div class="container services-detail-grid">
 
-
-    <div class="service-detail-card" id="acrylic">
-  <div class="service-detail-image">
-    <img src="public/WEBBG8.png" alt="Built-up 3D Acrylic Letters">
-  </div>
-  <div class="service-detail-content">
-    <h3>Built-up Acrylic Letters</h3>
-    <p>Hand-crafted returns with CNC-cut acrylic faces — polished, bonded and finished to create lightweight, premium 3D lettering. A sharp alternative to metal built-ups, with the same depth and detail.</p>
-    <ul class="service-features">
-      <li>Custom built-up returns, hand fabricated</li>
-      <li>CNC-cut acrylic faces for precision</li>
-      <li>Gloss, matt or special finishes available</li>
-      <li>Depths from 30mm upwards</li>
-      <li>Templates and fixings supplied for install</li>
-    </ul>
-  </div>
-</div>
-
-
-    
-  <section class="services-detail">
-  <div class="container services-detail-grid">
-
-    <div class="service-detail-card" id="trays">
-      <div class="service-detail-image">
-        <img src="public/WEBBG8.png" alt="ACM and aluminium sign trays">
-      </div>
-      <div class="service-detail-content">
-        <h3>ACM & Aluminium Sign Trays</h3>
-        <p>Built from ACM composite or aluminium, finished your way — powder-coated, vinyl-wrapped, or both. Add fret-cut lettering and LED illumination for a tray that looks sharp day and night.</p>
-        <ul class="service-features">
-          <li>ACM composite or aluminium construction</li>
-          <li>Powder-coated or vinyl-wrapped finishes</li>
-          <li>Fret-cut and backed-off lettering options</li>
-          <li>LED illumination available</li>
-          <li>Supplied fully assembled, trade-ready</li>
-        </ul>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-       <div class="service-detail-card" id="illuminated">
-  <div class="service-detail-image">
-    <img src="public/WEBBG8.png" alt="Illuminated and LED signage">
-  </div>
-  <div class="service-detail-content">
-    <h3>Illuminated & LED Signs</h3>
-    <p>Face-lit, halo-lit, and built-up letters — paired with LED panels, neon flex, or foam-embedded LEDs. All built for efficiency, brightness, and straightforward trade install with full wiring guides included.</p>
-    <ul class="service-features">
-      <li>Face-lit, halo-lit & built-up letter options</li>
-      <li>Neon-style flex and foam-embedded LEDs</li>
-      <li>High-efficiency LED modules with 5-year warranty</li>
-      <li>IP65-rated for outdoor weatherproofing</li>
-      <li>Supplied with LED kits and wiring guides</li>
-    </ul>
-  </div>
-</div>
- <br>
-        <div class="service-detail-card" id="cnc">
+        <!-- Built-up Acrylic Letters -->
+        <div class="service-detail-card" id="acrylic">
           <div class="service-detail-image">
-            <img src="https://images.pexels.com/photos/1369476/pexels-photo-1369476.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop" alt="CNC precision cutting">
+            <img src="public/WEBBG8.png" alt="Built-up 3D acrylic letters">
           </div>
           <div class="service-detail-content">
-            <h3>CNC Cut Letters & Logos</h3>
-            <p>Sharp edges, clean finishes — CNC cut acrylic, aluminium, foamex, and more.</p>
+            <h3>Built-up Acrylic Letters</h3>
+            <p>Hand-crafted returns with CNC-cut acrylic faces — bonded, polished and finished for lightweight, premium 3D lettering. A sharp alternative to metal built-ups.</p>
             <ul class="service-features">
-              <li>Acrylic, aluminium, steel, brass</li>
-              <li>Thickness from 3mm to 25mm</li>
-              <li>Polished or brushed finishes</li>
-              <li>Mounting systems included</li>
-              <li>CAD file preparation service</li>
+              <li>Hand-fabricated returns + CNC faces</li>
+              <li>Gloss, matt or special finishes</li>
+              <li>Depths from 30&nbsp;mm upwards</li>
+              <li>Templates and fixings supplied</li>
+              <li>Weather-resistant and durable</li>
             </ul>
           </div>
         </div>
 
-        <div class="service-detail-card" id="print">
+        <!-- ACM & Aluminium Trays -->
+        <div class="service-detail-card" id="trays">
           <div class="service-detail-image">
-            <img src="https://images.pexels.com/photos/267367/pexels-photo-267367.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop" alt="Large format vinyl graphics">
+            <img src="public/WEBBG8.png" alt="ACM and aluminium sign trays">
           </div>
           <div class="service-detail-content">
-            <h3>Vinyl & Large Format</h3>
-            <p>High-res digital printing on premium vinyls for vehicles, walls, windows and wraps.</p>
+            <h3>ACM &amp; Aluminium Sign Trays</h3>
+            <p>ACM composite or aluminium, finished your way — powder-coated, vinyl-wrapped, or both. Add fret-cut lettering and LEDs for a tray that looks sharp day and night.</p>
             <ul class="service-features">
-              <li>UV-resistant inks and vinyls</li>
-              <li>Up to 1600mm wide printing</li>
-              <li>Cut vinyl lettering and graphics</li>
+              <li>ACM composite or aluminium construction</li>
+              <li>Powder-coated or vinyl-wrapped finishes</li>
+              <li>Fret-cut &amp; backed-off lettering options</li>
+              <li>LED illumination available</li>
+              <li>Supplied fully assembled, trade-ready</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Illuminated & LED -->
+        <div class="service-detail-card" id="illuminated">
+          <div class="service-detail-image">
+            <img src="public/WEBBG8.png" alt="Illuminated and LED signage">
+          </div>
+          <div class="service-detail-content">
+            <h3>Illuminated &amp; LED Signs</h3>
+            <p>Face-lit, halo-lit, and built-up letters with LED panels, neon flex, or foam-embedded LEDs. Efficient, bright, and supplied with wiring guides for straightforward installs.</p>
+            <ul class="service-features">
+              <li>Face-lit, halo-lit &amp; built-up letter options</li>
+              <li>Neon-style flex &amp; foam-embedded LEDs</li>
+              <li>High-efficiency LED modules (5-year warranty)</li>
+              <li>IP65-rated weatherproofing</li>
+              <li>LED kits &amp; wiring guides included</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- CNC -->
+        <div class="service-detail-card" id="cnc">
+          <div class="service-detail-image">
+            <img src="public/WEBBG8.png" alt="CNC cut letters and logos">
+          </div>
+          <div class="service-detail-content">
+            <h3>CNC Cut Letters &amp; Logos</h3>
+            <p>Sharp edges and clean finishes — precision cut in acrylic, aluminium, foamex and more, ready to fit with the right fixings.</p>
+            <ul class="service-features">
+              <li>Acrylic, aluminium, steel, brass</li>
+              <li>Thickness from 3&nbsp;mm to 25&nbsp;mm</li>
+              <li>Polished or brushed finishes</li>
+              <li>Mounting systems supplied</li>
+              <li>CAD file prep available</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Vinyl & Large Format -->
+        <div class="service-detail-card" id="print">
+          <div class="service-detail-image">
+            <img src="public/WEBBG8.png" alt="Vinyl and large format graphics">
+          </div>
+          <div class="service-detail-content">
+            <h3>Vinyl &amp; Large Format</h3>
+            <p>High-res digital printing on premium vinyls for vehicles, walls, windows and wraps. Clean installs, strong colour, built to last.</p>
+            <ul class="service-features">
+              <li>UV-resistant inks &amp; vinyls</li>
+              <li>Up to 1600&nbsp;mm wide printing</li>
+              <li>Cut vinyl lettering &amp; graphics</li>
               <li>Application tape included</li>
               <li>Lamination for extra durability</li>
             </ul>
@@ -222,7 +225,7 @@
           <div class="process-step">
             <div class="process-number">1</div>
             <h3>You Design</h3>
-            <p>Send us your CAD or artwork files, we’ll check and prep them for production.</p>
+            <p>Send us your CAD or artwork files — we’ll check and prep them for production.</p>
           </div>
           <div class="process-step">
             <div class="process-number">2</div>
@@ -232,7 +235,7 @@
           <div class="process-step">
             <div class="process-number">3</div>
             <h3>You Fit</h3>
-            <p>Signs supplied ready-to-fit, with fixings, delivery UK-wide or collection available.</p>
+            <p>Signs supplied ready-to-fit, with fixings. UK-wide delivery or collection.</p>
           </div>
         </div>
       </div>
