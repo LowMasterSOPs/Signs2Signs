@@ -1,98 +1,173 @@
-<footer class="site-foot">
-  <!-- Font Awesome Brands (icons) — move to <head> if you like -->
+<footer class="site-foot" role="contentinfo">
+  <!-- If Font Awesome isn't already in <head>, keep this line;
+       otherwise you can remove it. -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
 
   <style>
+    :root{
+      /* Fallbacks if not defined elsewhere */
+      --accent: #F26B1D;
+      --bg-dark: #0a0f1a;
+      --text: #e5e7eb;
+      --muted: #94a3b8;
+      --container-max: 1200px;
+      --gutter: 24px;
+    }
+
     .site-foot{
-      border-top:1px solid rgba(16,23,42,.9);
-
-
-
-      
-      margin-inline: calc(-1 * var(--gutter));
-      padding:40px var(--gutter);
-      background:transparent;
+      background: var(--bg-dark);      /* full-bleed dark */
+      color: var(--text);
+      border-top: 1px solid rgba(255,255,255,.06);
+      padding: 40px 0 28px;            /* vertical padding only */
     }
+
+    .site-foot .container{
+      max-width: var(--container-max);
+      margin-inline: auto;
+      padding-inline: var(--gutter);
+    }
+
     .foot{
-      display:grid;
-      grid-template-columns:1fr 1fr; /* left / right */
-      gap:26px;
-      align-items:end;              /* bottom align both sides */
+      display: grid;
+      grid-template-columns: 1fr 1fr;  /* left / right */
+      gap: 28px;
+      align-items: end;
     }
-    .muted{color:var(--muted)}
-    .white{color:#fff}
 
-    .right-links{text-align:right}
-    .right-links .logo{display:inline-block;margin-bottom:15px}
+    .muted{ color: var(--muted); }
+    .white{ color: #fff; }
 
-    /* Social icons under opening hours */
+    /* Left column */
+    .contact p,
+    .contact address{ margin: 6px 0; }
+
+    .contact a{
+      color: var(--text);
+      text-decoration: none;
+      border-bottom: 1px dashed transparent;
+      transition: border-color .2s ease, color .2s ease;
+    }
+    .contact a:hover,
+    .contact a:focus-visible{
+      color: #fff;
+      border-bottom-color: currentColor;
+      outline: none;
+    }
+
+    /* Socials */
     .social-icons{
-      display:flex; gap:16px; margin-top:10px;
+      display: flex; gap: 16px; margin-top: 12px;
     }
     .social-icons a{
-      color:#F26B1D;                 /* brand orange */
-      font-size:26px;                /* consistent size */
-      line-height:1;                 /* tight baseline */
-      transition:color .2s ease;
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 36px; height: 36px; border-radius: 50%;
+      color: var(--accent);
+      text-decoration: none;
+      transition: transform .15s ease, color .2s ease, background .2s ease;
     }
-    .social-icons a:hover{ color:#fff }
+    .social-icons a:hover,
+    .social-icons a:focus-visible{
+      color: #0b0b0b;
+      background: #fff;
+      transform: translateY(-1px);
+      outline: none;
+    }
+    .social-icons i{ font-size: 20px; line-height: 1; }
+
+    /* Right column */
+    .right-links{ text-align: right; }
+    .right-links .logo{ display: inline-block; margin-bottom: 14px; }
+    .quick-links a{
+      color: var(--text);
+      text-decoration: none;
+      border-bottom: 1px dashed transparent;
+      transition: border-color .2s ease, color .2s ease;
+    }
+    .quick-links a:hover,
+    .quick-links a:focus-visible{
+      color: #fff;
+      border-bottom-color: currentColor;
+      outline: none;
+    }
+
+    /* Bottom bar */
+    .site-foot .foot-note{
+      text-align: center;
+      margin-top: 22px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
 
     /* Mobile */
-    @media (max-width:1024px){
-      .foot{grid-template-columns:1fr; text-align:center; align-items:center}
-      .right-links{ text-align:center }
-      .social-icons{ justify-content:center }
+    @media (max-width: 1024px){
+      .foot{ grid-template-columns: 1fr; text-align: center; align-items: center; }
+      .right-links{ text-align: center; }
+      .social-icons{ justify-content: center; }
+    }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce){
+      .social-icons a{ transition: none; }
     }
   </style>
 
-  <div class="container foot">
-    <!-- Left -->
-    <div>
-      <p class="muted">Manchester • UK-wide • Trade supply only</p>
-      <p class="muted">Reliance St, Manchester M40 3AG</p>
-      <p>
-        <a href="tel:+441616817515">0161 681 7515</a> •
-        <a href="mailto:sales@signs2signs.com">sales@signs2signs.com</a>
-      </p>
-      <p class="muted">Mon–Fri 8:30–16:30</p>
+  <div class="container">
+    <div class="foot">
+      <!-- Left -->
+      <div class="contact">
+        <p class="muted">Manchester • UK-wide • Trade supply only</p>
 
-      <!-- Socials (same size & thickness) -->
-      <div class="social-icons" aria-label="Social links">
-        <a href="https://instagram.com/yourhandle" target="_blank" rel="noopener" aria-label="Instagram">
-          <i class="fa-brands fa-instagram"></i>
+        <address class="muted" style="font-style: normal;">
+          Reliance St, Manchester M40 3AG
+        </address>
+
+        <p>
+          <a href="tel:+441616817515" aria-label="Call 0161 681 7515">0161 681 7515</a>
+          &nbsp;•&nbsp;
+          <a href="mailto:sales@signs2signs.com">sales@signs2signs.com</a>
+        </p>
+
+        <p class="muted" aria-label="Opening hours">Mon–Fri 08:30–16:30</p>
+
+        <!-- Socials -->
+        <div class="social-icons" aria-label="Social links">
+          <a href="https://instagram.com/yourhandle" target="_blank" rel="noopener" aria-label="Instagram">
+            <i class="fa-brands fa-instagram" aria-hidden="true"></i>
+          </a>
+          <a href="https://linkedin.com/company/yourhandle" target="_blank" rel="noopener" aria-label="LinkedIn">
+            <i class="fa-brands fa-linkedin" aria-hidden="true"></i>
+          </a>
+          <a href="https://twitter.com/yourhandle" target="_blank" rel="noopener" aria-label="X">
+            <i class="fa-brands fa-x-twitter" aria-hidden="true"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- Right -->
+      <div class="right-links">
+        <a class="logo" href="/" aria-label="Signs2Signs home">
+          <img src="public/S2S.svg" alt="S2S monogram logo" height="92" loading="lazy">
         </a>
-        <a href="https://linkedin.com/company/yourhandle" target="_blank" rel="noopener" aria-label="LinkedIn">
-          <i class="fa-brands fa-linkedin"></i>
-        </a>
-        <a href="https://twitter.com/yourhandle" target="_blank" rel="noopener" aria-label="X">
-          <i class="fa-brands fa-x-twitter"></i>
-        </a>
+
+        <p class="quick-links muted">
+          <b class="white">Quick links</b><br>
+          <a href="services.html">Services</a> ·
+          <a href="work.html">Work</a> ·
+          <a href="contact.html#quote">Get a Quote</a> ·
+          <a href="gallery.html">Gallery</a>
+        </p>
       </div>
     </div>
 
-    <!-- Right -->
-    <div class="right-links">
-      <a class="logo" href="/" aria-label="Signs2Signs home">
-        <img src="public/S2S.svg" alt="S2S monogram logo" height="100">
-      </a>
-      <p class="muted">
-        <b class="white">Quick links</b><br>
-        <a href="services.html">Services</a> ·
-        <a href="work.html">Work</a> ·
-        <a href="contact.html#quote">Get a Quote</a> ·
-        <a href="gallery.html">Gallery</a>
-      </p>
-    </div>
+    <p class="foot-note">
+      © <span id="year"></span> Signs2Signs.
+    </p>
   </div>
 
-  <p class="muted" style="text-align:center; margin-top:20px;">
-    © <span id="year"></span> Signs2Signs.
-  </p>
+  <script>
+    (function(){
+      var el = document.getElementById('year');
+      if (el) el.textContent = new Date().getFullYear();
+    })();
+  </script>
 </footer>
-
-<script>
-  (function(){
-    var el=document.querySelector('#year');
-    if(el) el.textContent=new Date().getFullYear();
-  })();
-</script>
