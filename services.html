@@ -26,14 +26,14 @@
       font-family:Manrope,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,'Helvetica Neue',Arial,sans-serif;
       color:#f8fafc;
 
-      /* Desktop/tablet: image + gradient */
       background:
         url("public/WEBBG8.png") no-repeat top right fixed,
         linear-gradient(180deg,#0B1B4A 0%,#0A0F1C 60%);
       background-size: auto, cover;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
     }
 
-    /* Mobile: remove background image, keep gradient */
     @media (max-width:768px){
       html,body{
         background: linear-gradient(180deg,#0B1B4A 0%,#0A0F1C 60%);
@@ -48,6 +48,7 @@
         radial-gradient(70% 70% at 80% 10%, rgba(31,63,175,.25) 0%, rgba(31,63,175,0) 65%);
       filter:blur(100px); z-index:-1;
     }
+
     a{color:var(--accent);text-decoration:none}
     img{max-width:100%;display:block}
     .container{max-width:1200px;margin:0 auto}
@@ -59,8 +60,17 @@
 
     /* Hero */
     .page-hero{text-align:center;padding:64px 0}
-    .page-hero h1{font-size:clamp(34px,5vw,54px)}
-    .page-hero p{color:#cbd5e1;font-size:clamp(16px,2vw,20px)}
+    h1{font-size:clamp(34px,5vw,54px);line-height:1.05;margin:18px 0 10px;color:#fff}
+    .lede{font-size:clamp(16px,2.2vw,20px);color:#e5e7eb;opacity:.95}
+    .kicker{
+      display:inline-flex;align-items:center;gap:8px;
+      color:#c7d2fe;
+      background:rgba(99,102,241,.15);
+      border:1px solid rgba(99,102,241,.35);
+      padding:6px 12px;
+      border-radius:999px;
+      font-weight:700;
+    }
 
     /* Service detail */
     .services-detail-grid{display:grid;gap:32px}
@@ -84,6 +94,9 @@
       .service-detail-card{grid-template-columns:1fr}
       .process-grid{grid-template-columns:1fr}
     }
+    @media(max-width:640px){
+      .kicker{ margin-inline:auto; }
+    }
   </style>
 </head>
 <body>
@@ -95,8 +108,9 @@
     <!-- Hero -->
     <section class="page-hero">
       <div class="container">
+        <span class="kicker">Manchester • Trade Sign Specialists</span>
         <h1>Our Services</h1>
-        <p>What we make (and make well)</p>
+        <p class="lede">What we make (and make well)</p>
       </div>
     </section>
 
@@ -104,7 +118,7 @@
     <section class="services-detail">
       <div class="container services-detail-grid">
         
-        <div class="service-detail-card">
+        <div class="service-detail-card" id="fascia">
           <div class="service-detail-image">
             <img src="https://images.pexels.com/photos/1462637/pexels-photo-1462637.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop" alt="Shopfront and fascia signage">
           </div>
@@ -121,7 +135,7 @@
           </div>
         </div>
 
-        <div class="service-detail-card">
+        <div class="service-detail-card" id="illuminated">
           <div class="service-detail-image">
             <img src="https://images.pexels.com/photos/273230/pexels-photo-273230.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop" alt="LED illuminated signage">
           </div>
@@ -138,7 +152,7 @@
           </div>
         </div>
 
-        <div class="service-detail-card">
+        <div class="service-detail-card" id="cnc">
           <div class="service-detail-image">
             <img src="https://images.pexels.com/photos/1369476/pexels-photo-1369476.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop" alt="CNC precision cutting">
           </div>
@@ -155,7 +169,7 @@
           </div>
         </div>
 
-        <div class="service-detail-card">
+        <div class="service-detail-card" id="print">
           <div class="service-detail-image">
             <img src="https://images.pexels.com/photos/267367/pexels-photo-267367.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop" alt="Large format vinyl graphics">
           </div>
