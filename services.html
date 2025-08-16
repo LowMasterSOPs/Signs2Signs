@@ -20,12 +20,26 @@
       --radius:20px; --shadow:0 10px 30px rgba(0,0,0,.25);
       --gutter:24px;
     }
+
     html,body{
       margin:0; padding:0;
       font-family:Manrope,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,'Helvetica Neue',Arial,sans-serif;
       color:#f8fafc;
-      background:linear-gradient(180deg,#0B1B4A 0%,#0A0F1C 60%);
+
+      /* Desktop/tablet: image + gradient */
+      background:
+        url("public/Untitled%20design%20(4).png") no-repeat top right fixed,
+        linear-gradient(180deg,#0B1B4A 0%,#0A0F1C 60%);
+      background-size: auto, cover;
     }
+
+    /* Mobile: remove background image, keep gradient */
+    @media (max-width:768px){
+      html,body{
+        background: linear-gradient(180deg,#0B1B4A 0%,#0A0F1C 60%);
+      }
+    }
+
     body{ padding-left:var(--gutter); padding-right:var(--gutter); }
     body::before{
       content:""; position:fixed; inset:0;
