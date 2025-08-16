@@ -13,79 +13,87 @@
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700&display=swap" rel="stylesheet">
 
   <style>
+    /* ========== Root & Theme ========== */
     :root{
       --brand:#0B1B4A; --brand-2:#1F3FAF;
       --accent:#F26B1D; --bg:#0A0F1C;
-      --muted:#9CA3AF;
+      --muted:#9CA3AF; --text:#f8fafc; --text-2:#e5e7eb;
       --radius:20px; --shadow:0 10px 30px rgba(0,0,0,.25);
-      --gutter:24px;
+      --gutter:24px; --container:1200px;
     }
 
+    /* ========== Base ========== */
     html,body{
       margin:0; padding:0;
       font-family:Manrope,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,'Helvetica Neue',Arial,sans-serif;
-      color:#f8fafc;
-
-      /* Desktop/tablet: image + gradient */
+      color:var(--text);
       background:
         url("public/WEBBG8.png") no-repeat top right fixed,
         linear-gradient(180deg,#0B1B4A 0%,#0A0F1C 60%);
       background-size: auto, cover;
     }
-
-    /* Mobile: remove background image, keep gradient */
-    @media (max-width:768px){
+    /* Mobile: no bg image */
+    @media(max-width:768px){
       html,body{
         background: linear-gradient(180deg,#0B1B4A 0%,#0A0F1C 60%);
       }
     }
-
     body{ padding-left:var(--gutter); padding-right:var(--gutter); }
     body::before{
-      content:""; position:fixed; inset:0;
+      content:""; position:fixed; inset:0; z-index:-1;
       background:
         radial-gradient(60% 60% at 20% 20%, rgba(242,107,29,.22) 0%, rgba(242,107,29,0) 60%),
         radial-gradient(70% 70% at 80% 10%, rgba(31,63,175,.25) 0%, rgba(31,63,175,0) 65%);
-      filter:blur(100px); z-index:-1;
+      filter:blur(100px);
     }
 
     a{color:var(--accent);text-decoration:none}
     img{max-width:100%;display:block}
-    .container{max-width:1200px;margin:0 auto}
+    .container{max-width:var(--container);margin:0 auto}
+    .muted{color:var(--muted)}
     .center{text-align:center}
     section{padding:32px 0}
     h1,h2,h3{margin:0 0 12px;color:#fff}
     p{color:#cbd5e1;margin:0 0 10px}
 
-    /* Hero (added kicker) */
-    .page-hero{padding:64px 0;text-align:center}
-    .kicker{
-      display:inline-flex;align-items:center;gap:8px;
-      color:#c7d2fe;
+    /* ========== Hero & kicker ========== */
+    .page-hero{text-align:center;padding:64px 0}
+    .page-hero .kicker{
+      display:inline-block;
       background:rgba(99,102,241,.15);
       border:1px solid rgba(99,102,241,.35);
-      padding:6px 12px;border-radius:999px;font-weight:700
+      color:#c7d2fe;
+      padding:6px 12px;
+      border-radius:999px;
+      font-weight:700;
+      margin-bottom:16px;
     }
     .page-hero h1{font-size:clamp(34px,5vw,54px)}
-    .page-hero .lede{color:#e5e7eb;font-size:clamp(16px,2vw,20px);opacity:.95}
+    .page-hero p{color:#cbd5e1;font-size:clamp(16px,2vw,20px)}
 
-    /* Service detail */
+    /* ========== Service detail ========== */
     .services-detail-grid{display:grid;gap:32px}
     .service-detail-card{
       display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:center;
       background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02));
-      border:1px solid rgba(255,255,255,.1);border-radius:var(--radius);padding:20px
+      border:1px solid rgba(255,255,255,.1);
+      border-radius:var(--radius);padding:20px;
     }
     .service-detail-image img{border-radius:16px}
     .service-features{margin:0;padding-left:20px;color:#cbd5e1}
     .service-features li{margin-bottom:6px}
 
-    /* Process */
+    /* ========== Process ========== */
     .process-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:24px}
-    .process-step{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);border-radius:var(--radius);padding:20px;text-align:center}
+    .process-step{
+      background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:var(--radius);
+      padding:20px;text-align:center;
+    }
     .process-number{font-size:28px;font-weight:700;color:var(--accent);margin-bottom:10px}
 
-    /* CTA */
+    /* ========== CTA ========== */
     .cta{text-align:center;padding:48px 0}
     .btn{display:inline-flex;align-items:center;gap:10px;padding:14px 18px;border-radius:14px;font-weight:700;box-shadow:0 12px 28px rgba(0,0,0,.25)}
     .btn-primary{background:var(--accent);color:#111827}
@@ -94,11 +102,6 @@
     @media(max-width:900px){
       .service-detail-card{grid-template-columns:1fr}
       .process-grid{grid-template-columns:1fr}
-    }
-    @media(max-width:640px){
-      /* centre vibe on small screens */
-      .container, .page-hero, .center { text-align:center; }
-      .kicker{ margin-inline:auto; }
     }
   </style>
 </head>
@@ -111,9 +114,9 @@
     <!-- Hero -->
     <section class="page-hero">
       <div class="container">
-        <span class="kicker">Manchester • Trade Sign Specialists</span>
+        <span class="kicker">What we do</span>
         <h1>Our Services</h1>
-        <p class="lede">What we make (and make well)</p>
+        <p>What we make (and make well)</p>
       </div>
     </section>
 
@@ -121,12 +124,13 @@
     <section class="services-detail">
       <div class="container services-detail-grid">
         
+        <!-- Service 1 -->
         <div class="service-detail-card">
           <div class="service-detail-image">
             <img src="https://images.pexels.com/photos/1462637/pexels-photo-1462637.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop" alt="Shopfront and fascia signage">
           </div>
           <div class="service-detail-content">
-            <h3>Shopfront &amp; Fascia Trays</h3>
+            <h3>Shopfront & Fascia Trays</h3>
             <p>From traditional fascia boards to modern LED-lit trays, built proper in aluminium and steel.</p>
             <ul class="service-features">
               <li>Aluminium and steel construction</li>
@@ -138,12 +142,13 @@
           </div>
         </div>
 
+        <!-- Service 2 -->
         <div class="service-detail-card">
           <div class="service-detail-image">
             <img src="https://images.pexels.com/photos/273230/pexels-photo-273230.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop" alt="LED illuminated signage">
           </div>
           <div class="service-detail-content">
-            <h3>Illuminated &amp; LED Signs</h3>
+            <h3>Illuminated & LED Signs</h3>
             <p>Energy-efficient LED illumination: halo-lit letters, face-lit panels, opal backs.</p>
             <ul class="service-features">
               <li>High-efficiency LED modules</li>
@@ -155,12 +160,13 @@
           </div>
         </div>
 
+        <!-- Service 3 -->
         <div class="service-detail-card">
           <div class="service-detail-image">
             <img src="https://images.pexels.com/photos/1369476/pexels-photo-1369476.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop" alt="CNC precision cutting">
           </div>
           <div class="service-detail-content">
-            <h3>CNC Cut Letters &amp; Logos</h3>
+            <h3>CNC Cut Letters & Logos</h3>
             <p>Sharp edges, clean finishes — CNC cut acrylic, aluminium, foamex, and more.</p>
             <ul class="service-features">
               <li>Acrylic, aluminium, steel, brass</li>
@@ -172,12 +178,13 @@
           </div>
         </div>
 
+        <!-- Service 4 -->
         <div class="service-detail-card">
           <div class="service-detail-image">
             <img src="https://images.pexels.com/photos/267367/pexels-photo-267367.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop" alt="Large format vinyl graphics">
           </div>
           <div class="service-detail-content">
-            <h3>Vinyl &amp; Large Format</h3>
+            <h3>Vinyl & Large Format</h3>
             <p>High-res digital printing on premium vinyls for vehicles, walls, windows and wraps.</p>
             <ul class="service-features">
               <li>UV-resistant inks and vinyls</li>
