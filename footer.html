@@ -3,7 +3,7 @@
     .site-foot {
       border-top: 1px solid rgba(255,255,255,.08);
       margin-inline: calc(-1 * var(--gutter));
-      padding: 40px var(--gutter);
+      padding: 40px var(--gutter) 20px;
       background: transparent;
     }
 
@@ -11,13 +11,11 @@
       display: grid;
       grid-template-columns: 1fr 1fr; /* left and right */
       gap: 26px;
-      align-items: end; /* 🔥 bottom align both sides */
+      align-items: end;
     }
 
     .white { color: #fff }
     .muted { color: var(--muted) }
-    .mt-s { margin-top: 10px }
-    .center { text-align: center }
 
     /* right-hand side */
     .right-links {
@@ -29,11 +27,28 @@
       margin-bottom: 15px;
     }
 
+    /* Instagram at bottom */
+    .footer-bottom {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .footer-bottom a {
+      display: inline-block;
+      width: 28px;
+      height: 28px;
+    }
+
+    .footer-bottom img {
+      width: 100%;
+      height: auto;
+    }
+
     @media (max-width:1024px) {
       .foot {
         grid-template-columns: 1fr;
         text-align: center;
-        align-items: center; /* centre on mobile */
+        align-items: center;
       }
       .right-links {
         text-align: center;
@@ -51,13 +66,6 @@
         <a href="mailto:sales@signs2signs.com">sales@signs2signs.com</a>
       </p>
       <p class="muted">Mon–Fri 8:30–16:30</p>
-      <p class="muted">
-        Follow: 
-        <a href="https://instagram.com/yourhandle" target="_blank" rel="noopener noreferrer">
-          Instagram
-        </a>
-      </p>
-  
     </div>
 
     <!-- Right Side -->
@@ -74,5 +82,16 @@
       </p>
     </div>
   </div>
+
+  <!-- Instagram Bottom Centre -->
+  <div class="footer-bottom">
+    <a href="https://instagram.com/yourhandle" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+      <img src="public/instagram.svg" alt="Instagram logo">
+    </a>
+    <p class="muted" style="margin-top:8px;">© <span id="year"></span> Signs2Signs.</p>
+  </div>
 </footer>
 
+<script>
+  document.getElementById("year").textContent = new Date().getFullYear();
+</script>
