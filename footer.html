@@ -9,9 +9,9 @@
 
     .foot {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1fr 1fr; 
       gap: 26px;
-      align-items: end;
+      align-items: end; 
     }
 
     .white { color: #fff }
@@ -25,29 +25,26 @@
       margin-bottom: 15px;
     }
 
-    .quick-links {
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      gap: 8px; /* spacing between links and icon */
-      flex-wrap: wrap;
+    /* Footer bottom */
+    .footer-bottom {
+      grid-column: 1 / -1;
+      text-align: center;
+      margin-top: 20px;
     }
 
-    .quick-links svg {
-      width: 22px;
-      height: 22px;
+    .footer-bottom svg {
+      width: 28px;
+      height: 28px;
       fill: #F26B1D; /* brand orange */
       transition: fill 0.2s ease;
-      flex-shrink: 0;
     }
-    .quick-links svg:hover {
+    .footer-bottom svg:hover {
       fill: #fff;
     }
 
     @media (max-width:1024px) {
       .foot { grid-template-columns: 1fr; text-align: center; }
       .right-links { text-align: center; }
-      .quick-links { justify-content: center; }
     }
   </style>
 
@@ -66,22 +63,26 @@
       <a class="logo" href="/" aria-label="Signs2Signs home">
         <img src="public/S2S.svg" alt="S2S monogram logo" height="100">
       </a>
-      <div class="quick-links muted">
-        <b class="white">Quick links</b> ·
+      <p class="muted">
+        <b class="white">Quick links</b><br>
         <a href="services.html">Services</a> ·
         <a href="work.html">Work</a> ·
         <a href="contact.html#quote">Get a Quote</a> ·
         <a href="gallery.html">Gallery</a>
-        <!-- Instagram Icon -->
-        <a href="https://instagram.com/signs2signs" target="_blank" rel="noopener" aria-label="Instagram">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-            <path d="M349.33,69.33H162.67A93.34,93.34,0,0,0,69.33,162.67V349.33A93.34,93.34,0,0,0,162.67,442.67H349.33A93.34,93.34,0,0,0,442.67,349.33V162.67A93.34,93.34,0,0,0,349.33,69.33Zm61.34,280a61.42,61.42,0,0,1-61.34,61.34H162.67a61.42,61.42,0,0,1-61.34-61.34V162.67a61.42,61.42,0,0,1,61.34-61.34H349.33a61.42,61.42,0,0,1,61.34,61.34Z"/>
-            <path d="M256,165.41A90.59,90.59,0,1,0,346.59,256,90.6,90.6,0,0,0,256,165.41Zm0,149.52A58.93,58.93,0,1,1,314.93,256,58.94,58.94,0,0,1,256,314.93Z"/>
-            <circle cx="396.67" cy="115.33" r="17.07"/>
-          </svg>
-        </a>
-      </div>
-      <p class="muted" style="margin-top:10px;">© <span id="year"></span> Signs2Signs.</p>
+      </p>
+    </div>
+
+    <!-- Bottom -->
+    <div class="footer-bottom">
+      <a href="https://instagram.com/yourhandle" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+        <!-- Instagram SVG from Flaticon -->
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+          <path d="M349.33,69.33H162.67A93.34,93.34,0,0,0,69.33,162.67V349.33A93.34,93.34,0,0,0,162.67,442.67H349.33A93.34,93.34,0,0,0,442.67,349.33V162.67A93.34,93.34,0,0,0,349.33,69.33Zm61.34,280a61.42,61.42,0,0,1-61.34,61.34H162.67a61.42,61.42,0,0,1-61.34-61.34V162.67a61.42,61.42,0,0,1,61.34-61.34H349.33a61.42,61.42,0,0,1,61.34,61.34Z"/>
+          <path d="M256,165.41A90.59,90.59,0,1,0,346.59,256,90.6,90.6,0,0,0,256,165.41Zm0,149.52A58.93,58.93,0,1,1,314.93,256,58.94,58.94,0,0,1,256,314.93Z"/>
+          <circle cx="396.67" cy="115.33" r="17.07"/>
+        </svg>
+      </a>
+      <p class="muted">© <span id="year"></span> Signs2Signs.</p>
     </div>
   </div>
 </footer>
