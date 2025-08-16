@@ -167,3 +167,77 @@
               <li>Thickness from 3mm to 25mm</li>
               <li>Polished or brushed finishes</li>
               <li>Mounting systems included</li>
+              <li>CAD file preparation service</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="service-detail-card">
+          <div class="service-detail-image">
+            <img src="https://images.pexels.com/photos/267367/pexels-photo-267367.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop" alt="Large format vinyl graphics">
+          </div>
+          <div class="service-detail-content">
+            <h3>Vinyl &amp; Large Format</h3>
+            <p>High-res digital printing on premium vinyls for vehicles, walls, windows and wraps.</p>
+            <ul class="service-features">
+              <li>UV-resistant inks and vinyls</li>
+              <li>Up to 1600mm wide printing</li>
+              <li>Cut vinyl lettering and graphics</li>
+              <li>Application tape included</li>
+              <li>Lamination for extra durability</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Process -->
+    <section class="process">
+      <div class="container center">
+        <h2>How It Works</h2>
+        <p class="muted">Simple process for trade professionals</p>
+        <div class="process-grid">
+          <div class="process-step">
+            <div class="process-number">1</div>
+            <h3>You Design</h3>
+            <p>Send us your CAD or artwork files, we’ll check and prep them for production.</p>
+          </div>
+          <div class="process-step">
+            <div class="process-number">2</div>
+            <h3>We Make</h3>
+            <p>Fabricated in Manchester using CNC, laser, print and assembly all in-house.</p>
+          </div>
+          <div class="process-step">
+            <div class="process-number">3</div>
+            <h3>You Fit</h3>
+            <p>Signs supplied ready-to-fit, with fixings, delivery UK-wide or collection available.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta">
+      <div class="container center">
+        <h2>Ready to get started?</h2>
+        <p class="muted">Send your brief today; we’ll price it proper and advise what’ll work best.</p>
+        <a href="contact.html#quote" class="btn btn-primary">Start a Quote</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer include -->
+  <div id="footer"></div>
+
+  <script>
+    async function include(file, target){
+      const res = await fetch(file);
+      const html = await res.text();
+      document.getElementById(target).innerHTML = html;
+    }
+    include('header.html','header');
+    include('footer.html','footer');
+  </script>
+</body>
+</html>
