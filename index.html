@@ -54,6 +54,7 @@
     a{color:var(--accent);text-decoration:none}
     img{max-width:100%;display:block}
     .container{max-width:1200px;margin:0 auto}
+    .muted{color:var(--muted)}
 
     /* Layout */
     section{padding:36px 0}
@@ -74,15 +75,12 @@
       line-height:.95;
       letter-spacing:-.02em;
       font-size:clamp(48px,10vw,120px);
- 
-       }
+    }
     .hero-title .mint{
-      background: linear-gradient(90deg,#f26b1d 0%, #f26b1d 40%, #F26B1D 100%);
+      background: linear-gradient(90deg,#F26B1D 0%, #FFC09A 50%, #F26B1D 100%);
       -webkit-background-clip:text; background-clip:text; color:transparent;
       position:relative;
     }
-
-    
     .hero-title .proper{
       color:#AFC3FF;
       text-shadow:0 4px 30px rgba(31,63,175,.35);
@@ -116,29 +114,66 @@
     }
     .badge{border:1px solid rgba(255,255,255,.18); padding:8px 12px; border-radius:999px; color:#cbd5e1; background:rgba(255,255,255,.06)}
     @keyframes slide { from{ transform:translateX(0)} to{ transform:translateX(-50%) } }
-    @media (prefers-reduced-motion:reduce){
-      .badge-track{ animation:none }
-    }
+    @media (prefers-reduced-motion:reduce){ .badge-track{ animation:none } }
 
-    /* Feature cards */
-    section h2{color:#fff;font-size:clamp(26px,3.6vw,40px);margin:0 0 14px;text-align:center}
+    /* Section headings */
+    section h2{color:#fff;font-size:clamp(26px,3.6vw,40px);margin:0 0 18px;text-align:center}
     section p{color:#cbd5e1;margin:0 0 10px}
-    .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-    .card{
-      background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.03));
-      border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:22px;
-    }
-    .card h3{ margin:0 0 6px }
-    .card p{ margin:0 }
 
-    /* Services grid */
-    .services{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
-    .svc{
-      background:linear-gradient(180deg,rgba(16,23,42,.9),rgba(16,23,42,.6));
-      border:0px solid rgba(255,255,255,.1);border-radius:18px;padding:18px;display:grid;gap:6px;
-      transition: transform .15s ease, box-shadow .2s ease, background .2s ease;
+    /* Cards — more padding + orange tone + accent bar */
+    .cards{
+      display:grid;grid-template-columns:repeat(3,1fr);gap:22px;
     }
-    .svc:hover{ transform:translateY(-2px); box-shadow:0 16px 36px rgba(0,0,0,.3); background:linear-gradient(180deg,rgba(24,33,60,.95),rgba(16,23,42,.7)) }
+    .card{
+      position:relative;
+      background:
+        linear-gradient(180deg, rgba(242,107,29,.10), rgba(242,107,29,.04)),
+        linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:22px;
+      padding:28px;
+      box-shadow:0 8px 24px rgba(0,0,0,.18);
+      transition:transform .15s ease, box-shadow .2s ease, border-color .2s ease;
+    }
+    .card::before{
+      content:""; position:absolute; inset:0 0 auto 0; height:3px; border-top-left-radius:22px; border-top-right-radius:22px;
+      background:linear-gradient(90deg, rgba(242,107,29,1) 0%, rgba(255,190,150,1) 50%, rgba(242,107,29,1) 100%);
+      opacity:.9;
+    }
+    .card:hover{
+      transform:translateY(-3px);
+      box-shadow:0 16px 40px rgba(242,107,29,.25);
+      border-color:rgba(242,107,29,.45);
+    }
+    .card h3{ margin:4px 0 8px; font-size:clamp(18px,2.2vw,22px) }
+    .card p{ margin:0; color:#dbe2ea }
+
+    /* Services grid — thicker padding + orange edge + active hover */
+    .services{
+      display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:14px;
+    }
+    .svc{
+      position:relative;
+      background:linear-gradient(180deg,rgba(16,23,42,.92),rgba(16,23,42,.65));
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:20px;
+      padding:22px;
+      display:grid;gap:6px;
+      transition: transform .15s ease, box-shadow .2s ease, background .2s ease, border-color .2s ease;
+    }
+    .svc::after{
+      content:""; position:absolute; inset:auto 10px 10px 10px; height:2px;
+      background:linear-gradient(90deg, rgba(242,107,29,.75), rgba(242,107,29,0));
+      border-radius:2px; opacity:.7;
+    }
+    .svc strong{ font-size:clamp(16px,1.9vw,20px) }
+    .svc span{ color:#cbd5e1 }
+    .svc:hover{
+      transform:translateY(-2px);
+      box-shadow:0 16px 36px rgba(242,107,29,.20);
+      background:linear-gradient(180deg,rgba(24,33,60,.96),rgba(16,23,42,.72));
+      border-color:rgba(242,107,29,.55);
+    }
 
     .center{text-align:center}
 
@@ -167,14 +202,11 @@
     @media (max-width:640px){
       :root{--gutter:12px}
       .cards,.services{grid-template-columns:1fr}
-
-      /* centre on small screens */
       .container, section, .hero, .center { text-align:center; }
       .cards, .services { justify-items:center; }
       .card, .svc { text-align:center; justify-items:center; }
       .kicker { margin-inline:auto; }
       .hero-actions { justify-content:center; }
-
       .sticky-cta{ display:flex }
     }
   </style>
@@ -197,12 +229,12 @@
         </h1>
 
         <p class="lede">
-         Your designs, our graft.<br> Cut, Fab, and Finished all under one roof.
-<br>Collect in Manny or get it dropped at your door.
+          Your designs, our graft. Cut, fab and finish under one roof.<br>
+          Collect in Manny or get it dropped at your door.
         </p>
 
         <div class="hero-actions" role="group" aria-label="Primary actions">
-          <a class="btn btn-primary" href="contact.html#quote">Price it up </a>
+          <a class="btn btn-primary" href="contact.html#quote">Price it up</a>
           <a class="btn btn-outline" href="gallery.html">See recent work</a>
         </div>
 
@@ -213,15 +245,12 @@
             <span class="badge">🛠️ CNC • Laser • Print</span>
             <span class="badge">🧰 Trade-only</span>
             <span class="badge">📦 UK-wide delivery</span>
-    
             <span class="badge">✨ Tidy finishes</span>
-
             <!-- duplicate for seamless loop -->
             <span class="badge">⚡ Fast lead times</span>
             <span class="badge">🛠️ CNC • Laser • Print</span>
             <span class="badge">🧰 Trade-only</span>
             <span class="badge">📦 UK-wide delivery</span>
-           
             <span class="badge">✨ Tidy finishes</span>
           </div>
         </div>
@@ -251,47 +280,46 @@
     </section>
 
     <section id="services" aria-labelledby="what-we-make">
-  <div class="container">
-    <h2 id="what-we-make">What we’re built for</h2>
-    <p class="lede">
-      With over 20 years in the game, Signs2Signs has earned a reputation for
-      <strong>quality, imagination and proper graft</strong>. Our team combines
-      traditional skill with modern kit to push signage into the future.
-    </p>
+      <div class="container">
+        <h2 id="what-we-make">What we’re built for</h2>
+        <p class="lede">
+          With over 20 years in the game, Signs2Signs has earned a reputation for
+          <strong>quality, imagination and proper graft</strong>. Our team combines
+          traditional skill with modern kit to push signage into the future.
+        </p>
 
-    <div class="cards">
-      <div class="card">
-        <h3>Experience + Innovation</h3>
-        <p>
-          From 3D acrylic letters to aluminium trays, every sign is built to the
-          highest standard. We blend craftsmanship with state-of-the-art machinery.
-        </p>
-      </div>
-      <div class="card">
-        <h3>Speed + Capacity</h3>
-        <p>
-          Whether it’s one-offs for local sign makers or high-volume rollouts
-          across the UK & Europe, we’ve got the people and the machines to deliver.
-        </p>
-      </div>
-      <div class="card">
-        <h3>All Shapes + Sizes</h3>
-        <p>
-          Flat cut logos, built-up acrylics, composite trays — internal or external.
-          If it can be made, we’ll make it proper.
-        </p>
-      </div>
-      <div class="card">
-        <h3>Trusted Trade Partner</h3>
-        <p>
-          We work behind the scenes for national names and independent sign shops
-          alike, helping our trade customers hit deadlines without compromise.
-        </p>
-      </div>
-    </div>
-  </div>
-</section>
+        <div class="cards">
+          <div class="card">
+            <h3>Experience + Innovation</h3>
+            <p>From 3D acrylic letters to aluminium trays, every sign is built to the
+              highest standard. We blend craftsmanship with state-of-the-art machinery.</p>
+          </div>
+          <div class="card">
+            <h3>Speed + Capacity</h3>
+            <p>Whether it’s one-offs for local sign makers or high-volume rollouts
+              across the UK & Europe, we’ve got the people and the machines to deliver.</p>
+          </div>
+          <div class="card">
+            <h3>All Shapes + Sizes</h3>
+            <p>Flat cut logos, built-up acrylics, composite trays — internal or external.
+              If it can be made, we’ll make it proper.</p>
+          </div>
+          <div class="card">
+            <h3>Trusted Trade Partner</h3>
+            <p>We work behind the scenes for national names and independent sign shops
+              alike, helping our trade customers hit deadlines without compromise.</p>
+          </div>
+        </div>
 
+        <!-- Services links with orange edge -->
+        <div class="services">
+          <a class="svc" href="services.html#fascia"><strong>Shopfront &amp; Fascia Trays</strong><span class="muted">Powder-coated trays, stand-offs, tidy finishes.</span></a>
+          <a class="svc" href="services.html#illuminated"><strong>Illuminated &amp; LED</strong><span class="muted">Halo, face-lit, opal backs — bright where it matters.</span></a>
+          <a class="svc" href="services.html#cnc"><strong>CNC Cut Letters &amp; Logos</strong><span class="muted">Acrylic, aluminium, foamex — crisp edges.</span></a>
+          <a class="svc" href="services.html#print"><strong>Vinyl &amp; Large Format</strong><span class="muted">Windows, walls, vehicles and banners — we print, you fit.</span></a>
+        </div>
+      </div>
+    </section>
 
     <section aria-labelledby="cta">
       <div class="container center">
