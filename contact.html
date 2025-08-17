@@ -11,451 +11,107 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&display=swap" rel="stylesheet">
 
-  <!-- Page CSS -->
   <style>
     :root{
       --brand:#0B1B4A; --brand-2:#1F3FAF;
       --accent:#F26B1D; --bg:#0A0F1C;
+      --ice:#AFC3FF;
       --muted:#9CA3AF;
       --radius:20px; --shadow:0 10px 30px rgba(0,0,0,.25);
       --gutter:24px;
       --input-bg: rgba(255,255,255,.06);
       --input-border: rgba(255,255,255,.12);
       --input-text: #e5e7eb;
-      --form-max:480px;
+      --form-max:520px;
     }
 
     html,body{
       margin:0; padding:0;
       font-family:Manrope,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,'Helvetica Neue',Arial,sans-serif;
       color:#f8fafc;
-
-      /* Desktop/tablet background */
       background:
         url("public/WEBBG4.png") no-repeat top right fixed,
         linear-gradient(180deg,#0B1B4A 0%,#0A0F1C 60%);
       background-size: auto, cover;
-      -webkit-font-smoothing:antialiased; 
+      -webkit-font-smoothing:antialiased;
       -moz-osx-font-smoothing:grayscale;
+      scroll-behavior:smooth;
     }
 
-    /* Remove background image on mobile */
     @media (max-width:768px){
-      html,body{
-        background: linear-gradient(180deg,#0B1B4A 0%,#0A0F1C 60%);
-      }
+      html,body{ background: linear-gradient(180deg,#0B1B4A 0%,#0A0F1C 60%); }
     }
 
-    /* Glow overlays behind content */
     body{ padding-left:var(--gutter); padding-right:var(--gutter); }
     body::before{
-      content:""; position:fixed; inset:0; z-index:-1;
+      content:""; position:fixed; inset:0; z-index:-1; pointer-events:none;
       background:
         radial-gradient(60% 60% at 20% 20%, rgba(242,107,29,.22) 0%, rgba(242,107,29,0) 60%),
-        radial-gradient(70% 70% at 80% 10%, rgba(31,63,175,.25) 0%, rgba(31,63,175,0) 65%);
-      filter:blur(100px);
+        radial-gradient(70% 70% at 80% 12%, rgba(31,63,175,.25) 0%, rgba(31,63,175,0) 65%);
+      filter:blur(110px);
     }
 
     a{color:var(--accent);text-decoration:none}
     img{max-width:100%;display:block}
     .container{max-width:1200px;margin:0 auto}
     .muted{color:var(--muted)}
+    .center{text-align:center}
 
     /* Sections */
-    section{padding:32px 0}
-    section h2{color:#fff;font-size:clamp(26px,3.6vw,36px);margin:0 0 12px}
+    section{padding:36px 0}
+    section h2{color:#fff;font-size:clamp(26px,3.6vw,40px);margin:0 0 14px}
     section p{color:#cbd5e1;margin:0 0 10px}
 
-    /* Hero */
-    .hero-wrap{padding:32px 0;text-align:center}
-    .kicker{display:inline-flex;align-items:center;gap:8px;color:#c7d2fe;background:rgba(99,102,241,.15);border:1px solid rgba(99,102,241,.35);padding:6px 12px;border-radius:999px;font-weight:700}
-    h1{font-size:clamp(34px,5vw,54px);line-height:1.05;margin:18px 0 10px;color:#fff}
-    .lede{font-size:clamp(16px,2.2vw,20px);color:#e5e7eb;opacity:.95}
+    /* HERO — match index */
+    .hero{padding:84px 0 40px; text-align:center; position:relative;}
+    .kicker{
+      display:inline-flex;align-items:center;gap:8px;
+      color:#c7d2fe;background:rgba(99,102,241,.15);
+      border:1px solid rgba(99,102,241,.35);
+      padding:6px 12px;border-radius:999px;font-weight:800;letter-spacing:.2px
+    }
+    h1.hero-title{
+      font-weight:800; color:#fff; line-height:.95; letter-spacing:-.02em;
+      font-size:clamp(40px,8.5vw,88px); margin:18px 0 10px;
+    }
+    .lede{
+      font-size:clamp(16px,2.2vw,22px);
+      color:#e5e7eb;opacity:.95;max-width:900px;margin:12px auto 0
+    }
+
+    /* Buttons (match index; add icy-blue secondary) */
+    .hero-actions{display:flex;gap:14px;margin-top:18px;flex-wrap:wrap;justify-content:center}
+    .btn{
+      display:inline-flex;align-items:center;gap:10px;
+      padding:16px 20px;border-radius:14px;font-weight:800;
+      box-shadow:0 12px 28px rgba(0,0,0,.25);
+      transition:transform .12s ease, box-shadow .2s ease, background .2s ease, border-color .2s ease, color .2s ease;
+      will-change:transform; cursor:pointer;
+    }
+    .btn:active{ transform:translateY(1px) scale(.99) }
+    .btn-primary{background:var(--accent);color:#111827;border:0}
+    .btn-primary:hover{ box-shadow:0 18px 40px rgba(242,107,29,.35) }
+    .btn-proper{
+      color:var(--ice);
+      background:linear-gradient(180deg, rgba(175,195,255,.10), rgba(175,195,255,.04));
+      border:1px solid rgba(175,195,255,.55);
+      box-shadow:0 10px 28px rgba(31,63,175,.18);
+    }
+    .btn-proper:hover{
+      background:linear-gradient(180deg, rgba(175,195,255,.18), rgba(175,195,255,.08));
+      border-color:rgba(175,195,255,.8);
+      box-shadow:0 0 22px rgba(31,63,175,.35), 0 16px 36px rgba(0,0,0,.35);
+      transform:translateY(-1px);
+    }
 
     /* Layout */
     .contact-wrap{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:32px;
-      align-items:start;
+      display:grid; grid-template-columns:1fr 1fr; gap:32px; align-items:start;
     }
-    @media(max-width:900px){
-      .contact-wrap{grid-template-columns:1fr}
-    }
+    @media(max-width:900px){ .contact-wrap{grid-template-columns:1fr} }
 
-    /* Cards */
-    .hero-card{
-      background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.02));
-      border:1px solid rgba(255,255,255,.12);
-      padding:22px;border-radius:var(--radius);box-shadow:var(--shadow)
-    }
-    .card{
-      background:linear-gradient(180deg,rgba(16,23,42,.9),rgba(16,23,42,.6));
-      border:1px solid rgba(255,255,255,.1);
-      border-radius:20px; padding:20px; margin-bottom:18px;
-    }
-    .card h4{margin-top:0}
-
-    /* Form */
-    .contact-form{max-width:var(--form-max);margin:0 auto}
-    .contact-form h3{margin:0 0 14px}
-    .form-group{display:grid;gap:6px;margin-bottom:12px}
-    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-    label{font-weight:700;color:#e5e7eb;font-size:14px}
-    input, select, textarea{
-      background:var(--input-bg);
-      border:1px solid var(--input-border);
-      color:var(--input-text);
-      border-radius:10px;
-      padding:8px 10px;
-      font-size:14px;
-      line-height:1.3;
-      width:100%;
-      box-sizing:border-box;
-    }
-    textarea{resize:vertical;min-height:100px}
-    select{height:38px}
-
-    /* Button */
-    .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:12px 16px;border-radius:12px;font-weight:700;box-shadow:0 12px 28px rgba(0,0,0,.25);cursor:pointer}
-    .btn-primary{background:var(--accent);color:#111827;border:0;width:100%;max-width:var(--form-max)}
-
-    /* Focus states */
-    a:focus-visible, .btn:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible{
-      outline:2px solid var(--accent); outline-offset:2px
-    }
-
-    /* File input styling */
-    input[type="file"] {
-      padding: 6px 8px;
-      font-size: 13px;
-    }
-    
-    input[type="file"]::-webkit-file-upload-button {
-      background: var(--accent);
-      color: #111827;
-      border: none;
-      padding: 6px 12px;
-      border-radius: 6px;
-      font-weight: 700;
-      margin-right: 8px;
-      cursor: pointer;
-    }
-
-    .file-list {
-      margin-top: 8px;
-      font-size: 12px;
-      color: var(--muted);
-    }
-    
-    .file-item {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 4px;
-    }
-    
-    .file-size {
-      color: var(--muted);
-      font-size: 11px;
-    }
-  </style>
-</head>
-<body>
-
-  <!-- Header include -->
-  <div id="header"></div>
-
-  <main>
-    <!-- Hero -->
-    <section class="hero">
-      <div class="container hero-wrap">
-        <span class="kicker">Trade Quotes • UK-wide</span>
-        <h1>Get a Quote</h1>
-        <p class="lede">Professional signage quotes for trade customers — fast turnaround, straight talk, no fluff.</p>
-      </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section>
-      <div class="container">
-        <div class="contact-wrap">
-
-          <!-- Form -->
-          <div class="hero-card">
-            <form class="contact-form" id="quoteForm" novalidate>
-              <h3>Request a Quote</h3>
-
-              <div class="form-group">
-                <label for="company">Company Name *</label>
-                <input type="text" id="company" name="company" required>
-              </div>
-
-              <div class="form-row">
-                <div class="form-group">
-                  <label for="name">Your Name *</label>
-                  <input type="text" id="name" name="name" required>
-                </div>
-                <div class="form-group">
-                  <label for="email">Email *</label>
-                  <input type="email" id="email" name="email" required>
-                </div>
-              </div>
-
-              <div class="form-row">
-                <div class="form-group">
-                  <label for="phone">Phone</label>
-                  <input type="tel" id="phone" name="phone" inputmode="tel">
-                </div>
-                <div class="form-group">
-                  <label for="postcode">Postcode</label>
-                  <input type="text" id="postcode" name="postcode" autocomplete="postal-code">
-                </div>
-              </div>
-
-              <div class="form-group">
-                <label for="service">Service Required *</label>
-                <select id="service" name="service" required>
-                  <option value="">Select a service</option>
-                  <option value="shopfront">Shopfront &amp; Fascia</option>
-                  <option value="illuminated">Illuminated &amp; LED Signs</option>
-                  <option value="cnc">CNC Cut Letters &amp; Logos</option>
-                  <option value="vinyl">Vinyl &amp; Large Format Graphics</option>
-                  <option value="multiple">Multiple Services</option>
-                  <option value="other">Other</option>
-                </select>
-              </div>
-
-              <div class="form-group">
-                <label for="project">Project Details *</label>
-                <textarea id="project" name="project" placeholder="Tell us about your project: materials, dimensions, quantities, deadlines, etc." required></textarea>
-              </div>
-
-              <div class="form-group">
-                <label for="timeline">Project Timeline</label>
-                <select id="timeline" name="timeline">
-                  <option value="">Select timeline</option>
-                  <option value="urgent">Urgent (1–2 weeks)</option>
-                  <option value="standard">Standard (3–4 weeks)</option>
-                  <option value="flexible">Flexible (5+ weeks)</option>
-                </select>
-              </div>
-
-              <div class="form-group">
-                <label for="files">Upload Files (Optional)</label>
-                <input type="file" id="files" name="files" multiple accept=".pdf,.jpg,.jpeg,.png,.gif,.ai,.eps,.svg,.dwg,.dxf">
-                <small class="muted" style="font-size: 12px; margin-top: 4px; display: block;">
-                  Upload artwork, CAD files, photos, or reference documents (Max 10MB per file)
-                </small>
-              </div>
-              <button type="submit" class="btn btn-primary">Send Quote Request</button>
-            </form>
-          </div>
-
-          <!-- Info cards -->
-          <aside aria-label="Contact details and turnaround">
-            <div class="card">
-              <h4>📍 Location</h4>
-              <ul>
-                <li>Manchester collection available</li>
-                <li>UK-wide express delivery</li>
-              </ul>
-            </div>
-            <div class="card">
-              <h4>✉️ Quotes</h4>
-              <ul>
-                <li>sales@signs2signs.co.uk</li>
-                <li>Quick response guaranteed</li>
-                <li>Same-day quotes for standard items</li>
-              </ul>
-            </div>
-            <div class="card">
-              <h4>⏱ Lead Time</h4>
-              <ul>
-                <li>Express manufacturing</li>
-                <li>5–15 working days</li>
-                <li>Priority scheduling for urgent jobs</li>
-              </ul>
-            </div>
-            <div class="card">
-              <h4>📂 File Requirements</h4>
-              <ul>
-                <li>Vector files (AI, EPS, PDF)</li>
-                <li>High-resolution images</li>
-                <li>Dimensions & measurements</li>
-                <li>Material specifications</li>
-                <li>Installation requirements</li>
-              </ul>
-            </div>
-          </aside>
-
-        </div>
-      </div>
-    </section>
-     <section class="process">
-      <div class="container center">
-        <h2>How It Works</h2>
-        <p class="muted">You design. We make. You fit.</p>
-        <div class="process-grid">
-          <div class="process-step">
-            <div class="process-number">1</div>
-            <h3>You Design</h3>
-            <p>Send CAD or artwork files — we’ll sanity-check and prep for production.</p>
-          </div>
-          <div class="process-step">
-            <div class="process-number">2</div>
-            <h3>We Make</h3>
-            <p>Fabricated in Manchester using CNC, laser, print and assembly all in-house.</p>
-          </div>
-          <div class="process-step">
-            <div class="process-number">3</div>
-            <h3>You Fit</h3>
-            <p>Supplied ready-to-fit with fixings. UK-wide delivery or collection.</p>
-          </div>
-        </div>
-
-       
-    </section>
-  </main>
-
-  <!-- Footer include -->
-  <div id="footer"></div>
-
-  <script>
-    // Include header & footer
-    async function include(file, target){
-      const res = await fetch(file);
-      const html = await res.text();
-      document.getElementById(target).innerHTML = html;
-    }
-    include('header.html','header');
-    include('footer.html','footer');
-  </script>
-
-  <script type="module">
-    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
-    
-    // Initialize Supabase client (using the same credentials as gallery)
-    const supabase = createClient(
-      "https://ketluxsokzvlqozcdwxo.supabase.co",
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtldGx1eHNva3p2bHFvemNkd3hvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTUzNjAzOTIsImV4cCI6MjA3MDkzNjM5Mn0.NCPCOXJ4vD1PYb_sBgoyA6lSvkiRpb8IlA4X8XnltUs"
-    );
-    
-    // Form handler with Supabase integration
-    document.addEventListener('DOMContentLoaded', function() {
-      const form = document.getElementById('quoteForm');
-      const submitButton = form?.querySelector('button[type="submit"]');
-      if (!form) return;
-      
-      form.addEventListener('submit', async function(e) {
-        e.preventDefault();
-        
-        if (submitButton) {
-          submitButton.disabled = true;
-          submitButton.textContent = 'Uploading files...';
-        }
-        
-        // Get basic form data
-        const formData = new FormData(form);
-        const files = formData.getAll('files');
-        
-        let uploadedFileUrls = [];
-        
-        // Upload files to Supabase Storage if any files are selected
-        if (files.length > 0 && files[0].size > 0) {
-          try {
-            for (const file of files) {
-              if (file.size > 10 * 1024 * 1024) { // 10MB limit
-                throw new Error(`File "${file.name}" is too large. Maximum size is 10MB.`);
-              }
-              
-              // Generate unique filename
-              const fileExt = file.name.split('.').pop();
-              const fileName = `${Date.now()}-${Math.random().toString(36).substring(2)}.${fileExt}`;
-              const filePath = `quote-files/${fileName}`;
-              
-              if (submitButton) {
-                submitButton.textContent = `Uploading ${file.name}...`;
-              }
-              
-              // Upload to Supabase Storage
-              const { data: uploadData, error: uploadError } = await supabase.storage
-                .from('quote-files')
-                .upload(filePath, file);
-              
-              if (uploadError) {
-                console.error('File upload error:', uploadError);
-                throw new Error(`Failed to upload file "${file.name}"`);
-              }
-              
-              // Get public URL
-              const { data: urlData } = supabase.storage
-                .from('quote-files')
-                .getPublicUrl(filePath);
-              
-              uploadedFileUrls.push({
-                name: file.name,
-                url: urlData.publicUrl,
-                size: file.size
-              });
-            }
-          } catch (fileError) {
-            console.error('File handling error:', fileError);
-            alert(fileError.message || 'Error uploading files. Please try again.');
-            
-            if (submitButton) {
-              submitButton.disabled = false;
-              submitButton.textContent = 'Send Quote Request';
-            }
-            return;
-          }
-        }
-        
-        if (submitButton) {
-          submitButton.textContent = 'Saving quote...';
-        }
-        
-        // Prepare quote data
-        const quoteData = {
-          company: formData.get('company'),
-          name: formData.get('name'),
-          email: formData.get('email'),
-          phone: formData.get('phone') || null,
-          postcode: formData.get('postcode') || null,
-          service: formData.get('service'),
-          project_details: formData.get('project'),
-          timeline: formData.get('timeline') || null,
-          uploaded_files: uploadedFileUrls.length > 0 ? JSON.stringify(uploadedFileUrls) : null,
-        };
-        
-        try {
-          // Submit to Supabase
-          const { data, error } = await supabase
-            .from('quote_requests')
-            .insert([quoteData]);
-          
-          if (error) {
-            console.error('Supabase error:', error);
-            alert('Sorry, there was an error submitting your quote request. Please try again or contact us directly at sales@signs2signs.com');
-          } else {
-            const fileMessage = uploadedFileUrls.length > 0 ? ` Your ${uploadedFileUrls.length} file(s) have also been uploaded.` : '';
-            alert(`Thanks! Your quote request has been submitted successfully.${fileMessage} We'll be in touch within 24 hours.`);
-            form.reset();
-          }
-        } catch (error) {
-          console.error('Error submitting form:', error);
-          alert('Sorry, there was an error submitting your quote request. Please try again or contact us directly at sales@signs2signs.com');
-        }
-        
-        // Re-enable submit button
-        if (submitButton) {
-          submitButton.disabled = false;
-          submitButton.textContent = 'Send Quote Request';
-        }
-      });
-    });
-  </script>
-</body>
-</html>
+    /* Cards (match index dark cards) */
+    .card, .hero-card{
+      background:linear-gradient(180deg, rgba(6,10,20,.95),
