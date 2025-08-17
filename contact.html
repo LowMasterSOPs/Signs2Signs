@@ -3,8 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Our Services | Signs2Signs</title>
-  <meta name="description" content="Shopfront trays, illuminated signs, CNC cut letters, vinyl and large format. Trade-only, built in Manchester.">
+  <title>Get a Quote | Signs2Signs — Trade Signage, Built in Manchester</title>
+  <meta name="description" content="Professional signage quotes for trade customers — fast turnaround, straight talk, no fluff.">
+  <meta name="robots" content="index, follow">
   <link rel="icon" type="image/svg+xml" href="public/S2S.svg">
 
   <!-- Fonts -->
@@ -12,32 +13,42 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700&display=swap" rel="stylesheet">
 
+  <!-- Page CSS -->
   <style>
-    /* ========== Root & Theme ========== */
     :root{
       --brand:#0B1B4A; --brand-2:#1F3FAF;
       --accent:#F26B1D; --bg:#0A0F1C;
-      --muted:#9CA3AF; --text:#f8fafc; --text-2:#e5e7eb;
+      --muted:#9CA3AF;
       --radius:20px; --shadow:0 10px 30px rgba(0,0,0,.25);
-      --gutter:24px; --container:1200px;
+      --gutter:24px;
+      --input-bg: rgba(255,255,255,.06);
+      --input-border: rgba(255,255,255,.12);
+      --input-text: #e5e7eb;
+      --form-max:480px;
     }
 
-    /* ========== Base ========== */
     html,body{
       margin:0; padding:0;
       font-family:Manrope,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,'Helvetica Neue',Arial,sans-serif;
-      color:var(--text);
+      color:#f8fafc;
+
+      /* Desktop/tablet background */
       background:
-        url("public/WEBBG8.png") no-repeat top right fixed,
+        url("public/Untitled%20design%20(4).png") no-repeat top right fixed,
         linear-gradient(180deg,#0B1B4A 0%,#0A0F1C 60%);
       background-size: auto, cover;
+      -webkit-font-smoothing:antialiased; 
+      -moz-osx-font-smoothing:grayscale;
     }
-    /* Mobile: no bg image */
-    @media(max-width:768px){
+
+    /* Remove background image on mobile */
+    @media (max-width:768px){
       html,body{
         background: linear-gradient(180deg,#0B1B4A 0%,#0A0F1C 60%);
       }
     }
+
+    /* Glow overlays behind content */
     body{ padding-left:var(--gutter); padding-right:var(--gutter); }
     body::before{
       content:""; position:fixed; inset:0; z-index:-1;
@@ -49,59 +60,71 @@
 
     a{color:var(--accent);text-decoration:none}
     img{max-width:100%;display:block}
-    .container{max-width:var(--container);margin:0 auto}
+    .container{max-width:1200px;margin:0 auto}
     .muted{color:var(--muted)}
-    .center{text-align:center}
+
+    /* Sections */
     section{padding:32px 0}
-    h1,h2,h3{margin:0 0 12px;color:#fff}
-    p{color:#cbd5e1;margin:0 0 10px}
+    section h2{color:#fff;font-size:clamp(26px,3.6vw,36px);margin:0 0 12px}
+    section p{color:#cbd5e1;margin:0 0 10px}
 
-    /* ========== Hero & kicker ========== */
-    .page-hero{text-align:center;padding:64px 0}
-    .page-hero .kicker{
-      display:inline-block;
-      background:rgba(99,102,241,.15);
-      border:1px solid rgba(99,102,241,.35);
-      color:#c7d2fe;
-      padding:6px 12px;
-      border-radius:999px;
-      font-weight:700;
-      margin-bottom:16px;
+    /* Hero */
+    .hero-wrap{padding:32px 0;text-align:center}
+    .kicker{display:inline-flex;align-items:center;gap:8px;color:#c7d2fe;background:rgba(99,102,241,.15);border:1px solid rgba(99,102,241,.35);padding:6px 12px;border-radius:999px;font-weight:700}
+    h1{font-size:clamp(34px,5vw,54px);line-height:1.05;margin:18px 0 10px;color:#fff}
+    .lede{font-size:clamp(16px,2.2vw,20px);color:#e5e7eb;opacity:.95}
+
+    /* Layout */
+    .contact-wrap{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:32px;
+      align-items:start;
     }
-    .page-hero h1{font-size:clamp(34px,5vw,54px)}
-    .page-hero p{color:#cbd5e1;font-size:clamp(16px,2vw,20px)}
-
-    /* ========== Service detail ========== */
-    .services-detail-grid{display:grid;gap:32px}
-    .service-detail-card{
-      display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:center;
-      background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02));
-      border:1px solid rgba(255,255,255,.1);
-      border-radius:var(--radius);padding:20px;
-    }
-    .service-detail-image img{border-radius:16px}
-    .service-features{margin:0;padding-left:20px;color:#cbd5e1}
-    .service-features li{margin-bottom:6px}
-
-    /* ========== Process ========== */
-    .process-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:24px}
-    .process-step{
-      background:rgba(255,255,255,.06);
-      border:1px solid rgba(255,255,255,.08);
-      border-radius:var(--radius);
-      padding:20px;text-align:center;
-    }
-    .process-number{font-size:28px;font-weight:700;color:var(--accent);margin-bottom:10px}
-
-    /* ========== CTA ========== */
-    .cta{text-align:center;padding:48px 0}
-    .btn{display:inline-flex;align-items:center;gap:10px;padding:14px 18px;border-radius:14px;font-weight:700;box-shadow:0 12px 28px rgba(0,0,0,.25)}
-    .btn-primary{background:var(--accent);color:#111827}
-
-    /* Responsive */
     @media(max-width:900px){
-      .service-detail-card{grid-template-columns:1fr}
-      .process-grid{grid-template-columns:1fr}
+      .contact-wrap{grid-template-columns:1fr}
+    }
+
+    /* Cards */
+    .hero-card{
+      background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.02));
+      border:1px solid rgba(255,255,255,.12);
+      padding:22px;border-radius:var(--radius);box-shadow:var(--shadow)
+    }
+    .card{
+      background:linear-gradient(180deg,rgba(16,23,42,.9),rgba(16,23,42,.6));
+      border:1px solid rgba(255,255,255,.1);
+      border-radius:20px; padding:20px; margin-bottom:18px;
+    }
+    .card h4{margin-top:0}
+
+    /* Form */
+    .contact-form{max-width:var(--form-max);margin:0 auto}
+    .contact-form h3{margin:0 0 14px}
+    .form-group{display:grid;gap:6px;margin-bottom:12px}
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    label{font-weight:700;color:#e5e7eb;font-size:14px}
+    input, select, textarea{
+      background:var(--input-bg);
+      border:1px solid var(--input-border);
+      color:var(--input-text);
+      border-radius:10px;
+      padding:8px 10px;
+      font-size:14px;
+      line-height:1.3;
+      width:100%;
+      box-sizing:border-box;
+    }
+    textarea{resize:vertical;min-height:100px}
+    select{height:38px}
+
+    /* Button */
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:12px 16px;border-radius:12px;font-weight:700;box-shadow:0 12px 28px rgba(0,0,0,.25);cursor:pointer}
+    .btn-primary{background:var(--accent);color:#111827;border:0;width:100%;max-width:var(--form-max)}
+
+    /* Focus states */
+    a:focus-visible, .btn:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible{
+      outline:2px solid var(--accent); outline-offset:2px
     }
   </style>
 </head>
@@ -112,124 +135,121 @@
 
   <main>
     <!-- Hero -->
-    <section class="page-hero">
+    <section class="hero">
+      <div class="container hero-wrap">
+        <span class="kicker">Trade Quotes • UK-wide</span>
+        <h1>Get a Quote</h1>
+        <p class="lede">Professional signage quotes for trade customers — fast turnaround, straight talk, no fluff.</p>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section>
       <div class="container">
-        <span class="kicker">What we do</span>
-        <h1>Our Services</h1>
-        <p>What we make (and make well)</p>
-      </div>
-    </section>
+        <div class="contact-wrap">
 
-    <!-- Service details -->
-    <section class="services-detail">
-      <div class="container services-detail-grid">
-        
-        <!-- Service 1 -->
-        <div class="service-detail-card">
-          <div class="service-detail-image">
-            <img src="https://images.pexels.com/photos/1462637/pexels-photo-1462637.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop" alt="Shopfront and fascia signage">
+          <!-- Form -->
+          <div class="hero-card">
+            <form class="contact-form" id="quoteForm" novalidate>
+              <h3>Request a Quote</h3>
+
+              <div class="form-group">
+                <label for="company">Company Name *</label>
+                <input type="text" id="company" name="company" required>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="name">Your Name *</label>
+                  <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                  <label for="email">Email *</label>
+                  <input type="email" id="email" name="email" required>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="phone">Phone</label>
+                  <input type="tel" id="phone" name="phone" inputmode="tel">
+                </div>
+                <div class="form-group">
+                  <label for="postcode">Postcode</label>
+                  <input type="text" id="postcode" name="postcode" autocomplete="postal-code">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="service">Service Required *</label>
+                <select id="service" name="service" required>
+                  <option value="">Select a service</option>
+                  <option value="shopfront">Shopfront &amp; Fascia</option>
+                  <option value="illuminated">Illuminated &amp; LED Signs</option>
+                  <option value="cnc">CNC Cut Letters &amp; Logos</option>
+                  <option value="vinyl">Vinyl &amp; Large Format Graphics</option>
+                  <option value="multiple">Multiple Services</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="project">Project Details *</label>
+                <textarea id="project" name="project" placeholder="Tell us about your project: materials, dimensions, quantities, deadlines, etc." required></textarea>
+              </div>
+
+              <div class="form-group">
+                <label for="timeline">Project Timeline</label>
+                <select id="timeline" name="timeline">
+                  <option value="">Select timeline</option>
+                  <option value="urgent">Urgent (1–2 weeks)</option>
+                  <option value="standard">Standard (3–4 weeks)</option>
+                  <option value="flexible">Flexible (5+ weeks)</option>
+                </select>
+              </div>
+
+              <button type="submit" class="btn btn-primary">Send Quote Request</button>
+            </form>
           </div>
-          <div class="service-detail-content">
-            <h3>Shopfront & Fascia Trays</h3>
-            <p>From traditional fascia boards to modern LED-lit trays, built proper in aluminium and steel.</p>
-            <ul class="service-features">
-              <li>Aluminium and steel construction</li>
-              <li>Powder coating in any RAL colour</li>
-              <li>LED integration available</li>
-              <li>Weatherproof sealing</li>
-              <li>Trade installation brackets included</li>
-            </ul>
-          </div>
+
+          <!-- Info cards -->
+          <aside aria-label="Contact details and turnaround">
+            <div class="card">
+              <h4>📍 Location</h4>
+              <ul>
+                <li>Manchester collection available</li>
+                <li>UK-wide express delivery</li>
+              </ul>
+            </div>
+            <div class="card">
+              <h4>✉️ Quotes</h4>
+              <ul>
+                <li>sales@signs2signs.co.uk</li>
+                <li>Quick response guaranteed</li>
+                <li>Same-day quotes for standard items</li>
+              </ul>
+            </div>
+            <div class="card">
+              <h4>⏱ Lead Time</h4>
+              <ul>
+                <li>Express manufacturing</li>
+                <li>5–15 working days</li>
+                <li>Priority scheduling for urgent jobs</li>
+              </ul>
+            </div>
+            <div class="card">
+              <h4>📂 File Requirements</h4>
+              <ul>
+                <li>Vector files (AI, EPS, PDF)</li>
+                <li>High-resolution images</li>
+                <li>Dimensions & measurements</li>
+                <li>Material specifications</li>
+                <li>Installation requirements</li>
+              </ul>
+            </div>
+          </aside>
+
         </div>
-
-        <!-- Service 2 -->
-        <div class="service-detail-card">
-          <div class="service-detail-image">
-            <img src="https://images.pexels.com/photos/273230/pexels-photo-273230.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop" alt="LED illuminated signage">
-          </div>
-          <div class="service-detail-content">
-            <h3>Illuminated & LED Signs</h3>
-            <p>Energy-efficient LED illumination: halo-lit letters, face-lit panels, opal backs.</p>
-            <ul class="service-features">
-              <li>High-efficiency LED modules</li>
-              <li>IP65-rated weatherproofing</li>
-              <li>Dimming and timer controls</li>
-              <li>5-year LED warranty</li>
-              <li>Low power consumption</li>
-            </ul>
-          </div>
-        </div>
-
-        <!-- Service 3 -->
-        <div class="service-detail-card">
-          <div class="service-detail-image">
-            <img src="https://images.pexels.com/photos/1369476/pexels-photo-1369476.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop" alt="CNC precision cutting">
-          </div>
-          <div class="service-detail-content">
-            <h3>CNC Cut Letters & Logos</h3>
-            <p>Sharp edges, clean finishes — CNC cut acrylic, aluminium, foamex, and more.</p>
-            <ul class="service-features">
-              <li>Acrylic, aluminium, steel, brass</li>
-              <li>Thickness from 3mm to 25mm</li>
-              <li>Polished or brushed finishes</li>
-              <li>Mounting systems included</li>
-              <li>CAD file preparation service</li>
-            </ul>
-          </div>
-        </div>
-
-        <!-- Service 4 -->
-        <div class="service-detail-card">
-          <div class="service-detail-image">
-            <img src="https://images.pexels.com/photos/267367/pexels-photo-267367.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop" alt="Large format vinyl graphics">
-          </div>
-          <div class="service-detail-content">
-            <h3>Vinyl & Large Format</h3>
-            <p>High-res digital printing on premium vinyls for vehicles, walls, windows and wraps.</p>
-            <ul class="service-features">
-              <li>UV-resistant inks and vinyls</li>
-              <li>Up to 1600mm wide printing</li>
-              <li>Cut vinyl lettering and graphics</li>
-              <li>Application tape included</li>
-              <li>Lamination for extra durability</li>
-            </ul>
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- Process -->
-    <section class="process">
-      <div class="container center">
-        <h2>How It Works</h2>
-        <p class="muted">Simple process for trade professionals</p>
-        <div class="process-grid">
-          <div class="process-step">
-            <div class="process-number">1</div>
-            <h3>You Design</h3>
-            <p>Send us your CAD or artwork files, we’ll check and prep them for production.</p>
-          </div>
-          <div class="process-step">
-            <div class="process-number">2</div>
-            <h3>We Make</h3>
-            <p>Fabricated in Manchester using CNC, laser, print and assembly all in-house.</p>
-          </div>
-          <div class="process-step">
-            <div class="process-number">3</div>
-            <h3>You Fit</h3>
-            <p>Signs supplied ready-to-fit, with fixings, delivery UK-wide or collection available.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- CTA -->
-    <section class="cta">
-      <div class="container center">
-        <h2>Ready to get started?</h2>
-        <p class="muted">Send your brief today; we’ll price it proper and advise what’ll work best.</p>
-        <a href="contact.html#quote" class="btn btn-primary">Start a Quote</a>
       </div>
     </section>
   </main>
@@ -238,6 +258,7 @@
   <div id="footer"></div>
 
   <script>
+    // Include header & footer
     async function include(file, target){
       const res = await fetch(file);
       const html = await res.text();
@@ -245,6 +266,17 @@
     }
     include('header.html','header');
     include('footer.html','footer');
+
+    // Form handler
+    document.addEventListener('DOMContentLoaded', function () {
+      const form = document.getElementById('quoteForm');
+      if(!form) return;
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        alert('Thanks! Your quote request has been captured. We’ll be in touch.');
+        form.reset();
+      });
+    });
   </script>
 </body>
 </html>
