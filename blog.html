@@ -3,74 +3,141 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Signs2Signs | Trade Signage, Built in Manchester</title>
-  <meta name="description" content="Trade-only signage supply. You design, we make — you fit. CNC, print & fabrication in-house. UK-wide delivery or Manchester collection.">
-  <meta name="robots" content="index, follow">
-  <link rel="icon" type="image/svg+xml" href="public/S2S.svg">
-
-  <!-- Fonts -->
+  <title>Blog | Signs2Signs</title>
+  <meta name="description" content="Trade signage tips, fabrication notes, and recent builds.">
+  <link rel="icon" type="image/svg+xml" href="/public/S2S.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700&display=swap" rel="stylesheet">
-
-  <!-- Base CSS -->
   <style>
-    :root{
-      --brand:#0B1B4A; --brand-2:#1F3FAF;
-      --accent:#F26B1D; --bg:#0A0F1C;
-      --muted:#9CA3AF;
-      --radius:20px; --shadow:0 10px 30px rgba(0,0,0,.25);
-      --gutter:24px;
-    }
-    html,body{
-      margin:0; padding:0;
-      font-family:Manrope,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,'Helvetica Neue',Arial,sans-serif;
-      color:#f8fafc;
-      background:linear-gradient(180deg,#0B1B4A 0%,#0A0F1C 60%);
-    }
-    body{ padding-left:var(--gutter); padding-right:var(--gutter); }
-    body::before{
-      content:""; position:fixed; inset:0;
-      background:
-        radial-gradient(60% 60% at 20% 20%, rgba(242,107,29,.22) 0%, rgba(242,107,29,0) 60%),
-        radial-gradient(70% 70% at 80% 10%, rgba(31,63,175,.25) 0%, rgba(31,63,175,0) 65%);
-      filter:blur(100px); z-index:-1;
-    }
-    a{color:var(--accent);text-decoration:none}
-    img{max-width:100%;display:block}
-    .container{max-width:1200px;margin:0 auto}
-    .center{text-align:center}
-    section{padding:64px 0}
-    section h2{color:#fff;font-size:clamp(26px,3.6vw,36px);margin:0 0 12px}
-    section p{color:#cbd5e1;margin:0 0 10px}
-    @media (max-width:1024px){ :root{--gutter:16px} }
-    @media (max-width:640px){ :root{--gutter:12px} }
+    :root{ --accent:#F26B1D; --gutter:24px; }
+    body{ margin:0; font-family:Manrope,system-ui,sans-serif; color:#f8fafc;
+      background:linear-gradient(180deg,#0B1B4A 0%,#0A0F1C 60%); padding:0 var(--gutter); }
+    .container{ max-width:1200px; margin:0 auto; }
+    .page-hero{ text-align:center; padding:64px 0; }
+    .kicker{ display:inline-flex; align-items:center; gap:8px; color:#c7d2fe;
+      background:rgba(99,102,241,.15); border:1px solid rgba(99,102,241,.35);
+      padding:6px 12px; border-radius:999px; font-weight:700; }
+    h1{ font-size:clamp(34px,5vw,54px); margin:16px 0 10px; }
+    .controls{ display:flex; gap:12px; flex-wrap:wrap; justify-content:center; margin:8px 0 24px; }
+    .pill{ padding:8px 12px; border-radius:999px; border:1px solid rgba(255,255,255,.2); cursor:pointer; }
+    .pill.active{ background:var(--accent); color:#111827; border-color:transparent; }
+    .grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
+    @media (max-width:900px){ .grid{ grid-template-columns:repeat(2,1fr); } }
+    @media (max-width:600px){ .grid{ grid-template-columns:1fr; } }
+    .card{ background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.03));
+      border:1px solid rgba(255,255,255,.1); border-radius:20px; padding:14px; display:flex; flex-direction:column; }
+    .card img{ border-radius:14px; aspect-ratio:16/9; object-fit:cover; width:100%; }
+    .meta{ display:flex; gap:10px; align-items:center; color:#cbd5e1; font-size:.9rem; margin:8px 0; }
+    .tags{ display:flex; gap:8px; flex-wrap:wrap; margin-top:6px; }
+    .tag{ font-size:.85rem; border:1px solid rgba(255,255,255,.15); padding:4px 8px; border-radius:999px; }
+    .share{ margin-top:auto; display:flex; gap:10px; }
+    .share a{ color:#f8fafc; opacity:.9 }
+    a.cardlink{ text-decoration:none; color:inherit; }
+    .center{ text-align:center; }
   </style>
 </head>
 <body>
-
-  <!-- Header include -->
   <div id="header"></div>
 
-  <!-- Main Content Placeholder -->
   <main>
-    <div class="container center">
-      <h2>Main Area</h2>
-      <p class="muted">This is where your page-specific content will go.</p>
-    </div>
+    <section class="page-hero">
+      <div class="container">
+        <span class="kicker">Shop Talk • Tips • Builds</span>
+        <h1>Blog</h1>
+        <p class="lede">Notes from the workshop: materials, methods and finished jobs.</p>
+        <div class="controls">
+          <button class="pill active" data-sort="new">Newest</button>
+          <button class="pill" data-sort="views">Top Viewed</button>
+          <button class="pill" data-sort="likes">Most Liked</button>
+        </div>
+        <div class="controls" id="tagbar"></div>
+      </div>
+    </section>
+
+    <section class="container">
+      <div id="grid" class="grid"></div>
+      <p class="center" id="empty" style="display:none;">No posts yet.</p>
+    </section>
   </main>
 
-  <!-- Footer include -->
   <div id="footer"></div>
 
-  <script>
-    async function include(file, target){
-      const res = await fetch(file);
-      const html = await res.text();
-      document.getElementById(target).innerHTML = html;
+  <script type="module">
+    import { supabase, fetchPosts, fetchTags } from '/blog/blog.js';
+
+    async function render(sort='new', tag=null){
+      document.querySelectorAll('.pill').forEach(p=>{
+        p.classList.toggle('active', p.dataset.sort===sort);
+      });
+      const { data } = await fetchPosts({ sort, tag });
+      const grid = document.getElementById('grid');
+      const empty = document.getElementById('empty');
+      grid.innerHTML = '';
+      if(!data || data.length===0){ empty.style.display='block'; return; }
+      empty.style.display='none';
+      data.forEach(p=>{
+        const href = `/blog/post.html?slug=${encodeURIComponent(p.slug)}`;
+        grid.insertAdjacentHTML('beforeend', `
+          <article class="card">
+            ${p.main_image_url ? `<a href="${href}" class="cardlink"><img src="${p.main_image_url}" alt=""></a>` : ''}
+            <a class="cardlink" href="${href}">
+              <h3 style="color:#F26B1D;margin:10px 0;">${p.title}</h3>
+              <div class="meta">
+                <span>${new Date(p.published_at || p.created_at).toLocaleDateString('en-GB')}</span>
+                <span>•</span>
+                <span>${p.views_count||0} views</span>
+                <span>•</span>
+                <span>❤ ${p.likes_count||0}</span>
+              </div>
+              ${p.description ? `<p style="color:#cbd5e1;margin:0 0 6px;">${p.description}</p>` : ''}
+            </a>
+            <div class="share">
+              <a href="https://x.com/intent/tweet?url=${encodeURIComponent(location.origin+href)}&text=${encodeURIComponent(p.title)}" target="_blank" rel="noopener">X</a>
+              <a href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(location.origin+href)}" target="_blank" rel="noopener">Facebook</a>
+              <a href="https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(location.origin+href)}" target="_blank" rel="noopener">LinkedIn</a>
+              <a href="#" data-copy="${location.origin+href}">Copy Link</a>
+            </div>
+          </article>
+        `);
+      });
+      grid.querySelectorAll('[data-copy]').forEach(a=>{
+        a.addEventListener('click', (e)=>{
+          e.preventDefault();
+          navigator.clipboard.writeText(a.dataset.copy);
+          a.textContent='Copied!';
+          setTimeout(()=>a.textContent='Copy Link', 1200);
+        });
+      });
     }
-    include('header.html','header');
-    include('footer.html','footer');
+
+    // tag bar
+    (async ()=>{
+      const tagbar = document.getElementById('tagbar');
+      const tags = await fetchTags();
+      tagbar.innerHTML = tags.map(t=>`<button class="pill" data-tag="${t}">${t}</button>`).join('');
+      tagbar.addEventListener('click', e=>{
+        const b = e.target.closest('[data-tag]'); if(!b) return;
+        tagbar.querySelectorAll('.pill').forEach(x=>x.classList.remove('active'));
+        b.classList.add('active');
+        render(document.querySelector('.controls .pill.active')?.dataset.sort || 'new', b.dataset.tag);
+      });
+    })();
+
+    document.querySelectorAll('.controls .pill[data-sort]').forEach(btn=>{
+      btn.addEventListener('click', ()=> render(btn.dataset.sort));
+    });
+    render(); // initial
+
+    // includes
+    (async function include(file, target){
+      const res = await fetch(file); const html = await res.text();
+      document.getElementById(target).innerHTML = html;
+    })('header.html','header');
+    (async function includeF(file, target){
+      const res = await fetch(file); const html = await res.text();
+      document.getElementById(target).innerHTML = html;
+    })('footer.html','footer');
   </script>
 </body>
 </html>
