@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <title>Blog Post | Signs2Signs</title>
+  <link rel="stylesheet" href="../style.css">
+  <style>
+    main{max-width:800px;margin:0 auto;padding:40px 20px;}
+    .post img{max-width:100%;margin:20px 0;border-radius:12px;}
+    .meta{color:#9ca3af;font-size:14px;margin-bottom:20px;}
+    .like-btn{cursor:pointer;padding:8px 14px;border-radius:6px;background:var(--accent);color:#111;font-weight:600;}
+  </style>
+</head>
+<body>
+<div id="header"></div>
+
+<main>
+  <article class="post">
+    <h1 id="title"></h1>
+    <div class="meta" id="meta"></div>
+    <img id="mainImg" style="display:none">
+    <div id="body"></div>
+    <div id="extraImgs"></div>
+  </article>
+
+  <div style="margin-top:20px;">
+    <button class="like-btn" id="likeBtn">❤️ Like</button>
+    <span id="likesCount"></span>
+  </div>
+
+  <div style="margin-top:20px;">
+    <p>Share:</p>
+    <a id="shareTwitter" target="_blank">Twitter</a> |
+    <a id="shareFacebook" target="_blank">Facebook</a>
+  </div>
+</main>
+
+<div id="footer"></div>
+
+<script type="module">
+  import { fetchPost, recordView, toggleLike } from './blog.js';
+
+  const params = new URLSearchParams(window.location.search);
+  const slug = params.get('slug');
+
+  const data = await fetchPost(slug);
+  if(!data){ document.body.innerHTML = "<p>Post not found.</p>"; }
+
+  document.getElementById('title').textContent = data.title;
+  document.getElementById('meta').textContent = 
+    new Date(data.published_at).toLocaleDateString() + 
+    ` • 👁 ${data.views_count} • ❤️ ${data.likes_count}`;
+
+  if(data.main_image_url){
+    const img = document.getElementById('mainImg');
+    img.src = data.main_image_url;
+    img.style.display='block';
+  }
+  document.getElementById('body').innerHTML = data.body;
+
+  // Extra images
+  const extra = document.getElementById
