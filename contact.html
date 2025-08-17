@@ -126,6 +126,41 @@
     a:focus-visible, .btn:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible{
       outline:2px solid var(--accent); outline-offset:2px
     }
+
+    /* File input styling */
+    input[type="file"] {
+      padding: 6px 8px;
+      font-size: 13px;
+    }
+    
+    input[type="file"]::-webkit-file-upload-button {
+      background: var(--accent);
+      color: #111827;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-weight: 700;
+      margin-right: 8px;
+      cursor: pointer;
+    }
+
+    .file-list {
+      margin-top: 8px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+    
+    .file-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+    
+    .file-size {
+      color: var(--muted);
+      font-size: 11px;
+    }
   </style>
 </head>
 <body>
@@ -208,6 +243,13 @@
                 </select>
               </div>
 
+              <div class="form-group">
+                <label for="files">Upload Files (Optional)</label>
+                <input type="file" id="files" name="files" multiple accept=".pdf,.jpg,.jpeg,.png,.gif,.ai,.eps,.svg,.dwg,.dxf">
+                <small class="muted" style="font-size: 12px; margin-top: 4px; display: block;">
+                  Upload artwork, CAD files, photos, or reference documents (Max 10MB per file)
+                </small>
+              </div>
               <button type="submit" class="btn btn-primary">Send Quote Request</button>
             </form>
           </div>
@@ -288,11 +330,70 @@
         
         if (submitButton) {
           submitButton.disabled = true;
-          submitButton.textContent = 'Submitting...';
+          submitButton.textContent = 'Uploading files...';
         }
         
-        // Get form data
+        // Get basic form data
         const formData = new FormData(form);
+        const files = formData.getAll('files');
+        
+        let uploadedFileUrls = [];
+        
+        // Upload files to Supabase Storage if any files are selected
+        if (files.length > 0 && files[0].size > 0) {
+          try {
+            for (const file of files) {
+              if (file.size > 10 * 1024 * 1024) { // 10MB limit
+                throw new Error(`File "${file.name}" is too large. Maximum size is 10MB.`);
+              }
+              
+              // Generate unique filename
+              const fileExt = file.name.split('.').pop();
+              const fileName = `${Date.now()}-${Math.random().toString(36).substring(2)}.${fileExt}`;
+              const filePath = `quote-files/${fileName}`;
+              
+              if (submitButton) {
+                submitButton.textContent = `Uploading ${file.name}...`;
+              }
+              
+              // Upload to Supabase Storage
+              const { data: uploadData, error: uploadError } = await supabase.storage
+                .from('quote-files')
+                .upload(filePath, file);
+              
+              if (uploadError) {
+                console.error('File upload error:', uploadError);
+                throw new Error(`Failed to upload file "${file.name}"`);
+              }
+              
+              // Get public URL
+              const { data: urlData } = supabase.storage
+                .from('quote-files')
+                .getPublicUrl(filePath);
+              
+              uploadedFileUrls.push({
+                name: file.name,
+                url: urlData.publicUrl,
+                size: file.size
+              });
+            }
+          } catch (fileError) {
+            console.error('File handling error:', fileError);
+            alert(fileError.message || 'Error uploading files. Please try again.');
+            
+            if (submitButton) {
+              submitButton.disabled = false;
+              submitButton.textContent = 'Send Quote Request';
+            }
+            return;
+          }
+        }
+        
+        if (submitButton) {
+          submitButton.textContent = 'Saving quote...';
+        }
+        
+        // Prepare quote data
         const quoteData = {
           company: formData.get('company'),
           name: formData.get('name'),
@@ -302,6 +403,7 @@
           service: formData.get('service'),
           project_details: formData.get('project'),
           timeline: formData.get('timeline') || null,
+          uploaded_files: uploadedFileUrls.length > 0 ? JSON.stringify(uploadedFileUrls) : null,
         };
         
         try {
@@ -314,7 +416,8 @@
             console.error('Supabase error:', error);
             alert('Sorry, there was an error submitting your quote request. Please try again or contact us directly at sales@signs2signs.com');
           } else {
-            alert('Thanks! Your quote request has been submitted successfully. We\'ll be in touch within 24 hours.');
+            const fileMessage = uploadedFileUrls.length > 0 ? ` Your ${uploadedFileUrls.length} file(s) have also been uploaded.` : '';
+            alert(`Thanks! Your quote request has been submitted successfully.${fileMessage} We'll be in touch within 24 hours.`);
             form.reset();
           }
         } catch (error) {
