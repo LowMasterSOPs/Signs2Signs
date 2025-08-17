@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Signs2Signs Blog | Trade Signage Tips & Updates</title>
   <meta name="description" content="Latest tips, projects & updates from the Signs2Signs workshop. Built in Manchester, supplied UK-wide.">
-  <meta name="robots" content="index, follow">
   <link rel="icon" type="image/svg+xml" href="/public/S2S.svg">
 
   <!-- Fonts -->
@@ -13,7 +12,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700&display=swap" rel="stylesheet">
 
-  <!-- Base Styles -->
   <style>
     :root{
       --brand:#0B1B4A; --brand-2:#1F3FAF;
@@ -22,30 +20,30 @@
       --radius:20px; --shadow:0 10px 30px rgba(0,0,0,.25);
       --gutter:24px;
     }
-    html,body{margin:0;padding:0;font-family:Manrope,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,'Helvetica Neue',Arial,sans-serif;color:#f8fafc;background:#0A0F1C;}
+    html,body{margin:0;padding:0;font-family:Manrope,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,'Helvetica Neue',Arial,sans-serif;color:#f8fafc;background:linear-gradient(180deg,#0B1B4A 0%,#0A0F1C 60%);}
     body{padding-left:var(--gutter);padding-right:var(--gutter);}
     a{color:var(--accent);text-decoration:none}
     img{max-width:100%;display:block}
     .container{max-width:1200px;margin:0 auto}
     .center{text-align:center}
-    section{padding:64px 0}
-    section h2{color:#fff;font-size:clamp(26px,3.6vw,36px);margin:0 0 12px}
-    section p{color:#cbd5e1;margin:0 0 10px}
-    @media (max-width:1024px){ :root{--gutter:16px} }
-    @media (max-width:640px){ :root{--gutter:12px} }
+    section{padding:48px 0}
+    .page-hero{padding:64px 0;text-align:center}
+    .page-hero h1{font-size:clamp(34px,5vw,54px);margin:0 0 10px}
+    .kicker{display:inline-flex;align-items:center;gap:8px;color:#c7d2fe;background:rgba(99,102,241,.15);border:1px solid rgba(99,102,241,.35);padding:6px 12px;border-radius:999px;font-weight:700}
+    .lede{color:#e5e7eb}
 
-    /* Blog cards */
-    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:24px;margin-top:32px}
-    .card{background:#111827;border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);display:flex;flex-direction:column}
-    .card img{border-radius:var(--radius);margin-bottom:14px}
-    .card h3{margin:0 0 6px;color:#fff;font-size:20px}
-    .card p{margin:0;color:#cbd5e1}
-    .meta{font-size:14px;color:#9ca3af;margin:4px 0 10px;display:flex;gap:6px;flex-wrap:wrap}
+    /* Pills / filters */
+    .pills{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:18px 0 8px}
+    .pill{padding:8px 14px;border-radius:999px;border:1px solid rgba(255,255,255,.2);background:#111827;color:#fff;cursor:pointer;font-weight:700}
+    .pill.active{background:var(--accent);color:#0b0b0b;border-color:transparent}
 
-    /* Pills */
-    .pills{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:20px 0}
-    .pill{padding:8px 16px;border-radius:999px;border:0;font-weight:700;cursor:pointer;background:#1f2937;color:#fff}
-    .pill.active{background:var(--accent);color:#0a0f1c}
+    /* Grid cards */
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:22px}
+    @media (max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}}
+    @media (max-width:600px){.grid{grid-template-columns:1fr}}
+    .card{background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.03));border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:14px;display:flex;flex-direction:column}
+    .card img{border-radius:14px;aspect-ratio:16/9;object-fit:cover;width:100%}
+    .meta{display:flex;gap:10px;align-items:center;color:#cbd5e1;font-size:.9rem;margin:8px 0}
   </style>
 </head>
 <body>
@@ -54,97 +52,35 @@
   <div id="header"></div>
 
   <main>
-    <section class="container center">
-      <h2>Signs2Signs Blog</h2>
-      <p class="muted">Latest tips, projects & updates from the workshop</p>
+    <section class="page-hero">
+      <div class="container">
+        <span class="kicker">Shop Talk • Tips • Builds</span>
+        <h1>Blog</h1>
+        <p class="lede">Notes from the workshop: materials, methods and finished jobs.</p>
 
-      <!-- Sort Pills -->
-      <div class="pills" id="sortbar">
-        <button class="pill active" data-sort="new">New</button>
-        <button class="pill" data-sort="views">Top Viewed</button>
-        <button class="pill" data-sort="likes">Most Liked</button>
+        <!-- Sort -->
+        <div class="pills" id="sortbar">
+          <button class="pill active" data-sort="new">Newest</button>
+          <button class="pill" data-sort="views">Top Viewed</button>
+          <button class="pill" data-sort="likes">Most Liked</button>
+        </div>
+
+        <!-- Tags -->
+        <div class="pills" id="tagbar"></div>
       </div>
+    </section>
 
-      <!-- Tags -->
-      <div class="pills" id="tagbar"></div>
-
-      <!-- Posts Grid -->
-      <div class="grid" id="grid"></div>
-      <p id="empty" style="display:none;margin-top:20px;color:#9ca3af">No posts yet.</p>
+    <!-- Posts -->
+    <section class="container">
+      <div id="grid" class="grid"></div>
+      <p class="center" id="empty" style="display:none;">No posts yet.</p>
     </section>
   </main>
 
   <!-- Footer include -->
   <div id="footer"></div>
 
-  <!-- Supabase Client -->
+  <!-- Shared client (lives in the same /blog/ folder) -->
   <script type="module" src="./blog.js"></script>
 
-  <!-- Page Logic -->
-  <script type="module">
-    import { fetchPosts, fetchTags } from './blog.js';
-
-    // includes (adjust if header/footer live outside /blog)
-    async function include(file, target){
-      try{const r=await fetch(file);document.getElementById(target).innerHTML=await r.text();}
-      catch(e){console.warn('Include failed',file,e);}
-    }
-    include('../header.html','header');
-    include('../footer.html','footer');
-
-    const sortbar=document.getElementById('sortbar');
-    const tagbar=document.getElementById('tagbar');
-    const grid=document.getElementById('grid');
-    const empty=document.getElementById('empty');
-    let currentSort='new', currentTag=null;
-
-    sortbar.addEventListener('click', e=>{
-      const b=e.target.closest('[data-sort]'); if(!b) return;
-      sortbar.querySelectorAll('.pill').forEach(p=>p.classList.remove('active'));
-      b.classList.add('active'); currentSort=b.dataset.sort; load();
-    });
-
-    tagbar.addEventListener('click', e=>{
-      const b=e.target.closest('[data-tag]'); if(!b) return;
-      tagbar.querySelectorAll('.pill').forEach(p=>p.classList.remove('active'));
-      b.classList.add('active'); currentTag=b.dataset.tag; load();
-    });
-
-    async function renderTags(){
-      try{
-        const tags=await fetchTags();
-        tagbar.innerHTML=tags.map(t=>`<button class="pill" data-tag="${t}">${t}</button>`).join('');
-      }catch(e){console.error('Tags error:',e);}
-    }
-
-    async function load(){
-      grid.innerHTML='<p class="center">Loading…</p>';
-      try{
-        const {data}=await fetchPosts({sort:currentSort,tag:currentTag});
-        if(!data||data.length===0){grid.innerHTML='';empty.style.display='block';return;}
-        empty.style.display='none';
-        grid.innerHTML=data.map(p=>{
-          const href=`./post.html?slug=${encodeURIComponent(p.slug)}`;
-          return `
-            <article class="card">
-              ${p.main_image_url?`<a href="${href}"><img src="${p.main_image_url}" alt=""></a>`:''}
-              <a href="${href}"><h3>${p.title}</h3></a>
-              <div class="meta">
-                <span>${new Date(p.published_at||p.created_at).toLocaleDateString('en-GB')}</span>
-                <span>•</span><span>${p.views_count||0} views</span>
-                <span>•</span><span>❤ ${p.likes_count||0}</span>
-              </div>
-              ${p.description?`<p>${p.description}</p>`:''}
-            </article>`;
-        }).join('');
-      }catch(e){
-        console.error('Posts error:',e);
-        grid.innerHTML='<p class="center">Couldn’t load posts. Check console.</p>';
-      }
-    }
-
-    await renderTags();
-    await load();
-  </script>
-</body>
-</html>
+  <!-- P
