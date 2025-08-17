@@ -83,4 +83,93 @@
   <!-- Shared client (lives in the same /blog/ folder) -->
   <script type="module" src="./blog.js"></script>
 
-  <!-- P
+  <!-- Page logic -->
+  <script type="module">
+    import { fetchPosts, fetchTags } from './blog.js';
+
+    // Include header/footer from site root:
+    async function include(file, target){
+      try{
+        const res = await fetch(file, { cache: 'no-store' });
+        if(!res.ok) throw new Error(res.status + ' ' + res.statusText);
+        document.getElementById(target).innerHTML = await res.text();
+      }catch(err){
+        console.error('Include failed:', file, err);
+        const el = document.getElementById(target);
+        if(el) el.innerHTML = '<div style="padding:12px;color:#fca5a5;background:#1f2937;border-radius:8px;">Failed to load '+file+'</div>';
+      }
+    }
+    include('/header.html','header');  // if your header/footer are NOT at root, switch to ../
+    include('/footer.html','footer');
+
+    const sortbar = document.getElementById('sortbar');
+    const tagbar  = document.getElementById('tagbar');
+    const grid    = document.getElementById('grid');
+    const empty   = document.getElementById('empty');
+
+    let currentSort = 'new';
+    let currentTag  = null;
+
+    sortbar.addEventListener('click', e=>{
+      const b = e.target.closest('[data-sort]'); if(!b) return;
+      sortbar.querySelectorAll('.pill').forEach(p=>p.classList.remove('active'));
+      b.classList.add('active');
+      currentSort = b.dataset.sort;
+      load();
+    });
+
+    tagbar.addEventListener('click', e=>{
+      const b = e.target.closest('[data-tag]'); if(!b) return;
+      tagbar.querySelectorAll('.pill').forEach(p=>p.classList.remove('active'));
+      b.classList.add('active');
+      currentTag = b.dataset.tag;
+      load();
+    });
+
+    async function renderTags(){
+      try{
+        const tags = await fetchTags();
+        tagbar.innerHTML = (tags||[]).map(t=>`<button class="pill" data-tag="${t}">${t}</button>`).join('');
+      }catch(err){
+        console.error('Tags load error:', err);
+      }
+    }
+
+    async function load(){
+      grid.innerHTML = '<p class="center" style="grid-column:1/-1;">Loading…</p>';
+      try{
+        const { data } = await fetchPosts({ sort: currentSort, tag: currentTag });
+        if(!data || data.length===0){
+          grid.innerHTML = '';
+          empty.style.display = 'block';
+          return;
+        }
+        empty.style.display = 'none';
+        grid.innerHTML = data.map(p=>{
+          const href = `./post.html?slug=${encodeURIComponent(p.slug)}`;
+          return `
+            <article class="card">
+              ${p.main_image_url ? `<a class="cardlink" href="${href}"><img src="${p.main_image_url}" alt=""></a>` : ''}
+              <a class="cardlink" href="${href}">
+                <h3 style="color:#F26B1D;margin:10px 0;">${p.title}</h3>
+                <div class="meta">
+                  <span>${new Date(p.published_at || p.created_at).toLocaleDateString('en-GB')}</span>
+                  <span>•</span><span>${p.views_count||0} views</span>
+                  <span>•</span><span>❤ ${p.likes_count||0}</span>
+                </div>
+                ${p.description ? `<p style="color:#cbd5e1;margin:0 0 6px;">${p.description}</p>` : ''}
+              </a>
+            </article>
+          `;
+        }).join('');
+      }catch(err){
+        console.error('Posts load error:', err);
+        grid.innerHTML = '<p class="center" style="grid-column:1/-1;">Couldn’t load posts. Check console.</p>';
+      }
+    }
+
+    await renderTags();
+    await load();
+  </script>
+</body>
+</html>
