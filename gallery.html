@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Gallery | Signs2Signs — Trade Signage, Built in Manchester</title>
-  <meta name="description" content="Gallery of recent trade signage — 3D acrylic, built-up metal, trays, neon & embedded. Built in Manchester.">
+  <meta name="description" content="Gallery of recent trade signage — flat cut, 3D acrylic, built-up metal, trays, neon & embedded. Built in Manchester.">
   <meta name="robots" content="index, follow">
   <link rel="icon" type="image/svg+xml" href="public/S2S.svg">
 
@@ -34,9 +34,7 @@
       -moz-osx-font-smoothing:grayscale;
       scroll-behavior:smooth;
     }
-    @media (max-width:768px){
-      html,body{ background: linear-gradient(180deg,#0B1B4A 0%,#0A0F1C 60%); }
-    }
+    @media (max-width:768px){ html,body{ background: linear-gradient(180deg,#0B1B4A 0%,#0A0F1C 60%); } }
     body{ padding-left:var(--gutter); padding-right:var(--gutter); }
     body::before{
       content:""; position:fixed; inset:0; z-index:-1; pointer-events:none;
@@ -51,13 +49,14 @@
     .container{max-width:1200px;margin:0 auto}
     .center{text-align:center}
     .muted{color:var(--muted)}
+    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 
     /* Sections */
     section{padding:36px 0}
     section h2{color:#fff;font-size:clamp(26px,3.6vw,40px);margin:0 0 14px}
     section p{color:#cbd5e1;margin:0 0 10px}
 
-    /* HERO (match index/services/quote) */
+    /* HERO (match site) */
     .hero{padding:84px 0 28px; text-align:center; position:relative;}
     .kicker{
       display:inline-flex;align-items:center;gap:8px;
@@ -97,10 +96,10 @@
       transform:translateY(-1px);
     }
 
-    /* FILTER BAR (icon tiles, matches index svc tiles) */
+    /* FILTER BAR */
     .filters{ margin-top:18px }
     .filter-grid{
-      display:grid; grid-template-columns:repeat(5,1fr); gap:14px;
+      display:grid; grid-template-columns:repeat(6,1fr); gap:14px;
       margin-top:14px;
     }
     @media (max-width:1100px){ .filter-grid{ grid-template-columns:repeat(3,1fr) } }
@@ -130,7 +129,7 @@
       background:linear-gradient(180deg,rgba(24,33,60,.96),rgba(16,23,42,.78));
     }
 
-    /* GALLERY GRID */
+    /* GALLERY GRID (no captions) */
     .gallery-grid{
       display:grid;
       grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
@@ -152,13 +151,9 @@
     }
     .gallery-item img{
       width:100%; height:240px; object-fit:cover; transition:transform .3s ease;
+      display:block;
     }
     .gallery-item:hover img{ transform:scale(1.04); }
-    .cap{
-      padding:12px 14px; font-size:13px; color:#cbd5e1; display:flex; align-items:center; gap:8px;
-      border-top:1px solid rgba(255,255,255,.08);
-    }
-    .cap .dot{ width:8px; height:8px; border-radius:999px; background:var(--accent); opacity:.8 }
 
     /* STATES */
     .loading, .error, .empty{ text-align:center; padding:40px; color:var(--muted); }
@@ -173,10 +168,7 @@
     }
     @keyframes spin{ to{ transform:rotate(360deg); } }
 
-    /* Responsive tweaks */
-    @media (max-width:1024px){
-      :root{--gutter:16px}
-    }
+    @media (max-width:1024px){ :root{--gutter:16px} }
     @media (max-width:640px){
       :root{--gutter:12px}
       .gallery-item img{ height:200px }
@@ -221,10 +213,7 @@
               <!-- 3D Acrylic -->
               <button class="filter-tile" role="tab" aria-selected="false" data-filter="3d-acrylic">
                 <div class="ic" aria-hidden="true">
-                  <svg viewBox="0 0 24 24">
-                    <path d="M4 20l8-16 8 16"/>
-                    <path d="M7.5 14h9"/>
-                  </svg>
+                  <svg viewBox="0 0 24 24"><path d="M4 20l8-16 8 16"/><path d="M7.5 14h9"/></svg>
                 </div>
                 <span>3D Acrylic</span>
               </button>
@@ -232,10 +221,7 @@
               <!-- Built-Up Metal -->
               <button class="filter-tile" role="tab" aria-selected="false" data-filter="built-up-metal">
                 <div class="ic" aria-hidden="true">
-                  <svg viewBox="0 0 24 24">
-                    <path d="M4 16V8l8-4 8 4v8l-8 4-8-4z"/>
-                    <path d="M12 4v16"/>
-                  </svg>
+                  <svg viewBox="0 0 24 24"><path d="M4 16V8l8-4 8 4v8l-8 4-8-4z"/><path d="M12 4v16"/></svg>
                 </div>
                 <span>Built-Up Metal</span>
               </button>
@@ -243,10 +229,7 @@
               <!-- Trays -->
               <button class="filter-tile" role="tab" aria-selected="false" data-filter="trays">
                 <div class="ic" aria-hidden="true">
-                  <svg viewBox="0 0 24 24">
-                    <rect x="4" y="6" width="16" height="12" rx="2"/>
-                    <path d="M4 9h16"/>
-                  </svg>
+                  <svg viewBox="0 0 24 24"><rect x="4" y="6" width="16" height="12" rx="2"/><path d="M4 9h16"/></svg>
                 </div>
                 <span>Trays</span>
               </button>
@@ -254,15 +237,20 @@
               <!-- Neon & Embedded -->
               <button class="filter-tile" role="tab" aria-selected="false" data-filter="neon-embedded">
                 <div class="ic" aria-hidden="true">
-                  <svg viewBox="0 0 24 24">
-                    <!-- neon tube curve -->
-                    <path d="M4 16c0-4 4-4 6-2s6 2 10-2"/>
-                    <!-- end caps -->
-                    <circle cx="4" cy="16" r="1.5"/>
-                    <circle cx="20" cy="12" r="1.5"/>
-                  </svg>
+                  <svg viewBox="0 0 24 24"><path d="M4 16c0-4 4-4 6-2s6 2 10-2"/><circle cx="4" cy="16" r="1.5"/><circle cx="20" cy="12" r="1.5"/></svg>
                 </div>
                 <span>Neon &amp; Embedded</span>
+              </button>
+
+              <!-- Flat Cut -->
+              <button class="filter-tile" role="tab" aria-selected="false" data-filter="flat-cut">
+                <div class="ic" aria-hidden="true">
+                  <svg viewBox="0 0 24 24">
+                    <rect x="4" y="4" width="16" height="16" rx="2"/>
+                    <path d="M9 8h6M9 12h4M9 16h5"/>
+                  </svg>
+                </div>
+                <span>Flat Cut</span>
               </button>
             </div>
           </div>
@@ -300,7 +288,7 @@
     include('footer.html','footer');
   </script>
 
-  <!-- Supabase Gallery + Filters -->
+  <!-- Supabase Gallery + Filters (no captions) -->
   <script type="module">
     import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
@@ -312,12 +300,13 @@
 
     const BUCKET = "images";
 
-    // Map UI filter keys to folder paths inside the bucket
+    // Map UI filter keys to bucket folder paths
     const CATEGORY_PATHS = {
       "3d-acrylic": "3d-acrylic",
       "built-up-metal": "built-up-metal",
       "trays": "trays",
-      "neon-embedded": "neon-embedded"
+      "neon-embedded": "neon-embedded",
+      "flat-cut": "Flat Cut" // change to "flat-cut" if your folder uses hyphen
     };
 
     // Elements
@@ -341,11 +330,10 @@
       show('error');
     }
 
-    // Cache category -> [{url, name, path, cap}]
+    // Cache category -> [{url, name, path}]
     const cache = new Map();
 
     async function listAll(path){
-      // Recursively list all images under a path
       const { data, error } = await supabase.storage.from(BUCKET).list(path || "", {
         limit: 1000,
         sortBy: { column: "name", order: "asc" }
@@ -377,8 +365,7 @@
         const { data: urlData } = supabase.storage.from(BUCKET).getPublicUrl(fullPath);
         const url = urlData?.publicUrl;
         const name = fullPath.split("/").pop();
-        const cap  = (catKey.replace(/-/g,' ') + " • " + name).replace(/\.(jpg|jpeg|png|gif|webp|svg)$/i,'');
-        return { url, name, path: fullPath, cap };
+        return { url, name, path: fullPath };
       }).filter(x => !!x.url);
 
       cache.set(catKey, items);
@@ -387,9 +374,7 @@
 
     async function loadAll(){
       const cats = Object.keys(CATEGORY_PATHS);
-      const promises = cats.map(loadCategory);
-      const arrays = await Promise.all(promises);
-      // Flatten
+      const arrays = await Promise.all(cats.map(loadCategory));
       return arrays.flat();
     }
 
@@ -406,15 +391,10 @@
 
         const img = document.createElement("img");
         img.src = it.url;
-        img.alt = it.name;
+        img.alt = "Gallery image"; // keep alt for accessibility; not shown visually
         img.loading = "lazy";
 
-        const cap = document.createElement("div");
-        cap.className = "cap";
-        cap.innerHTML = `<span class="dot" aria-hidden="true"></span><span>${it.cap}</span>`;
-
         card.appendChild(img);
-        card.appendChild(cap);
         card.addEventListener("click", () => window.open(it.url, "_blank"));
         gallery.appendChild(card);
       }
@@ -423,13 +403,8 @@
     async function applyFilter(key){
       try{
         show('loading');
-        let items = [];
-        if (key === 'all'){
-          items = await loadAll();
-        } else {
-          items = await loadCategory(key);
-        }
-        // Optional: newest first by filename timestamp if present
+        let items = key === 'all' ? await loadAll() : await loadCategory(key);
+        // Optional: newest-ish first by name if you use timestamps
         items.sort((a,b) => a.name < b.name ? 1 : -1);
         render(items);
       } catch(err){
@@ -438,7 +413,7 @@
       }
     }
 
-    // Filter UI handling
+    // Filter UI
     const tiles = Array.from(document.querySelectorAll(".filter-tile"));
     function setActive(key){
       tiles.forEach(btn => {
@@ -447,27 +422,20 @@
         btn.setAttribute("aria-selected", on ? "true" : "false");
       });
     }
-
     tiles.forEach(btn => {
       btn.addEventListener("click", () => {
         const key = btn.dataset.filter;
-        // Update hash for shareable deep-link
         history.replaceState(null, "", key === "all" ? "#all" : `#${key}`);
         setActive(key);
         applyFilter(key);
       });
     });
 
-    // Deep-link support: #trays etc.
+    // Deep-link support
     const hashKey = (location.hash || "#all").replace("#","");
     const startKey = tiles.some(t => t.dataset.filter === hashKey) ? hashKey : "all";
     setActive(startKey);
     applyFilter(startKey);
   </script>
-
-  <style>
-    /* Visually hidden utility for headings */
-    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
-  </style>
 </body>
 </html>
