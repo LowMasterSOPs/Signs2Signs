@@ -266,26 +266,24 @@
     }
     include('header.html','header');
     include('footer.html','footer');
+  </script>
 
-    // Supabase integration
+  <script type="module">
     import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
     
-    // Initialize Supabase client (these will be available after connecting to Supabase)
-    const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-    const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+    // Initialize Supabase client (using the same credentials as gallery)
+    const supabase = createClient(
+      "https://ketluxsokzvlqozcdwxo.supabase.co",
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtldGx1eHNva3p2bHFvemNkd3hvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTUzNjAzOTIsImV4cCI6MjA3MDkzNjM5Mn0.NCPCOXJ4vD1PYb_sBgoyA6lSvkiRpb8IlA4X8XnltUs"
+    );
     
-    let supabase = null;
-    if (supabaseUrl && supabaseKey) {
-      supabase = createClient(supabaseUrl, supabaseKey);
-    }
-
-    // Enhanced form handler with Supabase integration
-    document.addEventListener('DOMContentLoaded', function () {
+    // Form handler with Supabase integration
+    document.addEventListener('DOMContentLoaded', function() {
       const form = document.getElementById('quoteForm');
       const submitButton = form?.querySelector('button[type="submit"]');
-      if(!form) return;
+      if (!form) return;
       
-      form.addEventListener('submit', async function (e) {
+      form.addEventListener('submit', async function(e) {
         e.preventDefault();
         
         if (submitButton) {
@@ -304,32 +302,24 @@
           service: formData.get('service'),
           project_details: formData.get('project'),
           timeline: formData.get('timeline') || null,
-          created_at: new Date().toISOString()
         };
         
         try {
-          if (supabase) {
-            // Submit to Supabase
-            const { data, error } = await supabase
-              .from('quote_requests')
-              .insert([quoteData]);
-            
-            if (error) {
-              console.error('Supabase error:', error);
-              alert('Sorry, there was an error submitting your quote request. Please try again or contact us directly.');
-            } else {
-              alert('Thanks! Your quote request has been submitted successfully. We'll be in touch within 24 hours.');
-              form.reset();
-            }
+          // Submit to Supabase
+          const { data, error } = await supabase
+            .from('quote_requests')
+            .insert([quoteData]);
+          
+          if (error) {
+            console.error('Supabase error:', error);
+            alert('Sorry, there was an error submitting your quote request. Please try again or contact us directly at sales@signs2signs.com');
           } else {
-            // Fallback: just show success message (Supabase not configured)
-            console.log('Quote request (Supabase not connected):', quoteData);
-            alert('Thanks! Your quote request has been captured. We'll be in touch.\n\n(Note: Connect to Supabase to save requests to database)');
+            alert('Thanks! Your quote request has been submitted successfully. We\'ll be in touch within 24 hours.');
             form.reset();
           }
         } catch (error) {
-          console.error('Error submitting quote:', error);
-          alert('Sorry, there was an error submitting your quote request. Please try again or contact us directly.');
+          console.error('Error submitting form:', error);
+          alert('Sorry, there was an error submitting your quote request. Please try again or contact us directly at sales@signs2signs.com');
         }
         
         // Re-enable submit button
