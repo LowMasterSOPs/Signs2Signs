@@ -267,14 +267,76 @@
     include('header.html','header');
     include('footer.html','footer');
 
-    // Form handler
+    // Supabase integration
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    
+    // Initialize Supabase client (these will be available after connecting to Supabase)
+    const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+    const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+    
+    let supabase = null;
+    if (supabaseUrl && supabaseKey) {
+      supabase = createClient(supabaseUrl, supabaseKey);
+    }
+
+    // Enhanced form handler with Supabase integration
     document.addEventListener('DOMContentLoaded', function () {
       const form = document.getElementById('quoteForm');
+      const submitButton = form?.querySelector('button[type="submit"]');
       if(!form) return;
-      form.addEventListener('submit', function (e) {
+      
+      form.addEventListener('submit', async function (e) {
         e.preventDefault();
-        alert('Thanks! Your quote request has been captured. We’ll be in touch.');
-        form.reset();
+        
+        if (submitButton) {
+          submitButton.disabled = true;
+          submitButton.textContent = 'Submitting...';
+        }
+        
+        // Get form data
+        const formData = new FormData(form);
+        const quoteData = {
+          company: formData.get('company'),
+          name: formData.get('name'),
+          email: formData.get('email'),
+          phone: formData.get('phone') || null,
+          postcode: formData.get('postcode') || null,
+          service: formData.get('service'),
+          project_details: formData.get('project'),
+          timeline: formData.get('timeline') || null,
+          created_at: new Date().toISOString()
+        };
+        
+        try {
+          if (supabase) {
+            // Submit to Supabase
+            const { data, error } = await supabase
+              .from('quote_requests')
+              .insert([quoteData]);
+            
+            if (error) {
+              console.error('Supabase error:', error);
+              alert('Sorry, there was an error submitting your quote request. Please try again or contact us directly.');
+            } else {
+              alert('Thanks! Your quote request has been submitted successfully. We'll be in touch within 24 hours.');
+              form.reset();
+            }
+          } else {
+            // Fallback: just show success message (Supabase not configured)
+            console.log('Quote request (Supabase not connected):', quoteData);
+            alert('Thanks! Your quote request has been captured. We'll be in touch.\n\n(Note: Connect to Supabase to save requests to database)');
+            form.reset();
+          }
+        } catch (error) {
+          console.error('Error submitting quote:', error);
+          alert('Sorry, there was an error submitting your quote request. Please try again or contact us directly.');
+        }
+        
+        // Re-enable submit button
+        if (submitButton) {
+          submitButton.disabled = false;
+          submitButton.textContent = 'Send Quote Request';
+        }
       });
     });
   </script>
