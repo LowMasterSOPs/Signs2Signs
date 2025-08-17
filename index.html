@@ -343,3 +343,79 @@
           </a>
 
           <!-- Illumination -->
+          <a class="svc-tile" href="services.html#illumination" role="listitem" aria-label="Illumination">
+            <div class="ic" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7c0 2.2 1.2 4.2 3 5.3.7.4 1 1.2 1 2.7h6c0-1.5.3-2.3 1-2.7 1.8-1.1 3-3.1 3-5.3a7 7 0 0 0-7-7z"/><path d="M9 12h6M9 18h6M10 22h4"/></svg>
+            </div>
+            <strong>Illumination</strong>
+          </a>
+
+          <!-- Built-up Metal -->
+          <a class="svc-tile" href="services.html#built-up-metal" role="listitem" aria-label="Built-up Metal Letters">
+            <div class="ic" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M4 16V8l8-4 8 4v8l-8 4-8-4z"/><path d="M12 4v16"/></svg>
+            </div>
+            <strong>Built-Up Metal</strong>
+          </a>
+
+          <!-- CNC & Laser Cutting -->
+          <a class="svc-tile" href="services.html#cnc-laser" role="listitem" aria-label="CNC and Laser Cutting">
+            <div class="ic" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M4 8h16"/><path d="M12 8v5"/><rect x="11" y="13" width="2" height="3" rx="0.5"/><rect x="3" y="17" width="18" height="3" rx="1"/><path d="M7 15h10"/></svg>
+            </div>
+            <strong>CNC &amp; Laser Cutting</strong>
+          </a>
+
+          <!-- Print -->
+          <a class="svc-tile" href="services.html#print-large-format" role="listitem" aria-label="Print & Large Format">
+            <div class="ic" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><rect x="6" y="3" width="12" height="6" rx="1"/><rect x="5" y="11" width="14" height="10" rx="1"/><path d="M8 15h8"/></svg>
+            </div>
+            <strong>Print &amp; Graphics</strong>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="cta">
+      <div class="container center">
+        <h2 id="cta">Ready when you are</h2>
+        <p class="muted">Send your brief today; we’ll price it proper and advise what’ll work best.</p>
+        <p><a class="btn btn-primary" href="contact.html#quote">Start a quote</a></p>
+      </div>
+    </section>
+  </main>
+
+  <!-- Sticky CTA (kept in DOM but hidden on mobile via CSS) -->
+  <div class="sticky-cta">
+    <a href="contact.html#quote" aria-label="Get a fast quote">Get a fast quote</a>
+  </div>
+
+  <!-- Footer include -->
+  <div id="footer"></div>
+
+  <script>
+    // Simple include helper for header/footer
+    async function include(file, target){
+      try{
+        const res = await fetch(file);
+        const html = await res.text();
+        document.getElementById(target).innerHTML = html;
+      }catch(e){
+        console.error('Include failed:', e);
+      }
+    }
+    include('header.html','header');
+    include('footer.html','footer');
+
+    // Respect reduced motion: pause badge track if requested
+    (function(){
+      const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+      const track = document.querySelector('.badge-track');
+      const toggle = () => { if(track){ track.style.animation = mq.matches ? 'none' : ''; } };
+      if(mq.addEventListener){ mq.addEventListener('change', toggle); }
+      toggle();
+    })();
+  </script>
+</body>
+</html>
