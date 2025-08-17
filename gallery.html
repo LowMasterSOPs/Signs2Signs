@@ -4,76 +4,164 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Gallery | Signs2Signs — Trade Signage, Built in Manchester</title>
-  <meta name="description" content="Gallery of our recent signage work — shopfront trays, illuminated signs, CNC letters, and vinyl graphics.">
+  <meta name="description" content="Gallery of recent trade signage — 3D acrylic, built-up metal, trays, neon & embedded. Built in Manchester.">
   <meta name="robots" content="index, follow">
   <link rel="icon" type="image/svg+xml" href="public/S2S.svg">
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&display=swap" rel="stylesheet">
 
-  <!-- Page CSS -->
   <style>
     :root{
       --brand:#0B1B4A; --brand-2:#1F3FAF;
       --accent:#F26B1D; --bg:#0A0F1C;
+      --ice:#AFC3FF;
       --muted:#9CA3AF;
-      --radius:20px; --shadow:0 10px 30px rgba(0,0,0,.25);
+      --radius:22px; --shadow:0 10px 30px rgba(0,0,0,.25);
       --gutter:24px;
     }
     html,body{
       margin:0; padding:0;
       font-family:Manrope,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,'Helvetica Neue',Arial,sans-serif;
       color:#f8fafc;
-      background:linear-gradient(180deg,#0B1B4A 0%,#0A0F1C 60%);
+      background:
+        url("public/WEBBG8.png") no-repeat top right fixed,
+        linear-gradient(180deg,#0B1B4A 0%,#0A0F1C 60%);
+      background-size:auto, cover;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      scroll-behavior:smooth;
+    }
+    @media (max-width:768px){
+      html,body{ background: linear-gradient(180deg,#0B1B4A 0%,#0A0F1C 60%); }
     }
     body{ padding-left:var(--gutter); padding-right:var(--gutter); }
     body::before{
-      content:""; position:fixed; inset:0; z-index:-1;
+      content:""; position:fixed; inset:0; z-index:-1; pointer-events:none;
       background:
         radial-gradient(60% 60% at 20% 20%, rgba(242,107,29,.22) 0%, rgba(242,107,29,0) 60%),
-        radial-gradient(70% 70% at 80% 10%, rgba(31,63,175,.25) 0%, rgba(31,63,175,0) 65%);
-      filter:blur(100px);
+        radial-gradient(70% 70% at 80% 12%, rgba(31,63,175,.25) 0%, rgba(31,63,175,0) 65%);
+      filter:blur(110px);
     }
+
     a{color:var(--accent);text-decoration:none}
     img{max-width:100%;display:block}
     .container{max-width:1200px;margin:0 auto}
+    .center{text-align:center}
+    .muted{color:var(--muted)}
 
     /* Sections */
-    section{padding:32px 0}
-    section h2{color:#fff;font-size:clamp(26px,3.6vw,36px);margin:0 0 12px}
+    section{padding:36px 0}
+    section h2{color:#fff;font-size:clamp(26px,3.6vw,40px);margin:0 0 14px}
     section p{color:#cbd5e1;margin:0 0 10px}
 
-    /* Hero */
-    .hero{padding:64px 0;text-align:center}
-    h1{font-size:clamp(34px,5vw,54px);line-height:1.05;margin:18px 0 10px;color:#fff}
-    .lede{font-size:clamp(16px,2.2vw,20px);color:#e5e7eb;opacity:.95}
-    .kicker{display:inline-flex;align-items:center;gap:8px;color:#c7d2fe;background:rgba(99,102,241,.15);border:1px solid rgba(99,102,241,.35);padding:6px 12px;border-radius:999px;font-weight:700}
+    /* HERO (match index/services/quote) */
+    .hero{padding:84px 0 28px; text-align:center; position:relative;}
+    .kicker{
+      display:inline-flex;align-items:center;gap:8px;
+      color:#c7d2fe;background:rgba(99,102,241,.15);
+      border:1px solid rgba(99,102,241,.35);
+      padding:6px 12px;border-radius:999px;font-weight:800;letter-spacing:.2px
+    }
+    h1.hero-title{
+      font-weight:800; color:#fff; line-height:.95; letter-spacing:-.02em;
+      font-size:clamp(40px,8.5vw,88px); margin:18px 0 10px;
+    }
+    .lede{
+      font-size:clamp(16px,2.2vw,22px);
+      color:#e5e7eb;opacity:.95;max-width:900px;margin:12px auto 0
+    }
+    .hero-actions{display:flex;gap:14px;margin-top:18px;flex-wrap:wrap;justify-content:center}
+    .btn{
+      display:inline-flex;align-items:center;gap:10px;
+      padding:16px 20px;border-radius:14px;font-weight:800;
+      box-shadow:0 12px 28px rgba(0,0,0,.25);
+      transition:transform .12s ease, box-shadow .2s ease, background .2s ease, border-color .2s ease, color .2s ease;
+      will-change:transform; cursor:pointer;
+    }
+    .btn:active{ transform:translateY(1px) scale(.99) }
+    .btn-primary{background:var(--accent);color:#111827;border:0}
+    .btn-primary:hover{ box-shadow:0 18px 40px rgba(242,107,29,.35) }
+    .btn-proper{
+      color:var(--ice);
+      background:linear-gradient(180deg, rgba(175,195,255,.10), rgba(175,195,255,.04));
+      border:1px solid rgba(175,195,255,.55);
+      box-shadow:0 10px 28px rgba(31,63,175,.18);
+    }
+    .btn-proper:hover{
+      background:linear-gradient(180deg, rgba(175,195,255,.18), rgba(175,195,255,.08));
+      border-color:rgba(175,195,255,.8);
+      box-shadow:0 0 22px rgba(31,63,175,.35), 0 16px 36px rgba(0,0,0,.35);
+      transform:translateY(-1px);
+    }
 
-    /* Gallery Grid */
+    /* FILTER BAR (icon tiles, matches index svc tiles) */
+    .filters{ margin-top:18px }
+    .filter-grid{
+      display:grid; grid-template-columns:repeat(5,1fr); gap:14px;
+      margin-top:14px;
+    }
+    @media (max-width:1100px){ .filter-grid{ grid-template-columns:repeat(3,1fr) } }
+    @media (max-width:680px){ .filter-grid{ grid-template-columns:repeat(2,1fr) } }
+
+    .filter-tile{
+      appearance:none; border:1px solid rgba(255,255,255,.10);
+      background:linear-gradient(180deg,rgba(16,23,42,.96),rgba(16,23,42,.72));
+      border-radius:18px; padding:14px;
+      display:grid; gap:8px; place-items:center;
+      color:#fff; font-weight:700; cursor:pointer;
+      transition: transform .12s ease, box-shadow .2s ease, border-color .2s ease, background .2s ease;
+    }
+    .filter-tile .ic{
+      display:grid; place-items:center; width:44px; height:44px; border-radius:12px;
+      background:rgba(242,107,29,.10); color:var(--accent);
+    }
+    .filter-tile svg{ width:26px; height:26px; stroke:currentColor; fill:none; stroke-width:2 }
+    .filter-tile:hover{
+      transform:translateY(-1px);
+      box-shadow:0 16px 36px rgba(242,107,29,.18);
+      border-color:rgba(242,107,29,.45);
+    }
+    .filter-tile.active{
+      border-color:rgba(242,107,29,.75);
+      box-shadow:0 16px 36px rgba(242,107,29,.22);
+      background:linear-gradient(180deg,rgba(24,33,60,.96),rgba(16,23,42,.78));
+    }
+
+    /* GALLERY GRID */
     .gallery-grid{
       display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
-      gap:24px;
-      margin-top:32px;
+      grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+      gap:18px;
+      margin-top:22px;
     }
     .gallery-item{
-      background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.02));
-      border:1px solid rgba(255,255,255,.12);
+      background:linear-gradient(180deg, rgba(6,10,20,.95), rgba(10,15,28,.88));
+      border:1px solid rgba(255,255,255,.10);
       border-radius:var(--radius);
       overflow:hidden;
-      transition:transform .2s ease, box-shadow .2s ease;
+      transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease;
       cursor:pointer;
     }
-    .gallery-item:hover{ transform:translateY(-4px); box-shadow:var(--shadow); }
-    .gallery-item img{
-      width:100%; height:250px; object-fit:cover; transition:transform .3s ease;
+    .gallery-item:hover{
+      transform:translateY(-3px);
+      box-shadow:0 16px 40px rgba(242,107,29,.22);
+      border-color:rgba(242,107,29,.35);
     }
-    .gallery-item:hover img{ transform:scale(1.05); }
+    .gallery-item img{
+      width:100%; height:240px; object-fit:cover; transition:transform .3s ease;
+    }
+    .gallery-item:hover img{ transform:scale(1.04); }
+    .cap{
+      padding:12px 14px; font-size:13px; color:#cbd5e1; display:flex; align-items:center; gap:8px;
+      border-top:1px solid rgba(255,255,255,.08);
+    }
+    .cap .dot{ width:8px; height:8px; border-radius:999px; background:var(--accent); opacity:.8 }
 
-    /* Loading & Error States */
-    .loading, .error{ text-align:center; padding:40px; color:var(--muted); }
+    /* STATES */
+    .loading, .error, .empty{ text-align:center; padding:40px; color:var(--muted); }
     .error{
       background:rgba(242,107,29,0.1);
       border:1px solid #F26B1D; border-radius:var(--radius); color:#F26B1D; margin:20px 0;
@@ -85,15 +173,13 @@
     }
     @keyframes spin{ to{ transform:rotate(360deg); } }
 
-    /* Responsive */
+    /* Responsive tweaks */
     @media (max-width:1024px){
       :root{--gutter:16px}
-      .gallery-grid{grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px}
     }
     @media (max-width:640px){
       :root{--gutter:12px}
-      .gallery-grid{grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
-      .gallery-item img{height:200px}
+      .gallery-item img{ height:200px }
     }
   </style>
 </head>
@@ -103,24 +189,99 @@
   <div id="header"></div>
 
   <main>
-    <!-- Hero -->
-    <section class="hero">
+    <!-- HERO -->
+    <section class="hero" aria-labelledby="hero-title">
       <div class="container">
         <span class="kicker">Recent Work • Trade Gallery</span>
-        <h1>Our Work</h1>
-        <p class="lede">A selection of recent signage projects — built in Manchester, fitted by professionals like you.</p>
+        <h1 id="hero-title" class="hero-title">Our Work</h1>
+        <p class="lede center">Built in Manchester, fitted by pros. Filter by type to find what you need — fast.</p>
+
+        <div class="hero-actions" role="group" aria-label="Quick actions">
+          <a class="btn btn-proper" href="contact.html#quote">Get a quote</a>
+          <a class="btn btn-primary" href="services.html">See services</a>
+        </div>
+
+        <!-- FILTER BAR -->
+        <div class="filters">
+          <div class="container">
+            <div class="filter-grid" role="tablist" aria-label="Filter gallery">
+              <!-- All -->
+              <button class="filter-tile active" role="tab" aria-selected="true" data-filter="all">
+                <div class="ic" aria-hidden="true">
+                  <svg viewBox="0 0 24 24">
+                    <rect x="3" y="3" width="7" height="7" rx="1"/>
+                    <rect x="14" y="3" width="7" height="7" rx="1"/>
+                    <rect x="3" y="14" width="7" height="7" rx="1"/>
+                    <rect x="14" y="14" width="7" height="7" rx="1"/>
+                  </svg>
+                </div>
+                <span>All</span>
+              </button>
+
+              <!-- 3D Acrylic -->
+              <button class="filter-tile" role="tab" aria-selected="false" data-filter="3d-acrylic">
+                <div class="ic" aria-hidden="true">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M4 20l8-16 8 16"/>
+                    <path d="M7.5 14h9"/>
+                  </svg>
+                </div>
+                <span>3D Acrylic</span>
+              </button>
+
+              <!-- Built-Up Metal -->
+              <button class="filter-tile" role="tab" aria-selected="false" data-filter="built-up-metal">
+                <div class="ic" aria-hidden="true">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M4 16V8l8-4 8 4v8l-8 4-8-4z"/>
+                    <path d="M12 4v16"/>
+                  </svg>
+                </div>
+                <span>Built-Up Metal</span>
+              </button>
+
+              <!-- Trays -->
+              <button class="filter-tile" role="tab" aria-selected="false" data-filter="trays">
+                <div class="ic" aria-hidden="true">
+                  <svg viewBox="0 0 24 24">
+                    <rect x="4" y="6" width="16" height="12" rx="2"/>
+                    <path d="M4 9h16"/>
+                  </svg>
+                </div>
+                <span>Trays</span>
+              </button>
+
+              <!-- Neon & Embedded -->
+              <button class="filter-tile" role="tab" aria-selected="false" data-filter="neon-embedded">
+                <div class="ic" aria-hidden="true">
+                  <svg viewBox="0 0 24 24">
+                    <!-- neon tube curve -->
+                    <path d="M4 16c0-4 4-4 6-2s6 2 10-2"/>
+                    <!-- end caps -->
+                    <circle cx="4" cy="16" r="1.5"/>
+                    <circle cx="20" cy="12" r="1.5"/>
+                  </svg>
+                </div>
+                <span>Neon &amp; Embedded</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
       </div>
     </section>
 
-    <!-- Gallery -->
-    <section>
+    <!-- GALLERY -->
+    <section aria-labelledby="gallery-heading">
       <div class="container">
+        <h2 id="gallery-heading" class="sr-only">Gallery</h2>
         <div id="loadingMessage" class="loading">
           <div class="spinner"></div>
-          <p>Loading gallery images...</p>
+          <p>Loading gallery images…</p>
         </div>
         <div id="errorMessage" class="error" style="display:none;"></div>
-        <div id="imageGallery" class="gallery-grid"></div>
+        <div id="emptyMessage" class="empty" style="display:none;">No images found for this category yet.</div>
+        <div id="imageGallery" class="gallery-grid" aria-live="polite"></div>
       </div>
     </section>
   </main>
@@ -128,7 +289,7 @@
   <!-- Footer include -->
   <div id="footer"></div>
 
-  <!-- Include header & footer -->
+  <!-- Includes -->
   <script>
     async function include(file, target){
       const res = await fetch(file);
@@ -139,36 +300,53 @@
     include('footer.html','footer');
   </script>
 
-  <!-- Supabase Gallery Loader (recursive under images/Flat Cut) -->
+  <!-- Supabase Gallery + Filters -->
   <script type="module">
     import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
-    // Supabase (public anon key is fine for read-only public bucket)
+    // Supabase client
     const supabase = createClient(
       "https://ketluxsokzvlqozcdwxo.supabase.co",
       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtldGx1eHNva3p2bHFvemNkd3hvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTUzNjAzOTIsImV4cCI6MjA3MDkzNjM5Mn0.NCPCOXJ4vD1PYb_sBgoyA6lSvkiRpb8IlA4X8XnltUs"
     );
 
     const BUCKET = "images";
-    const ROOT_FOLDER = "Flat Cut";  // set to "" to show the whole bucket
 
-    const imageGallery   = document.getElementById("imageGallery");
-    const loadingMessage = document.getElementById("loadingMessage");
-    const errorMessage   = document.getElementById("errorMessage");
+    // Map UI filter keys to folder paths inside the bucket
+    const CATEGORY_PATHS = {
+      "3d-acrylic": "3d-acrylic",
+      "built-up-metal": "built-up-metal",
+      "trays": "trays",
+      "neon-embedded": "neon-embedded"
+    };
+
+    // Elements
+    const gallery   = document.getElementById("imageGallery");
+    const loadingEl = document.getElementById("loadingMessage");
+    const errorEl   = document.getElementById("errorMessage");
+    const emptyEl   = document.getElementById("emptyMessage");
 
     const isImage = (name) =>
       ["jpg","jpeg","png","gif","webp","svg"].includes(name.split(".").pop().toLowerCase());
 
-    function showError(msg){
-      loadingMessage.style.display = "none";
-      errorMessage.innerHTML = msg;
-      errorMessage.style.display = "block";
+    function show(state){
+      loadingEl.style.display = state === 'loading' ? 'block' : 'none';
+      errorEl.style.display   = state === 'error'   ? 'block' : 'none';
+      emptyEl.style.display   = state === 'empty'   ? 'block' : 'none';
+      gallery.style.display   = state ? 'none' : 'grid';
     }
 
-    // Recursively list every image path under ROOT_FOLDER
-    async function listAll(path = ROOT_FOLDER) {
-      const listPath = path || ""; // bucket root if empty
-      const { data, error } = await supabase.storage.from(BUCKET).list(listPath, {
+    function setError(msg){
+      errorEl.innerHTML = msg;
+      show('error');
+    }
+
+    // Cache category -> [{url, name, path, cap}]
+    const cache = new Map();
+
+    async function listAll(path){
+      // Recursively list all images under a path
+      const { data, error } = await supabase.storage.from(BUCKET).list(path || "", {
         limit: 1000,
         sortBy: { column: "name", order: "asc" }
       });
@@ -188,42 +366,108 @@
       return files;
     }
 
-    async function loadGallery(){
-      try{
-        const files = await listAll();
-        loadingMessage.style.display = "none";
-        imageGallery.innerHTML = "";
+    async function loadCategory(catKey){
+      if (cache.has(catKey)) return cache.get(catKey);
 
-        if (!files.length) {
-          showError(`No images found under <b>${BUCKET}/${ROOT_FOLDER || "(root)"}</b>.`);
-          return;
-        }
+      const folder = CATEGORY_PATHS[catKey];
+      if (!folder) return [];
 
-        for (const fullPath of files) {
-          const { data: urlData } = supabase.storage.from(BUCKET).getPublicUrl(fullPath);
-          const url = urlData?.publicUrl;
-          if (!url) continue;
+      const paths = await listAll(folder);
+      const items = paths.map((fullPath) => {
+        const { data: urlData } = supabase.storage.from(BUCKET).getPublicUrl(fullPath);
+        const url = urlData?.publicUrl;
+        const name = fullPath.split("/").pop();
+        const cap  = (catKey.replace(/-/g,' ') + " • " + name).replace(/\.(jpg|jpeg|png|gif|webp|svg)$/i,'');
+        return { url, name, path: fullPath, cap };
+      }).filter(x => !!x.url);
 
-          const item = document.createElement("div");
-          item.className = "gallery-item";
+      cache.set(catKey, items);
+      return items;
+    }
 
-          const img = document.createElement("img");
-          img.src = url;
-          img.alt = fullPath.split("/").pop();
-          img.loading = "lazy";
+    async function loadAll(){
+      const cats = Object.keys(CATEGORY_PATHS);
+      const promises = cats.map(loadCategory);
+      const arrays = await Promise.all(promises);
+      // Flatten
+      return arrays.flat();
+    }
 
-          item.appendChild(img);
-          item.addEventListener("click", () => window.open(url, "_blank"));
-          imageGallery.appendChild(item);
-        }
-      } catch(err){
-        console.error(err);
-        showError(`Error loading gallery: ${err.message}`);
+    function render(items){
+      gallery.innerHTML = "";
+      if (!items.length){
+        show('empty');
+        return;
+      }
+      show(null);
+      for (const it of items){
+        const card = document.createElement("div");
+        card.className = "gallery-item";
+
+        const img = document.createElement("img");
+        img.src = it.url;
+        img.alt = it.name;
+        img.loading = "lazy";
+
+        const cap = document.createElement("div");
+        cap.className = "cap";
+        cap.innerHTML = `<span class="dot" aria-hidden="true"></span><span>${it.cap}</span>`;
+
+        card.appendChild(img);
+        card.appendChild(cap);
+        card.addEventListener("click", () => window.open(it.url, "_blank"));
+        gallery.appendChild(card);
       }
     }
 
-    loadGallery();
+    async function applyFilter(key){
+      try{
+        show('loading');
+        let items = [];
+        if (key === 'all'){
+          items = await loadAll();
+        } else {
+          items = await loadCategory(key);
+        }
+        // Optional: newest first by filename timestamp if present
+        items.sort((a,b) => a.name < b.name ? 1 : -1);
+        render(items);
+      } catch(err){
+        console.error(err);
+        setError(`Error loading gallery: ${err.message}`);
+      }
+    }
+
+    // Filter UI handling
+    const tiles = Array.from(document.querySelectorAll(".filter-tile"));
+    function setActive(key){
+      tiles.forEach(btn => {
+        const on = btn.dataset.filter === key;
+        btn.classList.toggle("active", on);
+        btn.setAttribute("aria-selected", on ? "true" : "false");
+      });
+    }
+
+    tiles.forEach(btn => {
+      btn.addEventListener("click", () => {
+        const key = btn.dataset.filter;
+        // Update hash for shareable deep-link
+        history.replaceState(null, "", key === "all" ? "#all" : `#${key}`);
+        setActive(key);
+        applyFilter(key);
+      });
+    });
+
+    // Deep-link support: #trays etc.
+    const hashKey = (location.hash || "#all").replace("#","");
+    const startKey = tiles.some(t => t.dataset.filter === hashKey) ? hashKey : "all";
+    setActive(startKey);
+    applyFilter(startKey);
   </script>
+
+  <style>
+    /* Visually hidden utility for headings */
+    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+  </style>
 </body>
 </html>
-
