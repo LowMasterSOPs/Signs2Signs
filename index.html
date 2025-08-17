@@ -34,8 +34,8 @@
       -moz-osx-font-smoothing:grayscale;
       scroll-behavior:smooth;
     }
-
     body{ padding-left:var(--gutter); padding-right:var(--gutter); }
+    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 
     body::before{
       content:""; position:fixed; inset:0; pointer-events:none;
@@ -46,9 +46,7 @@
     }
 
     @media (max-width:768px){
-      html,body{
-        background: linear-gradient(180deg,#0B1B4A 0%,#0A0F1C 60%);
-      }
+      html,body{ background: linear-gradient(180deg,#0B1B4A 0%,#0A0F1C 60%); }
     }
 
     a{color:var(--accent);text-decoration:none}
@@ -67,24 +65,17 @@
       border:1px solid rgba(99,102,241,.35);
       padding:6px 12px;border-radius:999px;font-weight:800;letter-spacing:.2px
     }
-
-    /* BIG billboard headline */
     h1.hero-title{
       font-weight:800;
       margin:18px 0 10px;color:#fff;
-      line-height:.95;
-      letter-spacing:-.02em;
+      line-height:.95; letter-spacing:-.02em;
       font-size:clamp(48px,10vw,120px);
     }
     .hero-title .mint{
       background: linear-gradient(90deg,#F26B1D 0%, #FFC09A 50%, #F26B1D 100%);
       -webkit-background-clip:text; background-clip:text; color:transparent;
-      position:relative;
     }
-    .hero-title .proper{
-      color:#AFC3FF;
-      text-shadow:0 4px 30px rgba(31,63,175,.35);
-    }
+    .hero-title .proper{ color:#AFC3FF; text-shadow:0 4px 30px rgba(31,63,175,.35); }
 
     .lede{
       font-size:clamp(16px,2.2vw,22px);
@@ -92,11 +83,11 @@
     }
 
     .hero-actions{display:flex;gap:14px;margin-top:22px;flex-wrap:wrap;justify-content:center}
-
     .btn{
       display:inline-flex;align-items:center;gap:10px;
       padding:16px 20px;border-radius:14px;font-weight:800;
-      box-shadow:0 12px 28px rgba(0,0,0,.25); transition:transform .1s ease, box-shadow .2s ease, background .2s ease;
+      box-shadow:0 12px 28px rgba(0,0,0,.25);
+      transition:transform .1s ease, box-shadow .2s ease, background .2s ease;
       will-change:transform;
     }
     .btn:active{ transform:translateY(1px) scale(.99) }
@@ -105,13 +96,9 @@
     .btn-outline{border:1px solid rgba(255,255,255,.25);color:#e5e7eb;background:transparent}
     .btn-outline:hover{ background:rgba(255,255,255,.06) }
 
-    /* Fun badges row (ticker-lite) */
-    .badges{
-      margin-top:22px; overflow:hidden; mask-image:linear-gradient(90deg,transparent,black 10%, black 90%, transparent);
-    }
-    .badge-track{
-      display:flex; gap:14px; white-space:nowrap; animation:slide 20s linear infinite;
-    }
+    /* Badges */
+    .badges{ margin-top:22px; overflow:hidden; mask-image:linear-gradient(90deg,transparent,black 10%, black 90%, transparent) }
+    .badge-track{ display:flex; gap:14px; white-space:nowrap; animation:slide 20s linear infinite }
     .badge{border:1px solid rgba(255,255,255,.18); padding:8px 12px; border-radius:999px; color:#cbd5e1; background:rgba(255,255,255,.06)}
     @keyframes slide { from{ transform:translateX(0)} to{ transform:translateX(-50%) } }
     @media (prefers-reduced-motion:reduce){ .badge-track{ animation:none } }
@@ -120,60 +107,57 @@
     section h2{color:#fff;font-size:clamp(26px,3.6vw,40px);margin:0 0 18px;text-align:center}
     section p{color:#cbd5e1;margin:0 0 10px}
 
-    /* Cards — more padding + orange tone + accent bar */
+    /* ===== Feature Cards: 4-up, dark bg, orange titles ===== */
     .cards{
-      display:grid;grid-template-columns:repeat(3,1fr);gap:22px;
+      display:grid;grid-template-columns:repeat(4,1fr);gap:22px;
     }
     .card{
-      position:relative;
-      background:
-        linear-gradient(180deg, rgba(242,107,29,.10), rgba(242,107,29,.04)),
-        linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
-      border:1px solid rgba(255,255,255,.12);
+      background:linear-gradient(180deg, rgba(6,10,20,.95), rgba(10,15,28,.88));
+      border:1px solid rgba(255,255,255,.10);
       border-radius:22px;
-      padding:28px;
+      padding:30px;
       box-shadow:0 8px 24px rgba(0,0,0,.18);
       transition:transform .15s ease, box-shadow .2s ease, border-color .2s ease;
+      color:#fff;
     }
-    .card::before{
-      content:""; position:absolute; inset:0 0 auto 0; height:3px; border-top-left-radius:22px; border-top-right-radius:22px;
-      background:linear-gradient(90deg, rgba(242,107,29,1) 0%, rgba(255,190,150,1) 50%, rgba(242,107,29,1) 100%);
-      opacity:.9;
+    .card h3{
+      margin:0 0 10px;
+      color:var(--accent);
+      letter-spacing:.2px;
+      font-size:clamp(18px,2vw,22px);
     }
+    .card p{ margin:0; color:#e9edf3 }
     .card:hover{
       transform:translateY(-3px);
-      box-shadow:0 16px 40px rgba(242,107,29,.25);
+      box-shadow:0 16px 40px rgba(242,107,29,.22);
       border-color:rgba(242,107,29,.45);
     }
-    .card h3{ margin:4px 0 8px; font-size:clamp(18px,2.2vw,22px) }
-    .card p{ margin:0; color:#dbe2ea }
 
-    /* Services grid — thicker padding + orange edge + active hover */
-    .services{
-      display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:14px;
+    /* ===== Services icon grid: 6 tiles with SVG icons ===== */
+    .svc-icons{
+      display:grid; grid-template-columns:repeat(6,1fr); gap:16px; margin-top:20px;
     }
-    .svc{
-      position:relative;
-      background:linear-gradient(180deg,rgba(16,23,42,.92),rgba(16,23,42,.65));
-      border:1px solid rgba(255,255,255,.12);
-      border-radius:20px;
-      padding:22px;
-      display:grid;gap:6px;
-      transition: transform .15s ease, box-shadow .2s ease, background .2s ease, border-color .2s ease;
+    .svc-tile{
+      background:linear-gradient(180deg,rgba(16,23,42,.96),rgba(16,23,42,.72));
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:18px;
+      padding:18px;
+      text-align:center;
+      display:grid; gap:10px; align-content:center; justify-items:center;
+      transition: transform .15s ease, box-shadow .2s ease, border-color .2s ease;
     }
-    .svc::after{
-      content:""; position:absolute; inset:auto 10px 10px 10px; height:2px;
-      background:linear-gradient(90deg, rgba(242,107,29,.75), rgba(242,107,29,0));
-      border-radius:2px; opacity:.7;
-    }
-    .svc strong{ font-size:clamp(16px,1.9vw,20px) }
-    .svc span{ color:#cbd5e1 }
-    .svc:hover{
+    .svc-tile:hover{
       transform:translateY(-2px);
-      box-shadow:0 16px 36px rgba(242,107,29,.20);
-      background:linear-gradient(180deg,rgba(24,33,60,.96),rgba(16,23,42,.72));
+      box-shadow:0 16px 36px rgba(242,107,29,.18);
       border-color:rgba(242,107,29,.55);
     }
+    .svc-tile .ic{
+      display:grid; place-items:center;
+      width:48px; height:48px; border-radius:12px;
+      background:rgba(242,107,29,.10); color:var(--accent);
+    }
+    .svc-tile svg{ width:28px; height:28px; stroke:currentColor; fill:none; stroke-width:2; }
+    .svc-tile strong{ color:#fff; font-size:14px }
 
     .center{text-align:center}
 
@@ -194,17 +178,18 @@
     }
 
     /* Responsive */
+    @media (max-width:1200px){ .svc-icons{ grid-template-columns:repeat(3,1fr) } }
     @media (max-width:1024px){
       :root{--gutter:16px}
-      .services{grid-template-columns:repeat(2,1fr)}
       .cards{grid-template-columns:repeat(2,1fr)}
+    }
+    @media (max-width:780px){
+      .svc-icons{ grid-template-columns:repeat(2,1fr) }
     }
     @media (max-width:640px){
       :root{--gutter:12px}
-      .cards,.services{grid-template-columns:1fr}
+      .cards{grid-template-columns:1fr}
       .container, section, .hero, .center { text-align:center; }
-      .cards, .services { justify-items:center; }
-      .card, .svc { text-align:center; justify-items:center; }
       .kicker { margin-inline:auto; }
       .hero-actions { justify-content:center; }
       .sticky-cta{ display:flex }
@@ -259,64 +244,105 @@
       </div>
     </section>
 
+    <!-- 4 dark feature cards -->
     <section aria-labelledby="why-us">
       <div class="container">
         <h2 id="why-us">Built here. Built to last. Built for trade.</h2>
         <div class="cards">
           <div class="card">
-            <h3>In-house kit</h3>
-            <p>CNC routing, laser, print and fabrication under one roof. Quicker turnarounds and tighter QC.</p>
+            <h3>Experience + Innovation</h3>
+            <p>From 3D acrylic letters to aluminium trays, every sign is built to the highest standard. Craft meets state-of-the-art kit.</p>
           </div>
           <div class="card">
-            <h3>No nonsense</h3>
-            <p>Clear pricing, proper materials, updates as we go. If it won’t work, we’ll tell you.</p>
+            <h3>Speed + Capacity</h3>
+            <p>One-offs or high-volume rollouts across the UK & Europe — we’ve got the people and machines to deliver on time.</p>
           </div>
           <div class="card">
-            <h3>Trade supply, UK-wide</h3>
-            <p>You design, we make. Courier delivery or collection from Manchester.</p>
+            <h3>All Shapes + Sizes</h3>
+            <p>Flat cut logos, built-up acrylics, composite trays — internal or external. If it can be made, we’ll make it proper.</p>
+          </div>
+          <div class="card">
+            <h3>Trusted Trade Partner</h3>
+            <p>Behind the scenes for nationals and independents alike. We help our trade clients hit deadlines without compromise.</p>
           </div>
         </div>
       </div>
     </section>
 
+    <!-- Services with icons -->
     <section id="services" aria-labelledby="what-we-make">
       <div class="container">
         <h2 id="what-we-make">What we’re built for</h2>
-        <p class="lede">
-          With over 20 years in the game, Signs2Signs has earned a reputation for
-          <strong>quality, imagination and proper graft</strong>. Our team combines
-          traditional skill with modern kit to push signage into the future.
-        </p>
+        <p class="lede">Specialist manufacturing for the trade — from precision cutting to crisp illumination and tidy finishes.</p>
 
-        <div class="cards">
-          <div class="card">
-            <h3>Experience + Innovation</h3>
-            <p>From 3D acrylic letters to aluminium trays, every sign is built to the
-              highest standard. We blend craftsmanship with state-of-the-art machinery.</p>
-          </div>
-          <div class="card">
-            <h3>Speed + Capacity</h3>
-            <p>Whether it’s one-offs for local sign makers or high-volume rollouts
-              across the UK & Europe, we’ve got the people and the machines to deliver.</p>
-          </div>
-          <div class="card">
-            <h3>All Shapes + Sizes</h3>
-            <p>Flat cut logos, built-up acrylics, composite trays — internal or external.
-              If it can be made, we’ll make it proper.</p>
-          </div>
-          <div class="card">
-            <h3>Trusted Trade Partner</h3>
-            <p>We work behind the scenes for national names and independent sign shops
-              alike, helping our trade customers hit deadlines without compromise.</p>
-          </div>
-        </div>
+        <div class="svc-icons" role="list">
+          <!-- 3D Acrylic -->
+          <a class="svc-tile" href="services.html#acrylic-3d" role="listitem" aria-label="3D Acrylic Letters">
+            <div class="ic" aria-hidden="true">
+              <!-- 3D 'A' hint -->
+              <svg viewBox="0 0 24 24">
+                <path d="M4 20l8-16 8 16" />
+                <path d="M7.5 14h9" />
+              </svg>
+            </div>
+            <strong>3D Acrylic</strong>
+          </a>
 
-        <!-- Services links with orange edge -->
-        <div class="services">
-          <a class="svc" href="services.html#fascia"><strong>Shopfront &amp; Fascia Trays</strong><span class="muted">Powder-coated trays, stand-offs, tidy finishes.</span></a>
-          <a class="svc" href="services.html#illuminated"><strong>Illuminated &amp; LED</strong><span class="muted">Halo, face-lit, opal backs — bright where it matters.</span></a>
-          <a class="svc" href="services.html#cnc"><strong>CNC Cut Letters &amp; Logos</strong><span class="muted">Acrylic, aluminium, foamex — crisp edges.</span></a>
-          <a class="svc" href="services.html#print"><strong>Vinyl &amp; Large Format</strong><span class="muted">Windows, walls, vehicles and banners — we print, you fit.</span></a>
+          <!-- Sign Trays -->
+          <a class="svc-tile" href="services.html#trays" role="listitem" aria-label="Sign Trays">
+            <div class="ic" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <rect x="4" y="6" width="16" height="12" rx="2" />
+                <path d="M4 9h16" />
+              </svg>
+            </div>
+            <strong>Sign Trays</strong>
+          </a>
+
+          <!-- Illumination -->
+          <a class="svc-tile" href="services.html#illuminated" role="listitem" aria-label="Illumination">
+            <div class="ic" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="3" />
+                <path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.5 5.5l2.1 2.1M16.4 16.4l2.1 2.1M5.5 18.5l2.1-2.1M16.4 7.6l2.1-2.1" />
+              </svg>
+            </div>
+            <strong>Illumination</strong>
+          </a>
+
+          <!-- Built-up Metal -->
+          <a class="svc-tile" href="services.html#built-metal" role="listitem" aria-label="Built-up Metal Letters">
+            <div class="ic" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <path d="M4 16V8l8-4 8 4v8l-8 4-8-4z" />
+                <path d="M12 4v16" />
+              </svg>
+            </div>
+            <strong>Built-Up Metal</strong>
+          </a>
+
+          <!-- Vinyl -->
+          <a class="svc-tile" href="services.html#vinyl" role="listitem" aria-label="Vinyl">
+            <div class="ic" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <path d="M5 7c4-2 10-2 14 0v10c-4 2-10 2-14 0V7z" />
+                <path d="M9 10l6 0M9 14l4 0" />
+              </svg>
+            </div>
+            <strong>Vinyl</strong>
+          </a>
+
+          <!-- Print -->
+          <a class="svc-tile" href="services.html#print" role="listitem" aria-label="Print & Large Format">
+            <div class="ic" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <rect x="6" y="3" width="12" height="6" rx="1" />
+                <rect x="5" y="11" width="14" height="10" rx="1" />
+                <path d="M8 15h8" />
+              </svg>
+            </div>
+            <strong>Print</strong>
+          </a>
         </div>
       </div>
     </section>
