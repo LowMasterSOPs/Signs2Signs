@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Signs2Signs Blog | Trade Signage Tips & Updates</title>
-  <meta name="description" content="Latest tips, projects & updates from the Signs2Signs workshop. Built in Manchester, supplied UK-wide.">
-  <link rel="icon" type="image/svg+xml" href="/public/S2S.svg">
+  <title>Blog | Signs2Signs</title>
+  <meta name="description" content="Trade signage insights, case studies, and updates from Signs2Signs.">
+  <link rel="icon" type="image/svg+xml" href="public/S2S.svg">
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,37 +13,36 @@
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700&display=swap" rel="stylesheet">
 
   <style>
-    :root{
-      --brand:#0B1B4A; --brand-2:#1F3FAF;
-      --accent:#F26B1D; --bg:#0A0F1C;
-      --muted:#9CA3AF;
-      --radius:20px; --shadow:0 10px 30px rgba(0,0,0,.25);
-      --gutter:24px;
+    body {
+      margin:0;
+      font-family:Manrope,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,'Helvetica Neue',Arial,sans-serif;
+      background:linear-gradient(180deg,#0B1B4A 0%,#0A0F1C 60%);
+      color:#f8fafc;
     }
-    html,body{margin:0;padding:0;font-family:Manrope,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,'Helvetica Neue',Arial,sans-serif;color:#f8fafc;background:linear-gradient(180deg,#0B1B4A 0%,#0A0F1C 60%);}
-    body{padding-left:var(--gutter);padding-right:var(--gutter);}
-    a{color:var(--accent);text-decoration:none}
-    img{max-width:100%;display:block}
-    .container{max-width:1200px;margin:0 auto}
-    .center{text-align:center}
-    section{padding:48px 0}
-    .page-hero{padding:64px 0;text-align:center}
-    .page-hero h1{font-size:clamp(34px,5vw,54px);margin:0 0 10px}
-    .kicker{display:inline-flex;align-items:center;gap:8px;color:#c7d2fe;background:rgba(99,102,241,.15);border:1px solid rgba(99,102,241,.35);padding:6px 12px;border-radius:999px;font-weight:700}
-    .lede{color:#e5e7eb}
-
-    /* Pills / filters */
-    .pills{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:18px 0 8px}
-    .pill{padding:8px 14px;border-radius:999px;border:1px solid rgba(255,255,255,.2);background:#111827;color:#fff;cursor:pointer;font-weight:700}
-    .pill.active{background:var(--accent);color:#0b0b0b;border-color:transparent}
-
-    /* Grid cards */
-    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:22px}
-    @media (max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}}
-    @media (max-width:600px){.grid{grid-template-columns:1fr}}
-    .card{background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.03));border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:14px;display:flex;flex-direction:column}
-    .card img{border-radius:14px;aspect-ratio:16/9;object-fit:cover;width:100%}
-    .meta{display:flex;gap:10px;align-items:center;color:#cbd5e1;font-size:.9rem;margin:8px 0}
+    .container{max-width:1200px;margin:0 auto;padding:32px 24px}
+    h1{font-size:clamp(32px,5vw,48px);margin-bottom:24px}
+    .post-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:24px}
+    .post-card{
+      background:rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.1);
+      border-radius:16px;
+      overflow:hidden;
+      display:flex;flex-direction:column;
+    }
+    .post-card img{width:100%;aspect-ratio:16/9;object-fit:cover}
+    .post-card h3{margin:16px;font-size:20px}
+    .post-card p{margin:0 16px 16px;color:#cbd5e1}
+    .post-meta{margin:0 16px 16px;font-size:14px;color:#9CA3AF}
+    .filters{display:flex;gap:12px;margin-bottom:32px;flex-wrap:wrap}
+    .filters button{
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.15);
+      color:#fff;
+      padding:6px 14px;
+      border-radius:999px;
+      cursor:pointer;
+    }
+    .filters button.active{background:#F26B1D;color:#111827}
   </style>
 </head>
 <body>
@@ -51,125 +50,60 @@
   <!-- Header include -->
   <div id="header"></div>
 
-  <main>
-    <section class="page-hero">
-      <div class="container">
-        <span class="kicker">Shop Talk • Tips • Builds</span>
-        <h1>Blog</h1>
-        <p class="lede">Notes from the workshop: materials, methods and finished jobs.</p>
-
-        <!-- Sort -->
-        <div class="pills" id="sortbar">
-          <button class="pill active" data-sort="new">Newest</button>
-          <button class="pill" data-sort="views">Top Viewed</button>
-          <button class="pill" data-sort="likes">Most Liked</button>
-        </div>
-
-        <!-- Tags -->
-        <div class="pills" id="tagbar"></div>
-      </div>
-    </section>
-
-    <!-- Posts -->
-    <section class="container">
-      <div id="grid" class="grid"></div>
-      <p class="center" id="empty" style="display:none;">No posts yet.</p>
-    </section>
+  <main class="container">
+    <h1>Signs2Signs Blog</h1>
+    <div class="filters">
+      <button data-sort="new" class="active">Newest</button>
+      <button data-sort="views">Top Viewed</button>
+      <button data-sort="likes">Most Liked</button>
+    </div>
+    <div id="posts" class="post-grid"></div>
   </main>
 
   <!-- Footer include -->
   <div id="footer"></div>
 
-  <!-- Shared client (lives in the same /blog/ folder) -->
-  <script type="module" src="./blog.js"></script>
-
-  <!-- Page logic -->
   <script type="module">
-    import { fetchPosts, fetchTags } from './blog.js';
+    import { includePartials, fetchPosts } from "./blog.js"
 
-    // Include header/footer from site root:
-    async function include(file, target){
-      try{
-        const res = await fetch(file, { cache: 'no-store' });
-        if(!res.ok) throw new Error(res.status + ' ' + res.statusText);
-        document.getElementById(target).innerHTML = await res.text();
-      }catch(err){
-        console.error('Include failed:', file, err);
-        const el = document.getElementById(target);
-        if(el) el.innerHTML = '<div style="padding:12px;color:#fca5a5;background:#1f2937;border-radius:8px;">Failed to load '+file+'</div>';
-      }
-    }
-    include('/header.html','header');  // if your header/footer are NOT at root, switch to ../
-    include('/footer.html','footer');
+    // load header/footer
+    includePartials()
 
-    const sortbar = document.getElementById('sortbar');
-    const tagbar  = document.getElementById('tagbar');
-    const grid    = document.getElementById('grid');
-    const empty   = document.getElementById('empty');
+    const postsEl = document.getElementById("posts")
+    const filterButtons = document.querySelectorAll(".filters button")
 
-    let currentSort = 'new';
-    let currentTag  = null;
+    async function loadPosts(sort="new"){
+      postsEl.innerHTML = "<p>Loading…</p>"
+      const { data, error } = await fetchPosts({ sort })
+      if(error){ postsEl.innerHTML = "<p>Error loading posts</p>"; return }
 
-    sortbar.addEventListener('click', e=>{
-      const b = e.target.closest('[data-sort]'); if(!b) return;
-      sortbar.querySelectorAll('.pill').forEach(p=>p.classList.remove('active'));
-      b.classList.add('active');
-      currentSort = b.dataset.sort;
-      load();
-    });
-
-    tagbar.addEventListener('click', e=>{
-      const b = e.target.closest('[data-tag]'); if(!b) return;
-      tagbar.querySelectorAll('.pill').forEach(p=>p.classList.remove('active'));
-      b.classList.add('active');
-      currentTag = b.dataset.tag;
-      load();
-    });
-
-    async function renderTags(){
-      try{
-        const tags = await fetchTags();
-        tagbar.innerHTML = (tags||[]).map(t=>`<button class="pill" data-tag="${t}">${t}</button>`).join('');
-      }catch(err){
-        console.error('Tags load error:', err);
-      }
+      postsEl.innerHTML = ""
+      data.forEach(post=>{
+        const card = document.createElement("a")
+        card.href = `post.html?slug=${post.slug}`
+        card.className = "post-card"
+        card.innerHTML = `
+          ${post.main_image_url ? `<img src="${post.main_image_url}" alt="${post.title}">` : ""}
+          <h3>${post.title}</h3>
+          <p>${post.description || ""}</p>
+          <div class="post-meta">
+            ${new Date(post.published_at).toLocaleDateString()} · 👁 ${post.views_count} · ❤️ ${post.likes_count}
+          </div>
+        `
+        postsEl.appendChild(card)
+      })
     }
 
-    async function load(){
-      grid.innerHTML = '<p class="center" style="grid-column:1/-1;">Loading…</p>';
-      try{
-        const { data } = await fetchPosts({ sort: currentSort, tag: currentTag });
-        if(!data || data.length===0){
-          grid.innerHTML = '';
-          empty.style.display = 'block';
-          return;
-        }
-        empty.style.display = 'none';
-        grid.innerHTML = data.map(p=>{
-          const href = `./post.html?slug=${encodeURIComponent(p.slug)}`;
-          return `
-            <article class="card">
-              ${p.main_image_url ? `<a class="cardlink" href="${href}"><img src="${p.main_image_url}" alt=""></a>` : ''}
-              <a class="cardlink" href="${href}">
-                <h3 style="color:#F26B1D;margin:10px 0;">${p.title}</h3>
-                <div class="meta">
-                  <span>${new Date(p.published_at || p.created_at).toLocaleDateString('en-GB')}</span>
-                  <span>•</span><span>${p.views_count||0} views</span>
-                  <span>•</span><span>❤ ${p.likes_count||0}</span>
-                </div>
-                ${p.description ? `<p style="color:#cbd5e1;margin:0 0 6px;">${p.description}</p>` : ''}
-              </a>
-            </article>
-          `;
-        }).join('');
-      }catch(err){
-        console.error('Posts load error:', err);
-        grid.innerHTML = '<p class="center" style="grid-column:1/-1;">Couldn’t load posts. Check console.</p>';
-      }
-    }
+    filterButtons.forEach(btn=>{
+      btn.addEventListener("click",()=>{
+        filterButtons.forEach(b=>b.classList.remove("active"))
+        btn.classList.add("active")
+        loadPosts(btn.dataset.sort)
+      })
+    })
 
-    await renderTags();
-    await load();
+    loadPosts()
   </script>
 </body>
 </html>
+
