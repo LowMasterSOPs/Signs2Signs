@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title id="meta-title">Post | Signs2Signs</title>
+  <meta id="meta-desc" name="description" content="">
+  <link rel="icon" type="image/svg+xml" href="/public/S2S.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root{ --accent:#F26B1D; --gutter:24px; }
+    body{ margin:0; font-family:Manrope,system-ui,sans-serif; color:#f8fafc;
+      background:linear-gradient(180deg,#0B1B4A 0%,#0A0F1C 60%); padding:0 var(--gutter);}
+    .container{ max-width:900px; margin:0 auto; }
+    .hero{ text-align:center; padding:48px 0; }
+    .kicker{ display:inline-flex; align-items:center; gap:8px; color:#c7d2fe; background:rgba(99,102,241,.15); border:1px solid rgba(99,102,241,.35); padding:6px 12px; border-radius:999px; font-weight:700;}
+    h1{ font-size:clamp(30px,5vw,46px); margin:14px 0 10px;}
+    .meta{ color:#cbd5e1; }
+    .mainimg{ border-radius:16px; width:100%; aspect-ratio:16/9; object-fit:cover; }
+    .content{ background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.03)); border:1px solid rgba(255,255,255,.1); border-radius:18px; padding:20px; }
+    .content img{ max-width:100%; border-radius:12px; }
+    .extras{ display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:14px;}
+    @media (max-width:900px){ .extras{ grid-template-columns:repeat(2,1fr);} }
+    @media (max-width:600px){ .extras{ grid-template-columns:1fr;} }
+    .tags{ display:flex; gap:8px; flex-wrap:wrap; margin-top:12px; }
+    .tag{ font-size:.85rem; border:1px solid rgba(255,255,255,.15); padding:4px 8px; border-radius:999px; }
+    .like{ display:inline-flex; align-items:center; gap:8px; border:1px solid rgba(255,255,255,.2); padding:8px 12px; border-radius:999px; cursor:pointer; }
+    .share{ display:flex; gap:10px; margin-top:12px; }
+  </style>
+</head>
+<body>
+  <div id="header"></div>
+
+  <main class="container">
+    <section class="hero">
+      <span class="kicker">Blog</span>
+      <h1 id="title">Loading…</h1>
+      <p class="meta"><span id="date"></span> • <span id="views">0</span> views • ❤ <span id="likes">0</span></p>
+    </section>
+
+    <section>
+      <img id="mainimg" class="mainimg" alt="">
+      <div class="tags" id="tags"></div>
+    </section>
+
+    <section class="content" id="content"></section>
+
+    <section>
+      <div class="extras" id="extras"></div>
+      <div style="display:flex;gap:12px;margin-top:16px;">
+        <button id="likeBtn" class="like">❤ Like</button>
+        <div class="share" id="share"></div>
+      </div>
+    </section>
+  </main>
+
+  <div id="footer"></div>
+
+  <script type="module">
+    import { supabase, fetchPostBySlug, fetchPostExtras, addView, addLike } from '/blog/blog.js';
+
+    const params = new URLSearchParams(location.search);
+    const slug = params.get('slug');
+
+    // includes
+    (async function include(file, target){
+      const res = await fetch(file); const html = await res.text();
+      document.getElementById(target).innerHTML = html;
+    })('header.html','header');
+    (async function includeF(file, target){
+      const res = await fetch(file); const html = await res.text();
+      document.getElementById(target).innerHTML = html;
+    })('footer.html','footer');
+
+    (async ()=>{
+      const p = await fetchPostBySlug(slug);
+      if(!p){ document.getElementById('title').textContent='Not found'; return; }
+
+      // Basic meta (client-side; for true SEO you'd SSR this)
+      document.getElementById('meta-title').textContent = `${p.title} | Signs2Signs`;
+      document.getElementById('meta-desc').setAttribute('content', p.description || '');
+
+      document.getElementById('title').textContent = p.title;
+      document.getElementById('date').textContent = new Date(p.published_at || p.created_at).toLocaleDateString('en-GB');
+      document.getElementById('views').textContent = p.views_count || 0;
+      document.getElementById('likes').textContent = p.likes_count || 0;
+
+      const mainimg = document.getElementById('mainimg');
+      if(p.main_image_url){ mainimg.src = p.main_image_url; mainimg.alt = p.title; } else { mainimg.style.display='none'; }
+
+      // Body: you can store HTML or Markdown (render markdown client-side if you prefer)
+      document.getElementById('content').innerHTML = p.body;
+
+      const extras = await fetchPostExtras(p.id);
+      // tags
+      const tagsWrap = document.getElementById('tags');
+      extras.tags.forEach(t => tagsWrap.insertAdjacentHTML('beforeend', `<span class="tag">${t}</span>`));
+      // extra images
+      const ex = document.getElementById('extras');
+      extras.images.forEach(img => {
+        ex.insertAdjacentHTML('beforeend', `<img src="${img.image_url}" alt="${img.alt||''}">`);
+      });
+
+      // increment view (do after render)
+      await addView(p.id);
+
+      // likes
+      document.getElementById('likeBtn').addEventListener('click', async ()=>{
+        const ok = await addLike(p.id);
+        if(ok){ const likes = document.getElementById('likes'); likes.textContent = (+likes.textContent)+1; }
+      });
+
+      // share
+      const url = location.href;
+      const share = document.getElementById('share');
+      share.innerHTML = `
+        <a href="https://x.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(p.title)}" target="_blank" rel="noopener">X</a>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}" target="_blank" rel="noopener">Facebook</a>
+        <a href="https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="#" id="copy">Copy Link</a>
+      `;
+      share.querySelector('#copy').addEventListener('click', (e)=>{
+        e.preventDefault(); navigator.clipboard.writeText(url);
+        e.target.textContent='Copied!'; setTimeout(()=>e.target.textContent='Copy Link', 1200);
+      });
+    })();
+  </script>
+</body>
+</html>
