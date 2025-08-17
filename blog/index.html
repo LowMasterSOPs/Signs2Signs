@@ -3,121 +3,148 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Blog | Signs2Signs</title>
-  <link rel="stylesheet" href="../style.css">
+  <title>Signs2Signs Blog | Trade Signage Tips & Updates</title>
+  <meta name="description" content="Latest tips, projects & updates from the Signs2Signs workshop. Built in Manchester, supplied UK-wide.">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" type="image/svg+xml" href="/public/S2S.svg">
 
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- Base Styles -->
   <style>
-    main { max-width: 1000px; margin: 0 auto; padding: 40px 20px; }
-    .blog-header { text-align: center; margin-bottom: 30px; }
-    .filters { display:flex; gap:10px; justify-content:center; margin:20px 0; flex-wrap:wrap; }
-    .filters button { padding:8px 14px; border:0; border-radius:20px; cursor:pointer; font-weight:600; }
-    .filters button.active { background:var(--accent); color:#111; }
-    .tags { text-align:center; margin: 20px 0; }
-    .tags button { margin:4px; padding:6px 12px; border:1px solid var(--accent); background:none; color:var(--accent); border-radius:14px; cursor:pointer; font-size:14px; }
-    .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:24px; }
-    .post-card { background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,.12); border-radius:16px; overflow:hidden; display:flex; flex-direction:column; }
-    .post-card img { width:100%; height:180px; object-fit:cover; }
-    .post-card .content { padding:16px; flex:1; display:flex; flex-direction:column; }
-    .post-card h3 { margin:0 0 8px; font-size:18px; }
-    .post-card p { flex:1; color:#cbd5e1; font-size:14px; margin:0 0 12px; }
-    .meta { font-size:12px; color:#9ca3af; }
+    :root{
+      --brand:#0B1B4A; --brand-2:#1F3FAF;
+      --accent:#F26B1D; --bg:#0A0F1C;
+      --muted:#9CA3AF;
+      --radius:20px; --shadow:0 10px 30px rgba(0,0,0,.25);
+      --gutter:24px;
+    }
+    html,body{margin:0;padding:0;font-family:Manrope,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,'Helvetica Neue',Arial,sans-serif;color:#f8fafc;background:#0A0F1C;}
+    body{padding-left:var(--gutter);padding-right:var(--gutter);}
+    a{color:var(--accent);text-decoration:none}
+    img{max-width:100%;display:block}
+    .container{max-width:1200px;margin:0 auto}
+    .center{text-align:center}
+    section{padding:64px 0}
+    section h2{color:#fff;font-size:clamp(26px,3.6vw,36px);margin:0 0 12px}
+    section p{color:#cbd5e1;margin:0 0 10px}
+    @media (max-width:1024px){ :root{--gutter:16px} }
+    @media (max-width:640px){ :root{--gutter:12px} }
+
+    /* Blog cards */
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:24px;margin-top:32px}
+    .card{background:#111827;border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);display:flex;flex-direction:column}
+    .card img{border-radius:var(--radius);margin-bottom:14px}
+    .card h3{margin:0 0 6px;color:#fff;font-size:20px}
+    .card p{margin:0;color:#cbd5e1}
+    .meta{font-size:14px;color:#9ca3af;margin:4px 0 10px;display:flex;gap:6px;flex-wrap:wrap}
+
+    /* Pills */
+    .pills{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:20px 0}
+    .pill{padding:8px 16px;border-radius:999px;border:0;font-weight:700;cursor:pointer;background:#1f2937;color:#fff}
+    .pill.active{background:var(--accent);color:#0a0f1c}
   </style>
 </head>
 <body>
 
-<div id="header"></div>
+  <!-- Header include -->
+  <div id="header"></div>
 
-<main>
-  <div class="blog-header">
-    <h1>Signs2Signs Blog</h1>
-    <p class="muted">Latest tips, projects & updates from the workshop</p>
-  </div>
+  <main>
+    <section class="container center">
+      <h2>Signs2Signs Blog</h2>
+      <p class="muted">Latest tips, projects & updates from the workshop</p>
 
-  <!-- Sorting filters -->
-  <div class="filters">
-    <button data-sort="new" class="active">New</button>
-    <button data-sort="views">Top Viewed</button>
-    <button data-sort="likes">Most Liked</button>
-  </div>
-
-  <!-- Tag filters -->
-  <div class="tags" id="tagFilters"></div>
-
-  <!-- Posts grid -->
-  <div class="grid" id="postsGrid"></div>
-</main>
-
-<div id="footer"></div>
-
-<script type="module">
-  import { fetchPosts, fetchTags } from './blog.js';
-
-  const grid = document.getElementById('postsGrid');
-  const tagFilters = document.getElementById('tagFilters');
-  const filterBtns = document.querySelectorAll('.filters button');
-  let currentSort = 'new';
-  let currentTag = null;
-
-  async function loadPosts(){
-    grid.innerHTML = '<p>Loading...</p>';
-    const { data } = await fetchPosts({ sort: currentSort, tag: currentTag });
-    if(!data || data.length===0){ grid.innerHTML = '<p>No posts yet.</p>'; return; }
-    grid.innerHTML = data.map(p=>`
-      <div class="post-card">
-        ${p.main_image_url ? `<img src="${p.main_image_url}" alt="${p.title}">` : ''}
-        <div class="content">
-          <h3><a href="post.html?slug=${p.slug}">${p.title}</a></h3>
-          <p>${p.description || ''}</p>
-          <div class="meta">
-            ${new Date(p.published_at).toLocaleDateString()} • 👁 ${p.views_count} • ❤️ ${p.likes_count}
-          </div>
-        </div>
+      <!-- Sort Pills -->
+      <div class="pills" id="sortbar">
+        <button class="pill active" data-sort="new">New</button>
+        <button class="pill" data-sort="views">Top Viewed</button>
+        <button class="pill" data-sort="likes">Most Liked</button>
       </div>
-    `).join('');
-  }
 
-  // Sorting
-  filterBtns.forEach(btn=>{
-    btn.addEventListener('click',()=>{
-      filterBtns.forEach(b=>b.classList.remove('active'));
-      btn.classList.add('active');
-      currentSort = btn.dataset.sort;
-      loadPosts();
+      <!-- Tags -->
+      <div class="pills" id="tagbar"></div>
+
+      <!-- Posts Grid -->
+      <div class="grid" id="grid"></div>
+      <p id="empty" style="display:none;margin-top:20px;color:#9ca3af">No posts yet.</p>
+    </section>
+  </main>
+
+  <!-- Footer include -->
+  <div id="footer"></div>
+
+  <!-- Supabase Client -->
+  <script type="module" src="./blog.js"></script>
+
+  <!-- Page Logic -->
+  <script type="module">
+    import { fetchPosts, fetchTags } from './blog.js';
+
+    // includes (adjust if header/footer live outside /blog)
+    async function include(file, target){
+      try{const r=await fetch(file);document.getElementById(target).innerHTML=await r.text();}
+      catch(e){console.warn('Include failed',file,e);}
+    }
+    include('../header.html','header');
+    include('../footer.html','footer');
+
+    const sortbar=document.getElementById('sortbar');
+    const tagbar=document.getElementById('tagbar');
+    const grid=document.getElementById('grid');
+    const empty=document.getElementById('empty');
+    let currentSort='new', currentTag=null;
+
+    sortbar.addEventListener('click', e=>{
+      const b=e.target.closest('[data-sort]'); if(!b) return;
+      sortbar.querySelectorAll('.pill').forEach(p=>p.classList.remove('active'));
+      b.classList.add('active'); currentSort=b.dataset.sort; load();
     });
-  });
 
-  // Tags
-  async function loadTags(){
-    const tags = await fetchTags();
-    tagFilters.innerHTML = tags.map(t=>`
-      <button>${t}</button>
-    `).join('');
-    tagFilters.querySelectorAll('button').forEach(btn=>{
-      btn.addEventListener('click',()=>{
-        if(currentTag === btn.textContent){
-          currentTag = null;
-          btn.classList.remove('active');
-        } else {
-          currentTag = btn.textContent;
-          tagFilters.querySelectorAll('button').forEach(b=>b.classList.remove('active'));
-          btn.classList.add('active');
-        }
-        loadPosts();
-      });
+    tagbar.addEventListener('click', e=>{
+      const b=e.target.closest('[data-tag]'); if(!b) return;
+      tagbar.querySelectorAll('.pill').forEach(p=>p.classList.remove('active'));
+      b.classList.add('active'); currentTag=b.dataset.tag; load();
     });
-  }
 
-  loadTags();
-  loadPosts();
-</script>
+    async function renderTags(){
+      try{
+        const tags=await fetchTags();
+        tagbar.innerHTML=tags.map(t=>`<button class="pill" data-tag="${t}">${t}</button>`).join('');
+      }catch(e){console.error('Tags error:',e);}
+    }
 
-<script>
-  async function include(file, target){
-    const res = await fetch(file);
-    document.getElementById(target).innerHTML = await res.text();
-  }
-  include('../header.html','header');
-  include('../footer.html','footer');
-</script>
+    async function load(){
+      grid.innerHTML='<p class="center">Loading…</p>';
+      try{
+        const {data}=await fetchPosts({sort:currentSort,tag:currentTag});
+        if(!data||data.length===0){grid.innerHTML='';empty.style.display='block';return;}
+        empty.style.display='none';
+        grid.innerHTML=data.map(p=>{
+          const href=`./post.html?slug=${encodeURIComponent(p.slug)}`;
+          return `
+            <article class="card">
+              ${p.main_image_url?`<a href="${href}"><img src="${p.main_image_url}" alt=""></a>`:''}
+              <a href="${href}"><h3>${p.title}</h3></a>
+              <div class="meta">
+                <span>${new Date(p.published_at||p.created_at).toLocaleDateString('en-GB')}</span>
+                <span>•</span><span>${p.views_count||0} views</span>
+                <span>•</span><span>❤ ${p.likes_count||0}</span>
+              </div>
+              ${p.description?`<p>${p.description}</p>`:''}
+            </article>`;
+        }).join('');
+      }catch(e){
+        console.error('Posts error:',e);
+        grid.innerHTML='<p class="center">Couldn’t load posts. Check console.</p>';
+      }
+    }
+
+    await renderTags();
+    await load();
+  </script>
 </body>
 </html>
