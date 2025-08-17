@@ -2,61 +2,97 @@
 <html lang="en-GB">
 <head>
   <meta charset="utf-8">
-  <title>Blog Post | Signs2Signs</title>
-  <link rel="stylesheet" href="../style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Signs2Signs Blog | Trade Signage, Built in Manchester</title>
+  <meta name="description" content="Latest tips, projects & updates from the workshop. Trade signage news from Manchester.">
+  <link rel="icon" type="image/svg+xml" href="../public/S2S.svg">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700&display=swap" rel="stylesheet">
+
   <style>
-    main{max-width:800px;margin:0 auto;padding:40px 20px;}
-    .post img{max-width:100%;margin:20px 0;border-radius:12px;}
-    .meta{color:#9ca3af;font-size:14px;margin-bottom:20px;}
-    .like-btn{cursor:pointer;padding:8px 14px;border-radius:6px;background:var(--accent);color:#111;font-weight:600;}
+    :root {
+      --brand:#0B1B4A; --brand-2:#1F3FAF;
+      --accent:#F26B1D; --bg:#0A0F1C;
+      --muted:#9CA3AF;
+      --radius:20px; --shadow:0 10px 30px rgba(0,0,0,.25);
+      --gutter:24px;
+    }
+
+    html, body {
+      margin:0; padding:0;
+      font-family:Manrope, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, 'Helvetica Neue', Arial, sans-serif;
+      background:#fff; color:#111;
+    }
+
+    .container { max-width:1200px; margin:0 auto; padding:0 var(--gutter); }
+    .hero { padding:64px 0; text-align:center; }
+    .hero h1 { font-size:clamp(32px,5vw,52px); margin:0 0 12px; color:var(--brand); }
+    .hero p { color:var(--muted); margin:0; }
+
+    .filters { display:flex; gap:12px; justify-content:center; margin:32px 0; }
+    .filters button {
+      border:0; padding:8px 16px; border-radius:999px;
+      font-weight:600; cursor:pointer;
+      background:#f3f4f6; color:#111;
+    }
+    .filters button.active { background:var(--accent); color:#fff; }
+
+    .posts { display:grid; gap:24px; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); }
+    .post {
+      border:1px solid #e5e7eb; border-radius:var(--radius);
+      overflow:hidden; background:#fff; box-shadow:var(--shadow);
+      display:flex; flex-direction:column;
+    }
+    .post img { width:100%; height:180px; object-fit:cover; }
+    .post-content { padding:16px; flex:1; display:flex; flex-direction:column; }
+    .post-content h3 { margin:0 0 8px; font-size:20px; color:var(--brand); }
+    .post-content p { flex:1; margin:0 0 12px; color:#444; font-size:15px; }
+    .post-content a { color:var(--accent); font-weight:700; text-decoration:none; }
   </style>
 </head>
 <body>
-<div id="header"></div>
 
-<main>
-  <article class="post">
-    <h1 id="title"></h1>
-    <div class="meta" id="meta"></div>
-    <img id="mainImg" style="display:none">
-    <div id="body"></div>
-    <div id="extraImgs"></div>
-  </article>
+  <!-- Header include -->
+  <div id="header"></div>
 
-  <div style="margin-top:20px;">
-    <button class="like-btn" id="likeBtn">❤️ Like</button>
-    <span id="likesCount"></span>
-  </div>
+  <main>
+    <section class="hero">
+      <div class="container">
+        <h1>Signs2Signs Blog</h1>
+        <p>Latest tips, projects & updates from the workshop</p>
+        <div class="filters">
+          <button data-filter="new" class="active">New</button>
+          <button data-filter="views">Top Viewed</button>
+          <button data-filter="likes">Most Liked</button>
+        </div>
+      </div>
+    </section>
 
-  <div style="margin-top:20px;">
-    <p>Share:</p>
-    <a id="shareTwitter" target="_blank">Twitter</a> |
-    <a id="shareFacebook" target="_blank">Facebook</a>
-  </div>
-</main>
+    <section>
+      <div class="container">
+        <div class="posts" id="posts"></div>
+      </div>
+    </section>
+  </main>
 
-<div id="footer"></div>
+  <!-- Footer include -->
+  <div id="footer"></div>
 
-<script type="module">
-  import { fetchPost, recordView, toggleLike } from './blog.js';
+  <!-- Load blog logic -->
+  <script type="module" src="./blog.js"></script>
 
-  const params = new URLSearchParams(window.location.search);
-  const slug = params.get('slug');
-
-  const data = await fetchPost(slug);
-  if(!data){ document.body.innerHTML = "<p>Post not found.</p>"; }
-
-  document.getElementById('title').textContent = data.title;
-  document.getElementById('meta').textContent = 
-    new Date(data.published_at).toLocaleDateString() + 
-    ` • 👁 ${data.views_count} • ❤️ ${data.likes_count}`;
-
-  if(data.main_image_url){
-    const img = document.getElementById('mainImg');
-    img.src = data.main_image_url;
-    img.style.display='block';
-  }
-  document.getElementById('body').innerHTML = data.body;
-
-  // Extra images
-  const extra = document.getElementById
+  <script>
+    // Header & footer include
+    async function include(file, target) {
+      const res = await fetch(file);
+      const html = await res.text();
+      document.getElementById(target).innerHTML = html;
+    }
+    include('../header.html','header');
+    include('../footer.html','footer');
+  </script>
+</body>
+</html>
