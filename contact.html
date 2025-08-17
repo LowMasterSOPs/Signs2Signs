@@ -114,4 +114,359 @@
 
     /* Cards (match index dark cards) */
     .card, .hero-card{
-      background:linear-gradient(180deg, rgba(6,10,20,.95),
+      background:linear-gradient(180deg, rgba(6,10,20,.95), rgba(10,15,28,.88));
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:22px; padding:28px; box-shadow:0 8px 24px rgba(0,0,0,.18);
+    }
+    .card h4, .hero-card h3{ color:var(--accent); margin:0 0 10px; letter-spacing:.2px }
+
+    /* Form */
+    .contact-form{max-width:var(--form-max);margin:0 auto}
+    .form-group{display:grid;gap:6px;margin-bottom:12px}
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    @media(max-width:520px){ .form-row{grid-template-columns:1fr} }
+    label{font-weight:700;color:#e5e7eb;font-size:14px}
+    input, select, textarea{
+      background:var(--input-bg);
+      border:1px solid var(--input-border);
+      color:var(--input-text);
+      border-radius:12px;
+      padding:10px 12px;
+      font-size:15px; line-height:1.35; width:100%; box-sizing:border-box;
+    }
+    textarea{resize:vertical;min-height:120px}
+    select{height:44px}
+    input::placeholder, textarea::placeholder{ color:#94a3b8 }
+
+    /* Focus */
+    a:focus-visible, .btn:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible{
+      outline:none; box-shadow:0 0 0 3px rgba(242,107,29,.35); border-color:rgba(242,107,29,.6)
+    }
+
+    /* File input + list */
+    input[type="file"]{ padding:8px 10px; font-size:14px }
+    input[type="file"]::-webkit-file-upload-button{
+      background:var(--accent); color:#111827; border:none; padding:8px 12px; border-radius:8px; font-weight:800; margin-right:8px; cursor:pointer
+    }
+    .file-list{ margin-top:8px; font-size:12px; color:var(--muted) }
+    .file-item{ display:flex; align-items:center; gap:8px; margin-bottom:4px }
+    .file-size{ color:var(--muted); font-size:11px }
+  </style>
+</head>
+<body>
+
+  <!-- Header include -->
+  <div id="header"></div>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="container">
+        <span class="kicker">Trade Quotes • UK-wide</span>
+        <h1 id="hero-title" class="hero-title">Get a Quote</h1>
+        <p class="lede center">Professional signage quotes for trade customers — fast turnaround, straight talk, no fluff.</p>
+
+        <div class="hero-actions" role="group" aria-label="Quick links">
+          <a class="btn btn-proper" href="gallery.html">See recent work</a>
+          <a class="btn btn-primary" href="#quoteForm">Request a quote</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- FORM + INFO -->
+    <section aria-labelledby="form-heading">
+      <div class="container">
+        <div class="contact-wrap">
+
+          <!-- Form -->
+          <div class="hero-card">
+            <form class="contact-form" id="quoteForm" novalidate>
+              <h3 id="form-heading">Request a Quote</h3>
+
+              <div class="form-group">
+                <label for="company">Company Name *</label>
+                <input type="text" id="company" name="company" placeholder="e.g. North West Signs Ltd" required>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="name">Your Name *</label>
+                  <input type="text" id="name" name="name" placeholder="Jane Smith" required>
+                </div>
+                <div class="form-group">
+                  <label for="email">Email *</label>
+                  <input type="email" id="email" name="email" placeholder="you@company.co.uk" required>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="phone">Phone</label>
+                  <input type="tel" id="phone" name="phone" inputmode="tel" placeholder="Optional">
+                </div>
+                <div class="form-group">
+                  <label for="postcode">Postcode</label>
+                  <input type="text" id="postcode" name="postcode" autocomplete="postal-code" placeholder="Optional">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="service">Service Required *</label>
+                <select id="service" name="service" required>
+                  <option value="">Select a service</option>
+                  <option value="3d-acrylic">3D Acrylic Letters</option>
+                  <option value="sign-trays">ACM & Aluminium Sign Trays</option>
+                  <option value="illumination">Illuminated & LED Signs</option>
+                  <option value="built-up-metal">Built-Up Metal Letters</option>
+                  <option value="cnc-laser">CNC & Laser Cutting</option>
+                  <option value="print">Print & Graphics</option>
+                  <option value="multiple">Multiple Services</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="project">Project Details *</label>
+                <textarea id="project" name="project" placeholder="Materials, sizes, quantities, finishes, illumination, deadline, delivery/collection…" required></textarea>
+              </div>
+
+              <div class="form-group">
+                <label for="timeline">Project Timeline</label>
+                <select id="timeline" name="timeline">
+                  <option value="">Select timeline</option>
+                  <option value="urgent">Urgent (1–2 weeks)</option>
+                  <option value="standard">Standard (3–4 weeks)</option>
+                  <option value="flexible">Flexible (5+ weeks)</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="files">Upload Files (Optional)</label>
+                <input type="file" id="files" name="files" multiple accept=".pdf,.jpg,.jpeg,.png,.gif,.ai,.eps,.svg,.dwg,.dxf">
+                <small class="muted" style="font-size: 12px; margin-top: 4px; display: block;">
+                  Upload artwork, CAD files, photos, or reference docs (Max 10&nbsp;MB per file).
+                </small>
+                <div id="fileList" class="file-list" aria-live="polite"></div>
+              </div>
+
+              <button type="submit" class="btn btn-primary">Send Quote Request</button>
+            </form>
+          </div>
+
+          <!-- Info cards -->
+          <aside aria-label="Contact details and turnaround">
+            <div class="card">
+              <h4>📍 Location</h4>
+              <ul>
+                <li>Manchester collection available</li>
+                <li>UK-wide express delivery</li>
+              </ul>
+            </div>
+            <div class="card">
+              <h4>✉️ Quotes</h4>
+              <ul>
+                <li><a href="mailto:sales@signs2signs.co.uk">sales@signs2signs.co.uk</a></li>
+                <li>Quick response guaranteed</li>
+                <li>Same-day quotes for standard items</li>
+              </ul>
+            </div>
+            <div class="card">
+              <h4>⏱ Lead Time</h4>
+              <ul>
+                <li>Express manufacturing</li>
+                <li>Typical 5–15 working days</li>
+                <li>Priority scheduling for urgent jobs</li>
+              </ul>
+            </div>
+            <div class="card">
+              <h4>📂 File Requirements</h4>
+              <ul>
+                <li>Vectors preferred (AI, EPS, PDF)</li>
+                <li>High-resolution imagery</li>
+                <li>Dimensions & measurements</li>
+                <li>Material & finish specs</li>
+                <li>Any install constraints</li>
+              </ul>
+            </div>
+          </aside>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Process (match site style) -->
+    <section class="process">
+      <div class="container center">
+        <h2>How It Works</h2>
+        <p class="muted">You design. We make. You fit.</p>
+        <div class="process-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:24px">
+          <div class="card" style="text-align:center">
+            <div class="process-number" style="font-size:28px;font-weight:700;color:var(--accent);margin-bottom:10px">1</div>
+            <h3 style="margin:0 0 8px;color:#fff">You Design</h3>
+            <p>Send CAD or artwork files — we’ll sanity-check and prep for production.</p>
+          </div>
+          <div class="card" style="text-align:center">
+            <div class="process-number" style="font-size:28px;font-weight:700;color:var(--accent);margin-bottom:10px">2</div>
+            <h3 style="margin:0 0 8px;color:#fff">We Make</h3>
+            <p>Fabricated in Manchester using CNC, laser, print and assembly all in-house.</p>
+          </div>
+          <div class="card" style="text-align:center">
+            <div class="process-number" style="font-size:28px;font-weight:700;color:var(--accent);margin-bottom:10px">3</div>
+            <h3 style="margin:0 0 8px;color:#fff">You Fit</h3>
+            <p>Supplied ready-to-fit with fixings. UK-wide delivery or collection.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer include -->
+  <div id="footer"></div>
+
+  <script>
+    // Include header & footer
+    async function include(file, target){
+      const res = await fetch(file);
+      const html = await res.text();
+      document.getElementById(target).innerHTML = html;
+    }
+    include('header.html','header');
+    include('footer.html','footer');
+  </script>
+
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+
+    // Initialize Supabase client
+    const supabase = createClient(
+      "https://ketluxsokzvlqozcdwxo.supabase.co",
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtldGx1eHNva3p2bHFvemNkd3hvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTUzNjAzOTIsImV4cCI6MjA3MDkzNjM5Mn0.NCPCOXJ4vD1PYb_sBgoyA6lSvkiRpb8IlA4X8XnltUs"
+    );
+
+    // Helpers
+    function readableSize(bytes){
+      const units = ['B','KB','MB','GB'];
+      let i = 0, n = bytes;
+      while(n >= 1024 && i < units.length-1){ n /= 1024; i++; }
+      return n.toFixed(n < 10 && i > 0 ? 1 : 0) + ' ' + units[i];
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const form = document.getElementById('quoteForm');
+      const submitButton = form?.querySelector('button[type="submit"]');
+      const fileInput = document.getElementById('files');
+      const fileList = document.getElementById('fileList');
+      if (!form) return;
+
+      // Show selected files
+      fileInput?.addEventListener('change', () => {
+        fileList.innerHTML = '';
+        const files = fileInput.files || [];
+        [...files].forEach(f => {
+          const row = document.createElement('div');
+          row.className = 'file-item';
+          row.innerHTML = `<span>📎 ${f.name}</span><span class="file-size">(${readableSize(f.size)})</span>`;
+          fileList.appendChild(row);
+        });
+      });
+
+      form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+
+        if (submitButton) {
+          submitButton.disabled = true;
+          submitButton.textContent = 'Uploading files...';
+        }
+
+        // Get basic form data
+        const formData = new FormData(form);
+        const files = formData.getAll('files');
+
+        let uploadedFileUrls = [];
+
+        // Upload to Supabase Storage
+        if (files.length > 0 && files[0] && files[0].size > 0) {
+          try {
+            for (const file of files) {
+              if (file.size > 10 * 1024 * 1024) { // 10MB limit
+                throw new Error(`File "${file.name}" is too large. Maximum size is 10MB.`);
+              }
+              const fileExt = file.name.split('.').pop();
+              const fileName = `${Date.now()}-${Math.random().toString(36).slice(2)}.${fileExt}`;
+              const filePath = `quote-files/${fileName}`;
+
+              if (submitButton) submitButton.textContent = `Uploading ${file.name}…`;
+
+              const { error: uploadError } = await supabase.storage
+                .from('quote-files')
+                .upload(filePath, file);
+
+              if (uploadError) {
+                console.error('File upload error:', uploadError);
+                throw new Error(`Failed to upload file "${file.name}"`);
+              }
+
+              const { data: urlData } = supabase.storage
+                .from('quote-files')
+                .getPublicUrl(filePath);
+
+              uploadedFileUrls.push({
+                name: file.name,
+                url: urlData.publicUrl,
+                size: file.size
+              });
+            }
+          } catch (fileError) {
+            console.error('File handling error:', fileError);
+            alert(fileError.message || 'Error uploading files. Please try again.');
+            if (submitButton) {
+              submitButton.disabled = false;
+              submitButton.textContent = 'Send Quote Request';
+            }
+            return;
+          }
+        }
+
+        if (submitButton) submitButton.textContent = 'Saving quote…';
+
+        // Prepare quote data
+        const quoteData = {
+          company: formData.get('company'),
+          name: formData.get('name'),
+          email: formData.get('email'),
+          phone: formData.get('phone') || null,
+          postcode: formData.get('postcode') || null,
+          service: formData.get('service'),
+          project_details: formData.get('project'),
+          timeline: formData.get('timeline') || null,
+          uploaded_files: uploadedFileUrls.length > 0 ? JSON.stringify(uploadedFileUrls) : null,
+        };
+
+        try {
+          const { error } = await supabase
+            .from('quote_requests')
+            .insert([quoteData]);
+
+          if (error) {
+            console.error('Supabase error:', error);
+            alert('Sorry, there was an error submitting your quote request. Please try again or contact us directly at sales@signs2signs.co.uk');
+          } else {
+            const fileMessage = uploadedFileUrls.length > 0 ? ` Your ${uploadedFileUrls.length} file(s) have also been uploaded.` : '';
+            alert(`Thanks! Your quote request has been submitted successfully.${fileMessage} We'll be in touch within 24 hours.`);
+            form.reset();
+            if (fileList) fileList.innerHTML = '';
+          }
+        } catch (err) {
+          console.error('Error submitting form:', err);
+          alert('Sorry, there was an error submitting your quote request. Please try again or contact us directly at sales@signs2signs.co.uk');
+        }
+
+        if (submitButton) {
+          submitButton.disabled = false;
+          submitButton.textContent = 'Send Quote Request';
+        }
+      });
+    });
+  </script>
+</body>
+</html>
