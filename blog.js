@@ -1,4 +1,4 @@
-// blog.js — Supabase client, fetch + render
+// blog.js — Supabase client, fetch + render with "featured" support
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2"
 
 // 🔧 Your Supabase project details
@@ -7,23 +7,31 @@ const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZ
 
 export const supabase = createClient(SUPABASE_URL, SUPABASE_KEY)
 
-/**
- * Fetch all posts ordered by newest
- */
-export async function fetchPosts() {
+/** Fetch the single featured post, or null if none */
+export async function fetchFeaturedPost() {
+  // If (for any reason) multiple rows are marked featured, grab the newest by published_at/created_at
   const { data, error } = await supabase
     .from("posts")
-    .select("id, slug, title, description, main_image_url, published_at, created_at, updated_at")
+    .select("id, slug, title, description, main_image_url, published_at, created_at, updated_at, featured")
+    .eq("featured", true)
+    .order("published_at", { ascending: false, nullsFirst: false })
+    .order("created_at",  { ascending: false, nullsFirst: false })
+    .limit(1)
+  return { data: data?.[0] ?? null, error }
+}
+
+/** Fetch all posts (for archive + grid), newest first */
+export async function fetchAllPosts() {
+  const { data, error } = await supabase
+    .from("posts")
+    .select("id, slug, title, description, main_image_url, published_at, created_at, updated_at, featured")
     .order("published_at", { ascending: false, nullsFirst: false })
     .order("created_at",  { ascending: false, nullsFirst: false })
     .order("id",          { ascending: false })
-
   return { data, error }
 }
 
-/**
- * Load header.html and footer.html into placeholders
- */
+/** Load header.html and footer.html into placeholders */
 export async function includePartials({ headerSel = "#header", footerSel = "#footer" } = {}) {
   try {
     const [header, footer] = await Promise.all([
@@ -39,24 +47,24 @@ export async function includePartials({ headerSel = "#header", footerSel = "#foo
   }
 }
 
-// ====== Rendering logic ======
-const postsEl = document.getElementById("posts")
-const archiveEl = document.getElementById("archive")
+// ====== Rendering glue (runs on blog.html) ======
+const postsEl    = document.getElementById("posts")
+const archiveEl  = document.getElementById("archive")
 const featuredEl = document.getElementById("featured")
 
 function groupByYearMonth(posts){
   const buckets = new Map()
   for(const p of posts){
-    const d = p.published_at || p.created_at || p.updated_at || null
+    const d  = p.published_at || p.created_at || p.updated_at || null
     const dt = d ? new Date(d) : null
-    const year = dt ? dt.getFullYear() : "Unknown"
+    const year  = dt ? dt.getFullYear() : "Unknown"
     const month = dt ? dt.toLocaleString("en-GB",{ month:"long" }) : "Unsorted"
     if(!buckets.has(year)) buckets.set(year, new Map())
-    const ym = buckets.get(year)
-    if(!ym.has(month)) ym.set(month, [])
-    ym.get(month).push(p)
+    const byMonth = buckets.get(year)
+    if(!byMonth.has(month)) byMonth.set(month, [])
+    byMonth.get(month).push(p)
   }
-  return new Map([...buckets.entries()].sort((a,b)=>(b[0]+'').localeCompare(a[0]+'')))
+  return new Map([...buckets.entries()].sort((a,b)=>(b[0]+"").localeCompare(a[0]+"")))
 }
 
 function buildArchive(posts){
@@ -84,7 +92,7 @@ function buildArchive(posts){
       ul.className = "archive-list"
       for(const p of months.get(m)){
         const li = document.createElement("li")
-        const a = document.createElement("a")
+        const a  = document.createElement("a")
         a.href = `post.html?slug=${encodeURIComponent(p.slug || p.id)}`
         a.textContent = p.title || "Untitled"
         li.appendChild(a)
@@ -99,31 +107,46 @@ function buildArchive(posts){
 
 async function render() {
   postsEl.textContent = "Loading…"
-  const { data, error } = await fetchPosts()
-  if (error) { console.error(error); postsEl.textContent = "Error loading posts."; return }
 
-  if (!data || data.length === 0) {
+  // Pull everything in parallel
+  const [{ data: featured, error: featErr }, { data: allPosts, error: allErr }] =
+    await Promise.all([fetchFeaturedPost(), fetchAllPosts()])
+
+  if (featErr || allErr) {
+    console.error(featErr || allErr)
+    postsEl.textContent = "Error loading posts."
+    return
+  }
+
+  if (!allPosts || allPosts.length === 0) {
     postsEl.innerHTML = `<p class="empty">No posts yet.</p>`
     archiveEl.innerHTML = `<p class="empty">Nothing to archive… yet.</p>`
     featuredEl.innerHTML = ""
     return
   }
 
-  // 1️⃣ Featured post
-  const [latest, ...rest] = data
+  // 1) Featured block
+  let hero = featured
+  if (!hero) {
+    // fallback: use newest post if none is marked featured
+    hero = allPosts[0]
+  }
   featuredEl.innerHTML = `
-    ${latest.main_image_url ? `<img src="${latest.main_image_url}" alt="">` : ""}
+    ${hero.main_image_url ? `<img src="${hero.main_image_url}" alt="">` : ""}
     <div class="featured-content">
-      <h2>${latest.title ?? "Untitled"}</h2>
-      <p>${latest.description ?? ""}</p>
-      <a href="post.html?slug=${encodeURIComponent(latest.slug || latest.id)}">Read full post →</a>
+      <h2>${hero.title ?? "Untitled"}</h2>
+      <p>${hero.description ?? ""}</p>
+      <a href="post.html?slug=${encodeURIComponent(hero.slug || hero.id)}">Read full post →</a>
     </div>
   `
 
-  // 2️⃣ Archive
-  buildArchive(data)
+  // 2) Archive (built from all posts)
+  buildArchive(allPosts)
 
-  // 3️⃣ Remaining posts grid
+  // 3) Grid of remaining posts (exclude the featured one if it’s in the list)
+  const heroKey = hero.slug ?? hero.id
+  const rest = allPosts.filter(p => (p.slug ?? p.id) !== heroKey)
+
   postsEl.innerHTML = ""
   for (const p of rest) {
     const a = document.createElement("a")
@@ -138,6 +161,8 @@ async function render() {
   }
 }
 
-// Boot
-includePartials()
-render()
+// Boot if we’re on the blog page
+if (document.getElementById("posts")) {
+  includePartials()
+  render()
+}
