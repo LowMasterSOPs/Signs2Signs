@@ -5,8 +5,8 @@ const SUPABASE_URL = "https://ketluxsokzvlqozcdwxo.supabase.co"
 const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtldGx1eHNva3p2bHFvemNkd3hvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTUzNjAzOTIsImV4cCI6MjA3MDkzNjM5Mn0.NCPCOXJ4vD1PYb_sBgoyA6lSvkiRpb8IlA4X8XnltUs"
 export const supabase = createClient(SUPABASE_URL, SUPABASE_KEY)
 
-/* ---------- data ---------- */
-export async function fetchFeaturedPost() {
+/* data */
+async function fetchFeaturedPost() {
   const { data, error } = await supabase
     .from("posts")
     .select("id,slug,title,description,main_image_url,published_at,created_at,featured")
@@ -16,8 +16,7 @@ export async function fetchFeaturedPost() {
     .limit(1)
   return { data: data?.[0] ?? null, error }
 }
-
-export async function fetchAllPosts() {
+async function fetchAllPosts() {
   const { data, error } = await supabase
     .from("posts")
     .select("id,slug,title,description,main_image_url,published_at,created_at,featured")
@@ -27,7 +26,7 @@ export async function fetchAllPosts() {
   return { data, error }
 }
 
-/* ---------- includes ---------- */
+/* includes */
 async function includePartials({ headerSel="#header", footerSel="#footer" }={}) {
   try {
     const [header, footer] = await Promise.all([
@@ -40,28 +39,27 @@ async function includePartials({ headerSel="#header", footerSel="#footer" }={}) 
   } catch (e) { console.error(e) }
 }
 
-/* ---------- render ---------- */
+/* render */
 const postsEl    = document.getElementById("posts")
 const archiveEl  = document.getElementById("archive")
 const featuredEl = document.getElementById("featured")
 
-const linkFor = (p) => `/blog/${encodeURIComponent(p.slug || String(p.id))}`
+const linkFor = p => `/blog/${encodeURIComponent(p.slug || String(p.id))}`
 
 function groupByYearMonth(posts){
   const buckets = new Map()
   for(const p of posts){
     const d = p.published_at || p.created_at || null
     const dt = d ? new Date(d) : null
-    const year  = dt ? dt.getFullYear() : "Unknown"
+    const year = dt ? dt.getFullYear() : "Unknown"
     const month = dt ? dt.toLocaleString("en-GB",{ month:"long" }) : "Unsorted"
-    if(!buckets.has(year)) buckets.set(year, new Map())
+    if(!buckets.has(year)) buckets.set(year,new Map())
     const m = buckets.get(year)
-    if(!m.has(month)) m.set(month, [])
+    if(!m.has(month)) m.set(month,[])
     m.get(month).push(p)
   }
   return new Map([...buckets.entries()].sort((a,b)=>(b[0]+"").localeCompare(a[0]+"")))
 }
-
 function buildArchive(posts){
   const grouped = groupByYearMonth(posts)
   archiveEl.innerHTML = ""
@@ -69,17 +67,17 @@ function buildArchive(posts){
     const det = document.createElement("details"); det.open = true
     const sum = document.createElement("summary"); sum.textContent = year; det.appendChild(sum)
 
-    const monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"]
+    const monthNames=["January","February","March","April","May","June","July","August","September","October","November","December"]
     const ordered = monthNames.filter(m=>months.has(m))
-    if (months.has("Unsorted")) ordered.push("Unsorted")
+    if(months.has("Unsorted")) ordered.push("Unsorted")
 
     for(const m of ordered){
-      const wrap = document.createElement("div"); wrap.className = "month"
-      const h4 = document.createElement("h4"); h4.textContent = m; wrap.appendChild(h4)
-      const ul = document.createElement("ul"); ul.className = "archive-list"
+      const wrap = document.createElement("div"); wrap.className="month"
+      const h4=document.createElement("h4"); h4.textContent=m; wrap.appendChild(h4)
+      const ul=document.createElement("ul"); ul.className="archive-list"
       for(const p of months.get(m)){
-        const li = document.createElement("li")
-        const a = document.createElement("a"); a.href = linkFor(p); a.textContent = p.title || "Untitled"
+        const li=document.createElement("li")
+        const a=document.createElement("a"); a.href=linkFor(p); a.textContent=p.title||"Untitled"
         li.appendChild(a); ul.appendChild(li)
       }
       wrap.appendChild(ul); det.appendChild(wrap)
@@ -90,12 +88,12 @@ function buildArchive(posts){
 
 async function render(){
   postsEl.textContent = "Loading…"
-  const [{ data: featured }, { data: all, error }] = await Promise.all([fetchFeaturedPost(), fetchAllPosts()])
-  if (error){ postsEl.textContent = "Error loading posts."; return }
-  if (!all || all.length === 0){
-    postsEl.innerHTML = `<p class="empty">No posts yet.</p>`
-    archiveEl.innerHTML = `<p class="empty">Nothing to archive… yet.</p>`
-    featuredEl.innerHTML = ""
+  const [{data:featured},{data:all,error}] = await Promise.all([fetchFeaturedPost(), fetchAllPosts()])
+  if (error){ postsEl.textContent="Error loading posts."; return }
+  if (!all || all.length===0){
+    postsEl.innerHTML=`<p class="empty">No posts yet.</p>`
+    archiveEl.innerHTML=`<p class="empty">Nothing to archive… yet.</p>`
+    featuredEl.innerHTML=""
     return
   }
 
@@ -114,11 +112,11 @@ async function render(){
   const heroKey = hero.slug ?? hero.id
   const rest = all.filter(p => (p.slug ?? p.id) !== heroKey)
   postsEl.innerHTML = ""
-  for (const p of rest){
-    const a = document.createElement("a")
-    a.className = "card"
-    a.href = linkFor(p)
-    a.innerHTML = `
+  for(const p of rest){
+    const a=document.createElement("a")
+    a.className="card"
+    a.href=linkFor(p)
+    a.innerHTML=`
       ${p.main_image_url ? `<img class="thumb" src="${p.main_image_url}" alt="">` : ""}
       <div class="title">${p.title ?? "Untitled"}</div>
       ${p.description ? `<p class="desc">${p.description}</p>` : ""}
