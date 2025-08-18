@@ -1,109 +1,59 @@
 <!DOCTYPE html>
 <html lang="en-GB">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Blog | Signs2Signs</title>
-  <meta name="description" content="Trade signage insights, case studies, and updates from Signs2Signs.">
-  <link rel="icon" type="image/svg+xml" href="public/S2S.svg">
-
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700&display=swap" rel="stylesheet">
-
+  <link rel="icon" type="image/svg+xml" href="public/S2S.svg" />
   <style>
-    body {
-      margin:0;
-      font-family:Manrope,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,'Helvetica Neue',Arial,sans-serif;
-      background:linear-gradient(180deg,#0B1B4A 0%,#0A0F1C 60%);
-      color:#f8fafc;
-    }
-    .container{max-width:1200px;margin:0 auto;padding:32px 24px}
-    h1{font-size:clamp(32px,5vw,48px);margin-bottom:24px}
-    .post-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:24px}
-    .post-card{
-      background:rgba(255,255,255,.05);
-      border:1px solid rgba(255,255,255,.1);
-      border-radius:16px;
-      overflow:hidden;
-      display:flex;flex-direction:column;
-    }
-    .post-card img{width:100%;aspect-ratio:16/9;object-fit:cover}
-    .post-card h3{margin:16px;font-size:20px}
-    .post-card p{margin:0 16px 16px;color:#cbd5e1}
-    .post-meta{margin:0 16px 16px;font-size:14px;color:#9CA3AF}
-    .filters{display:flex;gap:12px;margin-bottom:32px;flex-wrap:wrap}
-    .filters button{
-      background:rgba(255,255,255,.08);
-      border:1px solid rgba(255,255,255,.15);
-      color:#fff;
-      padding:6px 14px;
-      border-radius:999px;
-      cursor:pointer;
-    }
-    .filters button.active{background:#F26B1D;color:#111827}
+    :root{--bg:#0A0F1C;--brand:#0B1B4A;--card:rgba(255,255,255,.06);--stroke:rgba(255,255,255,.12)}
+    *{box-sizing:border-box} body{margin:0;color:#f8fafc;background:linear-gradient(180deg,var(--brand),var(--bg));font-family:system-ui,Segoe UI,Roboto,Manrope,Arial,sans-serif}
+    .container{max-width:1100px;margin:0 auto;padding:32px 20px}
+    h1{margin:0 0 20px;font-size:clamp(28px,5vw,44px)}
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px}
+    .card{display:block;text-decoration:none;color:inherit;background:var(--card);border:1px solid var(--stroke);border-radius:14px;overflow:hidden}
+    .thumb{width:100%;aspect-ratio:16/9;object-fit:cover;background:#0b0b0b}
+    .title{margin:14px 14px 6px;font-weight:700}
+    .desc{margin:0 14px 16px;color:#cbd5e1}
+    .empty{opacity:.8}
   </style>
 </head>
 <body>
-
-  <!-- Header include -->
-  <div id="header"></div>
-
   <main class="container">
-    <h1>Signs2Signs Blog</h1>
-    <div class="filters">
-      <button data-sort="new" class="active">Newest</button>
-      <button data-sort="views">Top Viewed</button>
-      <button data-sort="likes">Most Liked</button>
-    </div>
-    <div id="posts" class="post-grid"></div>
+    <h1>Blog</h1>
+    <div id="posts" class="grid" aria-live="polite">Loading…</div>
   </main>
 
-  <!-- Footer include -->
-  <div id="footer"></div>
-
   <script type="module">
-    import { includePartials, fetchPosts } from "./blog.js"
-
-    // load header/footer
-    includePartials()
+    import { fetchPosts } from "./blog.js"
 
     const postsEl = document.getElementById("posts")
-    const filterButtons = document.querySelectorAll(".filters button")
 
-    async function loadPosts(sort="new"){
-      postsEl.innerHTML = "<p>Loading…</p>"
-      const { data, error } = await fetchPosts({ sort })
-      if(error){ postsEl.innerHTML = "<p>Error loading posts</p>"; return }
+    async function render() {
+      postsEl.textContent = "Loading…"
+      const { data, error } = await fetchPosts()
+      if (error) { postsEl.textContent = "Error loading posts."; return }
+
+      if (!data || data.length === 0) {
+        postsEl.innerHTML = `<p class="empty">No posts yet.</p>`
+        return
+      }
 
       postsEl.innerHTML = ""
-      data.forEach(post=>{
-        const card = document.createElement("a")
-        card.href = `post.html?slug=${post.slug}`
-        card.className = "post-card"
-        card.innerHTML = `
-          ${post.main_image_url ? `<img src="${post.main_image_url}" alt="${post.title}">` : ""}
-          <h3>${post.title}</h3>
-          <p>${post.description || ""}</p>
-          <div class="post-meta">
-            ${new Date(post.published_at).toLocaleDateString()} · 👁 ${post.views_count} · ❤️ ${post.likes_count}
-          </div>
+      for (const p of data) {
+        const a = document.createElement("a")
+        a.className = "card"
+        a.href = `post.html?slug=${encodeURIComponent(p.slug || p.id)}`
+        a.innerHTML = `
+          ${p.main_image_url ? `<img class="thumb" src="${p.main_image_url}" alt="">` : ""}
+          <div class="title">${p.title ?? "Untitled"}</div>
+          ${p.description ? `<p class="desc">${p.description}</p>` : ""}
         `
-        postsEl.appendChild(card)
-      })
+        postsEl.appendChild(a)
+      }
     }
 
-    filterButtons.forEach(btn=>{
-      btn.addEventListener("click",()=>{
-        filterButtons.forEach(b=>b.classList.remove("active"))
-        btn.classList.add("active")
-        loadPosts(btn.dataset.sort)
-      })
-    })
-
-    loadPosts()
+    render()
   </script>
 </body>
 </html>
-
