@@ -64,4 +64,20 @@
     </section>
 
     <section class="card comments">
-      <h2>Comment
+      <h2>Comments</h2>
+      <form id="comment-form">
+        <input type="text" id="comment-name" placeholder="Your name" required>
+        <input type="email" id="comment-email" placeholder="Your email" required>
+        <textarea id="comment-text" placeholder="Your comment..." required></textarea>
+        <button type="submit">Post Comment</button>
+      </form>
+      <div id="comments-list">Loading comments…</div>
+    </section>
+  </main>
+
+  <div id="footer"></div>
+
+  <!-- Absolute path so it loads at /blog/<slug> -->
+  <script type="module" src="/post.js"></script>
+</body>
+</html>
