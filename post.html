@@ -7,7 +7,12 @@
   <meta name="description" content="">
   <link rel="icon" type="image/svg+xml" href="/public/S2S.svg" />
   <style>
-    :root{ --card:rgba(255,255,255,.06); --stroke:rgba(255,255,255,.12); --muted:#cbd5e1; --accent:#F26B1D; }
+    :root{
+      --card:rgba(255,255,255,.06);
+      --stroke:rgba(255,255,255,.12);
+      --muted:#cbd5e1;
+      --accent:#F26B1D;
+    }
     *{box-sizing:border-box}
     body{
       margin:0;color:#f8fafc;font-family:Manrope,system-ui,Segoe UI,Roboto,Arial,sans-serif;
@@ -16,6 +21,10 @@
         linear-gradient(180deg,#0B1B4A 0%,#0A0F1C 60%);
       background-size:auto, cover;
     }
+    /* Global link colour */
+    a{ color:var(--accent); text-decoration:none }
+    a:hover{ text-decoration:underline }
+
     .container{max-width:900px;margin:0 auto;padding:32px 20px}
     .card{background:var(--card);border:1px solid var(--stroke);border-radius:14px;padding:24px;margin-bottom:24px}
     h1{margin:0 0 20px;font-size:clamp(28px,5vw,44px)}
@@ -40,14 +49,11 @@
   </style>
 </head>
 <body>
-  <!-- Header include -->
   <div id="header"></div>
 
   <main class="container">
-    <!-- Post container -->
     <article id="post" class="card">Loading post…</article>
 
-    <!-- Share container -->
     <section id="share-section" class="card" style="display:none">
       <div class="share">
         <span>Share this post:</span>
@@ -57,23 +63,5 @@
       </div>
     </section>
 
-    <!-- Comments container -->
     <section class="card comments">
-      <h2>Comments</h2>
-      <form id="comment-form">
-        <input type="text" id="comment-name" placeholder="Your name" required>
-        <input type="email" id="comment-email" placeholder="Your email" required>
-        <textarea id="comment-text" placeholder="Your comment..." required></textarea>
-        <button type="submit">Post Comment</button>
-      </form>
-      <div id="comments-list">Loading comments…</div>
-    </section>
-  </main>
-
-  <!-- Footer include -->
-  <div id="footer"></div>
-
-  <!-- IMPORTANT: absolute path so it loads at /blog/<slug> -->
-  <script type="module" src="/post.js"></script>
-</body>
-</html>
+      <h2>Comment
