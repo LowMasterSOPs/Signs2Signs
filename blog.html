@@ -7,15 +7,20 @@
   <link rel="icon" type="image/svg+xml" href="public/S2S.svg" />
   <style>
     :root{
-      --bg:#0A0F1C; --brand:#0B1B4A;
-      --card:rgba(255,255,255,.06); --stroke:rgba(255,255,255,.12);
+      --card:rgba(255,255,255,.06);
+      --stroke:rgba(255,255,255,.12);
       --muted:#cbd5e1;
     }
     *{box-sizing:border-box}
     body{
       margin:0;color:#f8fafc;
-      background:linear-gradient(180deg,var(--brand),var(--bg));
       font-family:Manrope,system-ui,Segoe UI,Roboto,Arial,sans-serif;
+
+      /* WEBBG8 top-right + gradient background */
+      background:
+        url("public/WEBBG8.png") no-repeat top right fixed,
+        linear-gradient(180deg,#0B1B4A 0%,#0A0F1C 60%);
+      background-size:auto, cover;
     }
     .container{max-width:1200px;margin:0 auto;padding:32px 20px}
     h1{margin:0 0 20px;font-size:clamp(28px,5vw,44px)}
@@ -66,7 +71,7 @@
   <div id="header"></div>
 
   <main class="container">
-  
+    <h1>Blog</h1>
 
     <!-- Featured post -->
     <section id="featured" class="featured"></section>
