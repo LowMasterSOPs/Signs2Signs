@@ -1,0 +1,6 @@
+# Homepage stays as index.html (default on Netlify)
+# Blog listing page
+/blog    /blog.html   200
+
+# Individual blog posts → route to post.html (handled by JS)
+/blog/*  /post.html   200
