@@ -6,16 +6,42 @@
   <title>Blog | Signs2Signs</title>
   <link rel="icon" type="image/svg+xml" href="public/S2S.svg" />
   <style>
-    :root{--bg:#0A0F1C;--brand:#0B1B4A;--card:rgba(255,255,255,.06);--stroke:rgba(255,255,255,.12);--muted:#cbd5e1}
+    :root{
+      --bg:#0A0F1C; --brand:#0B1B4A;
+      --card:rgba(255,255,255,.06); --stroke:rgba(255,255,255,.12);
+      --muted:#cbd5e1;
+    }
     *{box-sizing:border-box}
-    body{margin:0;color:#f8fafc;background:linear-gradient(180deg,var(--brand),var(--bg));font-family:Manrope,system-ui,Segoe UI,Roboto,Arial,sans-serif}
+    body{
+      margin:0;color:#f8fafc;
+      background:linear-gradient(180deg,var(--brand),var(--bg));
+      font-family:Manrope,system-ui,Segoe UI,Roboto,Arial,sans-serif;
+    }
     .container{max-width:1200px;margin:0 auto;padding:32px 20px}
     h1{margin:0 0 20px;font-size:clamp(28px,5vw,44px)}
+
     /* Layout */
     .layout{display:grid;grid-template-columns:280px 1fr;gap:24px}
     @media (max-width: 900px){ .layout{grid-template-columns:1fr} }
+
+    /* Featured */
+    .featured{
+      margin-bottom:40px;
+      background:var(--card);border:1px solid var(--stroke);
+      border-radius:16px;overflow:hidden;
+    }
+    .featured img{width:100%;max-height:400px;object-fit:cover;display:block}
+    .featured-content{padding:20px}
+    .featured-content h2{margin:0 0 12px;font-size:clamp(24px,4vw,36px)}
+    .featured-content p{margin:0 0 12px;color:var(--muted);line-height:1.5}
+    .featured-content a{display:inline-block;margin-top:12px;color:#fff;text-decoration:underline}
+
     /* Sidebar */
-    .sidebar{background:var(--card);border:1px solid var(--stroke);border-radius:14px;padding:12px;position:sticky;top:16px;max-height:calc(100vh - 32px);overflow:auto}
+    .sidebar{
+      background:var(--card);border:1px solid var(--stroke);
+      border-radius:14px;padding:12px;
+      position:sticky;top:16px;max-height:calc(100vh - 32px);overflow:auto
+    }
     .sidebar h2{font-size:18px;margin:6px 8px 10px}
     details{border:1px solid var(--stroke);border-radius:10px;margin:8px 0;background:rgba(255,255,255,.03)}
     summary{cursor:pointer;padding:10px 12px;font-weight:700;list-style:none}
@@ -25,6 +51,7 @@
     .archive-list{margin:0;padding:0;list-style:none}
     .archive-list a{display:block;padding:6px 8px;border-radius:8px;color:#fff;text-decoration:none}
     .archive-list a:hover{background:rgba(255,255,255,.06)}
+
     /* Cards */
     .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px}
     .card{display:block;text-decoration:none;color:inherit;background:var(--card);border:1px solid var(--stroke);border-radius:14px;overflow:hidden}
@@ -41,6 +68,9 @@
   <main class="container">
     <h1>Blog</h1>
 
+    <!-- Featured post -->
+    <section id="featured" class="featured"></section>
+
     <div class="layout">
       <!-- Archive Sidebar -->
       <aside class="sidebar" aria-label="Blog archive">
@@ -48,7 +78,7 @@
         <div id="archive"></div>
       </aside>
 
-      <!-- Posts -->
+      <!-- Posts grid -->
       <section>
         <div id="posts" class="grid" aria-live="polite">Loading…</div>
       </section>
@@ -58,100 +88,6 @@
   <!-- Footer include -->
   <div id="footer"></div>
 
-  <script type="module">
-    import { fetchPosts, includePartials } from "./blog.js"
-
-    const postsEl = document.getElementById("posts")
-    const archiveEl = document.getElementById("archive")
-
-    function groupByYearMonth(posts){
-      const buckets = new Map()
-      for(const p of posts){
-        const d = p.published_at || p.created_at || p.updated_at || null
-        const dt = d ? new Date(d) : null
-        const year = dt ? dt.getFullYear() : "Unknown"
-        const month = dt ? dt.toLocaleString("en-GB",{ month:"long" }) : "Unsorted"
-        if(!buckets.has(year)) buckets.set(year, new Map())
-        const ym = buckets.get(year)
-        if(!ym.has(month)) ym.set(month, [])
-        ym.get(month).push(p)
-      }
-      // Sort years desc, months desc by date order
-      return new Map([...buckets.entries()].sort((a,b)=> (b[0]+'').localeCompare(a[0]+'')))
-    }
-
-    function buildArchive(posts){
-      const grouped = groupByYearMonth(posts)
-      archiveEl.innerHTML = ""
-      for(const [year, months] of grouped){
-        const det = document.createElement("details")
-        det.open = true
-        const sum = document.createElement("summary")
-        sum.textContent = year
-        det.appendChild(sum)
-
-        // months: keep calendar order (Dec..Jan)
-        const monthOrder = new Intl.DateTimeFormat("en-GB",{month:"long"}).format
-        const monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"]
-        const orderedMonths = monthNames.filter(m=>months.has(m))
-        // add non-dated bucket if present
-        if(months.has("Unsorted")) orderedMonths.push("Unsorted")
-
-        for(const m of orderedMonths){
-          const wrap = document.createElement("div")
-          wrap.className = "month"
-          const h4 = document.createElement("h4")
-          h4.textContent = m
-          wrap.appendChild(h4)
-
-          const ul = document.createElement("ul")
-          ul.className = "archive-list"
-          for(const p of months.get(m)){
-            const li = document.createElement("li")
-            const a = document.createElement("a")
-            a.href = `post.html?slug=${encodeURIComponent(p.slug || p.id)}`
-            a.textContent = p.title || "Untitled"
-            li.appendChild(a)
-            ul.appendChild(li)
-          }
-          wrap.appendChild(ul)
-          det.appendChild(wrap)
-        }
-        archiveEl.appendChild(det)
-      }
-    }
-
-    async function render() {
-      postsEl.textContent = "Loading…"
-      const { data, error } = await fetchPosts()
-      if (error) { console.error(error); postsEl.textContent = "Error loading posts."; return }
-
-      if (!data || data.length === 0) {
-        postsEl.innerHTML = `<p class="empty">No posts yet.</p>`
-        archiveEl.innerHTML = `<p class="empty">Nothing to archive… yet.</p>`
-        return
-      }
-
-      // Build archive first
-      buildArchive(data)
-
-      // Cards
-      postsEl.innerHTML = ""
-      for (const p of data) {
-        const a = document.createElement("a")
-        a.className = "card"
-        a.href = `post.html?slug=${encodeURIComponent(p.slug || p.id)}`
-        a.innerHTML = `
-          ${p.main_image_url ? `<img class="thumb" src="${p.main_image_url}" alt="">` : ""}
-          <div class="title">${p.title ?? "Untitled"}</div>
-          ${p.description ? `<p class="desc">${p.description}</p>` : ""}
-        `
-        postsEl.appendChild(a)
-      }
-    }
-
-    includePartials()
-    render()
-  </script>
+  <script type="module" src="blog.js"></script>
 </body>
 </html>
