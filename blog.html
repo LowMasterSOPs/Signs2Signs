@@ -15,8 +15,6 @@
     body{
       margin:0;color:#f8fafc;
       font-family:Manrope,system-ui,Segoe UI,Roboto,Arial,sans-serif;
-
-      /* WEBBG8 top-right + gradient background */
       background:
         url("public/WEBBG8.png") no-repeat top right fixed,
         linear-gradient(180deg,#0B1B4A 0%,#0A0F1C 60%);
@@ -24,29 +22,15 @@
     }
     .container{max-width:1200px;margin:0 auto;padding:32px 20px}
     h1{margin:0 0 20px;font-size:clamp(28px,5vw,44px)}
-
-    /* Layout */
     .layout{display:grid;grid-template-columns:280px 1fr;gap:24px}
-    @media (max-width: 900px){ .layout{grid-template-columns:1fr} }
-
-    /* Featured */
-    .featured{
-      margin-bottom:40px;
-      background:var(--card);border:1px solid var(--stroke);
-      border-radius:16px;overflow:hidden;
-    }
+    @media (max-width:900px){.layout{grid-template-columns:1fr}}
+    .featured{margin-bottom:40px;background:var(--card);border:1px solid var(--stroke);border-radius:16px;overflow:hidden}
     .featured img{width:100%;max-height:400px;object-fit:cover;display:block}
     .featured-content{padding:20px}
     .featured-content h2{margin:0 0 12px;font-size:clamp(24px,4vw,36px)}
     .featured-content p{margin:0 0 12px;color:var(--muted);line-height:1.5}
     .featured-content a{display:inline-block;margin-top:12px;color:#fff;text-decoration:underline}
-
-    /* Sidebar */
-    .sidebar{
-      background:var(--card);border:1px solid var(--stroke);
-      border-radius:14px;padding:12px;
-      position:sticky;top:16px;max-height:calc(100vh - 32px);overflow:auto
-    }
+    .sidebar{background:var(--card);border:1px solid var(--stroke);border-radius:14px;padding:12px;position:sticky;top:16px;max-height:calc(100vh - 32px);overflow:auto}
     .sidebar h2{font-size:18px;margin:6px 8px 10px}
     details{border:1px solid var(--stroke);border-radius:10px;margin:8px 0;background:rgba(255,255,255,.03)}
     summary{cursor:pointer;padding:10px 12px;font-weight:700;list-style:none}
@@ -56,8 +40,6 @@
     .archive-list{margin:0;padding:0;list-style:none}
     .archive-list a{display:block;padding:6px 8px;border-radius:8px;color:#fff;text-decoration:none}
     .archive-list a:hover{background:rgba(255,255,255,.06)}
-
-    /* Cards */
     .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px}
     .card{display:block;text-decoration:none;color:inherit;background:var(--card);border:1px solid var(--stroke);border-radius:14px;overflow:hidden}
     .thumb{width:100%;aspect-ratio:16/9;object-fit:cover;background:#0b0b0b}
@@ -67,30 +49,24 @@
   </style>
 </head>
 <body>
-  <!-- Header include -->
   <div id="header"></div>
 
   <main class="container">
     <h1>Blog</h1>
-
-    <!-- Featured post -->
     <section id="featured" class="featured"></section>
 
     <div class="layout">
-      <!-- Archive Sidebar -->
       <aside class="sidebar" aria-label="Blog archive">
         <h2>Archive</h2>
         <div id="archive"></div>
       </aside>
 
-      <!-- Posts grid -->
       <section>
         <div id="posts" class="grid" aria-live="polite">Loading…</div>
       </section>
     </div>
   </main>
 
-  <!-- Footer include -->
   <div id="footer"></div>
 
   <script type="module" src="blog.js"></script>
