@@ -1,46 +1,28 @@
-// blog.js — minimal client + helpers for the blog
+// blog.js — Supabase client, fetch + render
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2"
 
-// 🔧 Your Supabase project (you shared these)
+// 🔧 Your Supabase project details
 const SUPABASE_URL = "https://ketluxsokzvlqozcdwxo.supabase.co"
 const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtldGx1eHNva3p2bHFvemNkd3hvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTUzNjAzOTIsImV4cCI6MjA3MDkzNjM5Mn0.NCPCOXJ4vD1PYb_sBgoyA6lSvkiRpb8IlA4X8XnltUs"
 
-// Create client
 export const supabase = createClient(SUPABASE_URL, SUPABASE_KEY)
 
 /**
- * Fetch all posts with sensible ordering.
- * Tries published_at first, then created_at, then id.
- * Returns only fields the page uses.
+ * Fetch all posts ordered by newest
  */
 export async function fetchPosts() {
-  // Select commonly-used columns; add/remove as you like
-  const columns = [
-    "id",
-    "slug",
-    "title",
-    "description",
-    "main_image_url",
-    "published_at",
-    "created_at",
-    "updated_at"
-  ].join(", ")
-
-  let query = supabase.from("posts").select(columns)
-
-  // Order by date fields if they exist; fall back to id
-  query = query
+  const { data, error } = await supabase
+    .from("posts")
+    .select("id, slug, title, description, main_image_url, published_at, created_at, updated_at")
     .order("published_at", { ascending: false, nullsFirst: false })
     .order("created_at",  { ascending: false, nullsFirst: false })
     .order("id",          { ascending: false })
 
-  const { data, error } = await query
   return { data, error }
 }
 
 /**
- * Inject header.html and footer.html into #header / #footer.
- * Keeps your HTML pages tidy and DRY.
+ * Load header.html and footer.html into placeholders
  */
 export async function includePartials({ headerSel = "#header", footerSel = "#footer" } = {}) {
   try {
@@ -56,3 +38,106 @@ export async function includePartials({ headerSel = "#header", footerSel = "#foo
     console.error("Error loading partials:", err)
   }
 }
+
+// ====== Rendering logic ======
+const postsEl = document.getElementById("posts")
+const archiveEl = document.getElementById("archive")
+const featuredEl = document.getElementById("featured")
+
+function groupByYearMonth(posts){
+  const buckets = new Map()
+  for(const p of posts){
+    const d = p.published_at || p.created_at || p.updated_at || null
+    const dt = d ? new Date(d) : null
+    const year = dt ? dt.getFullYear() : "Unknown"
+    const month = dt ? dt.toLocaleString("en-GB",{ month:"long" }) : "Unsorted"
+    if(!buckets.has(year)) buckets.set(year, new Map())
+    const ym = buckets.get(year)
+    if(!ym.has(month)) ym.set(month, [])
+    ym.get(month).push(p)
+  }
+  return new Map([...buckets.entries()].sort((a,b)=>(b[0]+'').localeCompare(a[0]+'')))
+}
+
+function buildArchive(posts){
+  const grouped = groupByYearMonth(posts)
+  archiveEl.innerHTML = ""
+  for(const [year, months] of grouped){
+    const det = document.createElement("details")
+    det.open = true
+    const sum = document.createElement("summary")
+    sum.textContent = year
+    det.appendChild(sum)
+
+    const monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"]
+    const orderedMonths = monthNames.filter(m=>months.has(m))
+    if(months.has("Unsorted")) orderedMonths.push("Unsorted")
+
+    for(const m of orderedMonths){
+      const wrap = document.createElement("div")
+      wrap.className = "month"
+      const h4 = document.createElement("h4")
+      h4.textContent = m
+      wrap.appendChild(h4)
+
+      const ul = document.createElement("ul")
+      ul.className = "archive-list"
+      for(const p of months.get(m)){
+        const li = document.createElement("li")
+        const a = document.createElement("a")
+        a.href = `post.html?slug=${encodeURIComponent(p.slug || p.id)}`
+        a.textContent = p.title || "Untitled"
+        li.appendChild(a)
+        ul.appendChild(li)
+      }
+      wrap.appendChild(ul)
+      det.appendChild(wrap)
+    }
+    archiveEl.appendChild(det)
+  }
+}
+
+async function render() {
+  postsEl.textContent = "Loading…"
+  const { data, error } = await fetchPosts()
+  if (error) { console.error(error); postsEl.textContent = "Error loading posts."; return }
+
+  if (!data || data.length === 0) {
+    postsEl.innerHTML = `<p class="empty">No posts yet.</p>`
+    archiveEl.innerHTML = `<p class="empty">Nothing to archive… yet.</p>`
+    featuredEl.innerHTML = ""
+    return
+  }
+
+  // 1️⃣ Featured post
+  const [latest, ...rest] = data
+  featuredEl.innerHTML = `
+    ${latest.main_image_url ? `<img src="${latest.main_image_url}" alt="">` : ""}
+    <div class="featured-content">
+      <h2>${latest.title ?? "Untitled"}</h2>
+      <p>${latest.description ?? ""}</p>
+      <a href="post.html?slug=${encodeURIComponent(latest.slug || latest.id)}">Read full post →</a>
+    </div>
+  `
+
+  // 2️⃣ Archive
+  buildArchive(data)
+
+  // 3️⃣ Remaining posts grid
+  postsEl.innerHTML = ""
+  for (const p of rest) {
+    const a = document.createElement("a")
+    a.className = "card"
+    a.href = `post.html?slug=${encodeURIComponent(p.slug || p.id)}`
+    a.innerHTML = `
+      ${p.main_image_url ? `<img class="thumb" src="${p.main_image_url}" alt="">` : ""}
+      <div class="title">${p.title ?? "Untitled"}</div>
+      ${p.description ? `<p class="desc">${p.description}</p>` : ""}
+    `
+    postsEl.appendChild(a)
+  }
+}
+
+// Boot
+includePartials()
+render()
