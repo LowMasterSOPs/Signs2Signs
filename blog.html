@@ -20,13 +20,19 @@
   </style>
 </head>
 <body>
+  <!-- Header include -->
+  <div id="header"></div>
+
   <main class="container">
     <h1>Blog</h1>
     <div id="posts" class="grid" aria-live="polite">Loading…</div>
   </main>
 
+  <!-- Footer include -->
+  <div id="footer"></div>
+
   <script type="module">
-    import { fetchPosts } from "./blog.js"
+    import { fetchPosts, includePartials } from "./blog.js"
 
     const postsEl = document.getElementById("posts")
 
@@ -54,6 +60,8 @@
       }
     }
 
+    // load header/footer and posts
+    includePartials()
     render()
   </script>
 </body>
