@@ -4,14 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Blog | Signs2Signs</title>
-  <meta name="description" content="Insights, updates, and behind-the-scenes from Signs2Signs — CNC, print, fabrication, and trade signage built in Manchester." />
   <link rel="icon" type="image/svg+xml" href="/public/S2S.svg" />
-
-  <!-- Fonts (match site) -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&display=swap" rel="stylesheet">
-
   <style>
     :root{
       --card:rgba(255,255,255,.06);
@@ -20,34 +13,18 @@
       --accent:#F26B1D;
     }
     *{box-sizing:border-box}
-    html,body{height:100%}
     body{
-      margin:0;
-      color:#f8fafc;
-      font-family:'Manrope', system-ui, Segoe UI, Roboto, Arial, sans-serif;
+      margin:0;color:#f8fafc;font-family:Manrope,system-ui,Segoe UI,Roboto,Arial,sans-serif;
       background:
         url("/public/WEBBG8.png") no-repeat top right fixed,
         linear-gradient(180deg,#0B1B4A 0%,#0A0F1C 60%);
       background-size:auto, cover;
-      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
     }
-    /* Remove hero BG image on small screens to keep things tidy */
-    @media (max-width:640px){
-      body{
-        background:
-          linear-gradient(180deg,#0B1B4A 0%,#0A0F1C 60%);
-        background-size:cover;
-      }
-    }
-
-    /* Links */
+    /* Global link colour */
     a{ color:var(--accent); text-decoration:none }
-    a:hover, a:focus{ text-decoration:underline }
-    a:focus-visible{ outline:2px dashed var(--accent); outline-offset:2px }
+    a:hover{ text-decoration:underline }
 
-    /* Layout helpers */
     .container{max-width:1200px;margin:0 auto;padding:32px 20px}
-    .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;padding:0;margin:-1px}
 
     /* HERO (match site) */
     .hero{padding:84px 0 28px; text-align:center; position:relative;}
@@ -68,13 +45,13 @@
 
     /* Featured */
     .featured{margin-bottom:40px;background:var(--card);border:1px solid var(--stroke);border-radius:16px;overflow:hidden}
-    .featured img{width:100%;max-height:420px;object-fit:cover;display:block}
+    .featured img{width:100%;max-height:400px;object-fit:cover;display:block}
     .featured-content{padding:20px}
-    .featured-content h2{margin:0 0 12px;font-size:clamp(24px,4vw,36px);line-height:1.1}
-    .featured-content p{margin:0 0 12px;color:var(--muted);line-height:1.6}
-    .featured-content a{display:inline-block;margin-top:12px;font-weight:700}
+    .featured-content h2{margin:0 0 12px;font-size:clamp(24px,4vw,36px)}
+    .featured-content p{margin:0 0 12px;color:var(--muted);line-height:1.5}
+    .featured-content a{display:inline-block;margin-top:12px}
 
-    /* Main layout */
+    /* Layout */
     .layout{display:grid;grid-template-columns:280px 1fr;gap:24px}
     @media (max-width:900px){ .layout{grid-template-columns:1fr} }
 
@@ -92,30 +69,22 @@
 
     /* Cards grid */
     .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px}
-    .card{display:block;text-decoration:none;color:inherit;background:var(--card);border:1px solid var(--stroke);border-radius:14px;overflow:hidden;transition:transform .12s ease}
-    .card:focus-visible{outline:2px dashed var(--accent); outline-offset:3px}
-    .card:hover{transform:translateY(-2px)}
+    .card{display:block;text-decoration:none;color:inherit;background:var(--card);border:1px solid var(--stroke);border-radius:14px;overflow:hidden}
     .thumb{width:100%;aspect-ratio:16/9;object-fit:cover;background:#0b0b0b}
-    .title{margin:14px 14px 6px;font-weight:700;line-height:1.25}
-    .desc{margin:0 14px 16px;color:var(--muted);line-height:1.55}
+    .title{margin:14px 14px 6px;font-weight:700}
+    .desc{margin:0 14px 16px;color:var(--muted)}
     .empty{opacity:.8}
-
-    /* Small niceties */
-    @media (prefers-reduced-motion: no-preference){
-      .fade-in{animation:fade .4s ease both}
-      @keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
-    }
   </style>
 </head>
 <body>
-  <!-- Header include (populated by your JS include loader) -->
-  <div id="header" role="banner"></div>
+  <!-- Header include -->
+  <div id="header"></div>
 
-  <main id="main" tabindex="-1">
+  <main>
     <!-- Blog hero -->
     <section class="hero">
       <div class="container">
-        <span class="kicker" aria-label="Kicker">Insights • Updates • Behind the Scenes</span>
+        <span class="kicker">Insights • Updates • Behind the Scenes</span>
         <h1 class="hero-title">The Signs2Signs Blog</h1>
         <p class="lede">
           Stories, updates, and know-how from the workshop floor. From CNC and laser to full installs —
@@ -126,41 +95,25 @@
 
     <section class="container">
       <!-- Featured post -->
-      <div id="featured" class="featured fade-in" aria-live="polite" aria-busy="true">
-        <!-- Your /blog.js will inject the markup for the latest/featured post here -->
-      </div>
+      <div id="featured" class="featured"></div>
 
       <div class="layout">
         <!-- Archive -->
         <aside class="sidebar" aria-label="Blog archive">
           <h2>Archive</h2>
-          <div id="archive" aria-live="polite" aria-busy="true">
-            <!-- /blog.js will render months -> posts here -->
-          </div>
+          <div id="archive"></div>
         </aside>
 
         <!-- Posts grid -->
-        <section aria-labelledby="posts-heading">
-          <h2 id="posts-heading" class="sr-only">Latest posts</h2>
-          <div id="posts" class="grid" aria-live="polite" aria-busy="true">
-            <div class="card empty">
-              <div class="title">Loading…</div>
-              <p class="desc">Brewing up fresh posts. Kettle’s on ☕</p>
-            </div>
-          </div>
+        <section>
+          <div id="posts" class="grid" aria-live="polite">Loading…</div>
         </section>
       </div>
     </section>
   </main>
 
   <!-- Footer include -->
-  <div id="footer" role="contentinfo"></div>
-
-  <noscript>
-    <div class="container" style="color:#fff;margin-top:16px">
-      JavaScript is required for the blog feed and archive to load.
-    </div>
-  </noscript>
+  <div id="footer"></div>
 
   <!-- Absolute path so it loads under /blog -->
   <script type="module" src="/blog.js"></script>
