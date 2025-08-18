@@ -1,4 +1,4 @@
-// post.js — render a single blog post
+// post.js — render a single blog post with full body
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2"
 
 // Supabase client
@@ -18,21 +18,19 @@ async function includePartials({ headerSel="#header", footerSel="#footer" }={}) 
   } catch (err) { console.error("partials load error", err) }
 }
 
-// Read slug from URL
+// Get slug from URL
 function getSlug() {
   const params = new URLSearchParams(window.location.search)
   return params.get("slug")
 }
 
+// Fetch a single post by slug or id
 async function fetchPost(slug) {
-  let query
-  // If slug is numeric, fallback to id
   if(/^\d+$/.test(slug)){
-    query = supabase.from("posts").select("*").eq("id", slug).single()
+    return supabase.from("posts").select("*").eq("id", slug).single()
   } else {
-    query = supabase.from("posts").select("*").eq("slug", slug).single()
+    return supabase.from("posts").select("*").eq("slug", slug).single()
   }
-  return query
 }
 
 async function renderPost() {
@@ -43,6 +41,7 @@ async function renderPost() {
   const { data: post, error } = await fetchPost(slug)
   if (error || !post) { console.error(error); postEl.innerHTML = `<p class="empty">Post not found.</p>`; return }
 
+  // 👇 here we output the full body field
   postEl.innerHTML = `
     <div class="post-hero">
       ${post.main_image_url ? `<img src="${post.main_image_url}" alt="">` : ""}
@@ -52,7 +51,7 @@ async function renderPost() {
       ${post.published_at ? new Date(post.published_at).toLocaleDateString("en-GB") : ""}
     </div>
     <div class="post-body">
-      ${post.content || post.description || "<p>No content.</p>"}
+      ${post.body || post.content || post.description || "<p>No content.</p>"}
     </div>
   `
 }
