@@ -6,7 +6,12 @@
   <title>Blog | Signs2Signs</title>
   <link rel="icon" type="image/svg+xml" href="/public/S2S.svg" />
   <style>
-    :root{ --card:rgba(255,255,255,.06); --stroke:rgba(255,255,255,.12); --muted:#cbd5e1; }
+    :root{
+      --card:rgba(255,255,255,.06);
+      --stroke:rgba(255,255,255,.12);
+      --muted:#cbd5e1;
+      --accent:#F26B1D; /* brand orange */
+    }
     *{box-sizing:border-box}
     body{
       margin:0;color:#f8fafc;font-family:Manrope,system-ui,Segoe UI,Roboto,Arial,sans-serif;
@@ -15,6 +20,10 @@
         linear-gradient(180deg,#0B1B4A 0%,#0A0F1C 60%);
       background-size:auto, cover;
     }
+    /* Global link colour */
+    a{ color:var(--accent); text-decoration:none }
+    a:hover{ text-decoration:underline }
+
     .container{max-width:1200px;margin:0 auto;padding:32px 20px}
     h1{margin:0 0 20px;font-size:clamp(28px,5vw,44px)}
     .layout{display:grid;grid-template-columns:280px 1fr;gap:24px}
@@ -26,7 +35,7 @@
     .featured-content{padding:20px}
     .featured-content h2{margin:0 0 12px;font-size:clamp(24px,4vw,36px)}
     .featured-content p{margin:0 0 12px;color:var(--muted);line-height:1.5}
-    .featured-content a{display:inline-block;margin-top:12px;color:#fff;text-decoration:underline}
+    .featured-content a{display:inline-block;margin-top:12px}
 
     /* Sidebar */
     .sidebar{background:var(--card);border:1px solid var(--stroke);border-radius:14px;padding:12px;position:sticky;top:16px;max-height:calc(100vh - 32px);overflow:auto}
@@ -37,7 +46,7 @@
     .month{padding:8px 12px 10px}
     .month h4{margin:8px 0 6px;font-size:14px;color:var(--muted);font-weight:700}
     .archive-list{margin:0;padding:0;list-style:none}
-    .archive-list a{display:block;padding:6px 8px;border-radius:8px;color:#fff;text-decoration:none}
+    .archive-list a{display:block;padding:6px 8px;border-radius:8px;color:#fff}
     .archive-list a:hover{background:rgba(255,255,255,.06)}
 
     /* Cards */
@@ -74,7 +83,7 @@
   <!-- Footer include -->
   <div id="footer"></div>
 
-  <!-- IMPORTANT: absolute path -->
+  <!-- Absolute path so it loads under /blog -->
   <script type="module" src="/blog.js"></script>
 </body>
 </html>
